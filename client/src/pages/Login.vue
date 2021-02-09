@@ -2,7 +2,7 @@
   <q-layout>
     <q-page-container class="bg-grey-2">
       <q-page class="row justify-center items-center">
-        <q-card class="shadow-3 card-border q-ma-md responsive-web">
+        <q-card class="shadow-3 q-ma-md" style="border-radius:12px">
           <q-card-section>
             <div class="col column items-center justify-center">
                 <div class="row justify-center">
