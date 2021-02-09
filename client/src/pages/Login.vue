@@ -1,6 +1,6 @@
 <template>
   <q-layout>
-    <q-page-container class="fondo">
+    <q-page-container class="bg-grey-2">
       <q-page class="row justify-center items-center">
         <q-card class="shadow-3 card-border q-ma-md responsive-web">
           <q-card-section>
@@ -15,7 +15,7 @@
             </div>
             <q-form @submit="onSubmit" class="q-gutter-sm q-ma-sm">
               <div>
-                <q-input class="text-bold input-style q-pl-sm" type="email" v-model="form.email" label="Correo electrónico">
+                <q-input class="text-bold q-pl-sm" type="email" v-model="form.email" label="Correo electrónico">
                   <template v-slot:prepend>
                     <q-icon color="primary" name="mail"></q-icon>
                   </template>
@@ -23,7 +23,7 @@
               </div>
 
               <div>
-                <q-input class="text-bold input-style q-pl-sm q-pr-sm" :type="isPwd ? 'password' : 'text'" v-model="form.password" label="Contraseña">
+                <q-input class="text-bold q-pl-sm q-pr-sm" :type="isPwd ? 'password' : 'text'" v-model="form.password" label="Contraseña">
                   <template v-slot:prepend>
                     <q-icon color="primary" name="vpn_key"></q-icon>
                   </template>
@@ -34,7 +34,7 @@
               </div>
 
               <div class="text-center q-ma-sm">
-                <q-btn push color="primary" class="button-login q-mt-sm" label="Iniciar Sesion" :loading="loading" type="submit">
+                <q-btn push color="primary" class="q-mt-sm" label="Iniciar Sesion" :loading="loading" type="submit">
                   <template v-slot:loading>
                     <q-spinner-hourglass class="on-left" />
                     Cargando...
@@ -42,6 +42,8 @@
                 </q-btn>
               </div>
               <q-separator inset class="q-mt-lg q-mb-lg" />
+
+              <div class="text-center text-primary text-bold cursor-pointer" @click="$router.push('registro')"> ¿Eres Nuevo? Registrate </div>
             </q-form>
           </q-card-section>
         </q-card>
@@ -86,14 +88,5 @@ export default {
 }
 </script>
 <style lang="css" scoped>
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-}
-.gray {
-  color: rgb(0, 0, 0);
-}
+
 </style>
