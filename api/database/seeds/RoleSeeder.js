@@ -17,22 +17,22 @@ const roleData = [
   {
     id: 1,
     name: 'Super Admin',
-    description: 'Rol de Súper Administrador de TRILLOS',
+    description: 'Rol de Súper Administrador',
     permissions: [1]
   },
   {
     id: 2,
     name: 'Cliente',
-    description: 'Rol de Cliente de TRILLOS',
-    permissions: [1]
+    description: 'Rol de Cliente',
+    permissions: [2]
   },
   {
     id: 3,
     name: 'Proveedor',
-    description: 'Rol de Proveedor de TRILLOS',
-    permissions: [1]
+    description: 'Rol de Proveedor',
+    permissions: [3]
   },
-  
+
 ]
 
 class RoleSeeder {

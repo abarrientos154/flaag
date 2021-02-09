@@ -18,9 +18,8 @@ const Factory = use('Factory')
 
 const userData = [
   {
-    _id: '5e90d6e6f75366526a680091',
-    email: 'admin@triyus.com',
-    password: 'triyus2020',
+    email: 'admin@flaag.com',
+    password: 'flaag2020',
     full_name: 'Administrador del Sistema',
     roles: [1]
   }
@@ -29,17 +28,15 @@ const userData = [
 class UserSeeder {
   async run () {
     for (let i of userData) {
-      let user = await User.find(i._id)
+      let user = await User.findBy('email', i.email)
       if (!user) {
         await User.create(i)
       }
       else {
         user.email = i.email
         user.password = i.password
-        user.name = i.name
-        user.lastName = i.lastName
+        user.full_name = i.full_name
         user.roles = i.roles
-        user.country_id = i.country_id ? i.country_id : null
         await user.save()
       }
     }
