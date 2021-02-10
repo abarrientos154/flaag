@@ -12,7 +12,12 @@ class User extends Model {
   }
   static fieldValidationRules() {
     const rulesUser = {
-
+      direccion: 'string',
+      name: 'string|required',
+      lastName: 'string|required',
+      password: 'string|required',
+      telefono: 'string',
+      email: 'email|required'
     }
     return rulesUser
   }

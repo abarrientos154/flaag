@@ -18,6 +18,36 @@ const { validate } = use("Validator")
 class UserController {
 
   async register({ request, response }) {
+    let dat = request.only(['dat'])
+    dat = JSON.parse(dat.dat)
+    const validation = await validate(dat, User.fieldValidationRules())
+    if (validation.fails()) {
+      response.unprocessableEntity(validation.messages())
+    } else if (((await User.where({email: dat.email}).fetch()).toJSON()).length) {
+      response.unprocessableEntity([{
+        message: 'Correo ya registrado en el sistema!'
+      }])
+    } else {
+      let body = dat
+      body.roles = [2]
+      const user = await User.create(body)
+
+      const profilePic = request.file('perfil', {
+      })
+      if (Helpers.appRoot('storage/uploads/perfil')) {
+        await profilePic.move(Helpers.appRoot('storage/uploads/perfil'), {
+          name: user._id.toString(),
+          overwrite: true
+        })
+      } else {
+        mkdirp.sync(`${__dirname}/storage/Excel`)
+      }
+      if (!profilePic.moved()) {
+        return profilePic.error()
+      }
+
+      response.send(user)
+    }
   }
 
   async validateEmail({ request, response, params }) {
