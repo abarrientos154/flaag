@@ -7,8 +7,8 @@ const Model = use('Model')
 const Hash = use('Hash')
 
 class User extends Model {
-  static get fillable() {
-    return []
+  static get fillableProveedor() {
+    return ['nombreEmpresa', 'rut', 'direccionFisica', 'telefono', 'delivery', 'regiones', 'dias', 'hapertura', 'hcierre', 'deliveryPrice']
   }
   static fieldValidationRules() {
     const rulesUser = {

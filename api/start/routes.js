@@ -39,6 +39,8 @@ addPrefixToGroup(
     Route.post("login", "UserController.login");
     Route.post("registrar_cliente", "UserController.register")
     Route.get("validate_email/:email", "UserController.validateEmail")
+    Route.get("perfil_img/:file", "UploadController.perfilImg")
+    Route.get("tienda_files/:file", "UploadController.tiendaFiles")
   })
 );
 
@@ -47,5 +49,9 @@ addPrefixToGroup(
     // Insertar rutas con protección de autenticación aquí
 
     Route.get("user_info", "UserController.userInfo") // metodo para obtener informacion del usuario que esta logueado
+    Route.put("editar_proveedor", "UserController.editarP")
+    Route.post("subir_foto_perfil", "UploadController.subirPerfil")
+    Route.post("subir_archivo_proveedor", "UploadController.subirImgTienda")
+    Route.delete("eliminar_archivo_proveedor/:file", "UploadController.eliminarImgTienda")
   }).middleware("auth")
 );

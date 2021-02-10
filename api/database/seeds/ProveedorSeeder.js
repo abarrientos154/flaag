@@ -22,7 +22,9 @@ const userData = [
     direccionFisica: 'En chile',
     telefono: '041254545445',
     delivery: false,
-    regiones: 'Si',
+    regiones: false,
+    perfil: false,
+    dias: [],
     roles: [1]
   }
 ]
@@ -43,6 +45,7 @@ class ProveedorSeeder {
         user.telefono = i.telefono
         user.delivery = i.delivery
         user.regiones = i.regiones
+        user.perfil = i.perfil
         user.roles = i.roles
         await user.save()
       }

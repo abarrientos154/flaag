@@ -17,6 +17,13 @@ const { validate } = use("Validator")
  */
 class UserController {
 
+  async editarP ({ request, response, auth }) {
+    const userL = (await auth.getUser()).toJSON()
+    let body = request.only(User.fillableProveedor)
+    let user = await User.query().where('_id', userL._id.toString()).update(body)
+    response.send(user)
+  }
+
   async register({ request, response }) {
     let dat = request.only(['dat'])
     dat = JSON.parse(dat.dat)
