@@ -1,0 +1,366 @@
+<template>
+  <div>
+    <q-carousel
+        v-model="slide1"
+        style="height: 850px; width: 100%"
+        navigation
+        >
+        <q-carousel-slide :name="index + 1" :img-src="img.img"  v-for="(img, index) in slPrincipal" :key="index">
+            <div class="absolute-center bg-transparent q-mx-md" style="width: 100%">
+                <div class="text-h3 text-bold text-black q-mb-md">¿Tienes hambre? Estás en el lugar correcto</div>
+                <div class="row items-center">
+                    <q-input class="col-4 q-mt-md" color="black" bg-color="white" filled bottom-slots v-model="direccion" placeholder="Ingresa la dirección de entrega">
+                        <template v-slot:prepend>
+                            <q-icon name="place" color="black" />
+                        </template>
+                        <template v-slot:append>
+                            <q-btn :label="direccion.length ? 'Borrar' : ''" @click="direccion.length ? direccion = '' : ''" no-caps flat />
+                        </template>
+                    </q-input>
+                    <q-select class="col-3 q-ml-sm" color="black" bg-color="white" filled v-model="selected" :options="options">
+                        <template v-slot:prepend>
+                            <q-icon :name="selected.icon" color="black" />
+                        </template>
+                        <template v-slot:option="scope">
+                            <q-item
+                                v-bind="scope.itemProps"
+                                v-on="scope.itemEvents"
+                            >
+                                <q-item-section avatar>
+                                <q-icon :name="scope.opt.icon" />
+                                </q-item-section>
+                                <q-item-section>
+                                <q-item-label v-html="scope.opt.label" />
+                                </q-item-section>
+                            </q-item>
+                        </template>
+                    </q-select>
+                    <q-btn class="q-ml-sm q-py-sm" size="md" color="black" label="Buscar comida" no-caps />
+                </div>
+            </div>
+        </q-carousel-slide>
+    </q-carousel>
+
+    <q-carousel
+      v-model="slide2"
+      ref="carousel2"
+      :autoplay="autoplay"
+      @mouseenter="autoplay = false"
+      @mouseleave="autoplay = true"
+      swipeable
+      animated
+      infinite
+      height="300px"
+      class="bg-transparent q-my-md"
+    >
+      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slLogos" :key="index" class="column no-wrap">
+        <div class="row fit justify-around items-center no-wrap">
+          <div v-for="(img, index2) in value" :key="index2">
+            <q-avatar size="150px"><img :src="img.img" ></q-avatar>
+            <div class="text-center">{{img.name}}</div>
+          </div>
+        </div>
+      </q-carousel-slide>
+
+      <template v-slot:control>
+        <q-carousel-control
+          position="top-right"
+          :offset="[18, 18]"
+          class="q-gutter-xs"
+        >
+          <q-btn flat no-caps dense text-color="black" class="q-mr-md"><u>Ver todos</u></q-btn>
+          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_left" @click="$refs.carousel2.previous()" />
+          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_right" @click="$refs.carousel2.next()" />
+        </q-carousel-control>
+      </template>
+    </q-carousel>
+    <q-separator />
+
+    <q-carousel
+      v-model="slide3"
+      ref="carousel3"
+      animated
+      infinite
+      height="330px"
+      class="bg-transparent q-my-md"
+    >
+      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad1" :key="index" class="column no-wrap">
+        <div class="row fit justify-around items-center no-wrap">
+          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
+            <q-card-section horizontal>
+              <q-img :src="card.img" style="height: 180px; width: 130px" />
+
+              <q-card-section>
+                <div class="row justify-between items-center">
+                  <div class="text-subtitle2">{{card.name}}</div>
+                  <div class="text-grey text-caption row items-center">
+                    <q-icon name="place" />2.5
+                  </div>
+                </div>
+                <div class="text-caption text-grey">
+                  {{card.descripcion}}
+                </div>
+              </q-card-section>
+            </q-card-section>
+          </q-card>
+        </div>
+      </q-carousel-slide>
+
+      <template v-slot:control>
+        <q-carousel-control
+          position="top-right"
+          :offset="[18, 18]"
+          class="q-gutter-xs"
+        >
+          <q-btn flat no-caps dense text-color="black" class="q-mr-md"><u>Ver todos</u></q-btn>
+          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_left" @click="$refs.carousel3.previous()" />
+          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_right" @click="$refs.carousel3.next()" />
+        </q-carousel-control>
+      </template>
+    </q-carousel>
+    <q-separator />
+
+    <q-carousel
+      v-model="slide4"
+      ref="carousel4"
+      animated
+      infinite
+      height="300px"
+      class="bg-transparent q-my-md"
+    >
+      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad1" :key="index" class="column no-wrap">
+        <div class="text-h5 text-bold q-ml-md">Lo nuevo de los emprendedores</div>
+        <div class="row fit justify-around items-center no-wrap">
+          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
+            <q-img :src="card.img" style="height: 120px; width: 300px" />
+
+            <q-card-section>
+              <div class="row justify-between items-center">
+                <div class="text-subtitle2">{{card.name}}</div>
+                <div class="text-grey text-caption row items-center">
+                  <q-icon name="place" />2.5
+                </div>
+              </div>
+            </q-card-section>
+
+            <q-card-section class="q-px-sm q-pt-none">
+              <div class="text-caption text-grey">
+                {{card.descripcion}}
+              </div>
+            </q-card-section>
+          </q-card>
+        </div>
+      </q-carousel-slide>
+
+      <template v-slot:control>
+        <q-carousel-control
+          position="top-right"
+          :offset="[18, 18]"
+          class="q-gutter-xs"
+        >
+          <q-btn flat no-caps dense text-color="black" class="q-mr-md"><u>Ver todos</u></q-btn>
+          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_left" @click="$refs.carousel4.previous()" />
+          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_right" @click="$refs.carousel4.next()" />
+        </q-carousel-control>
+      </template>
+    </q-carousel>
+    <q-separator />
+
+    <q-carousel
+      v-model="slide5"
+      ref="carousel5"
+      animated
+      infinite
+      height="330px"
+      class="bg-transparent q-my-md"
+    >
+      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad1" :key="index" class="column no-wrap">
+        <div class="row fit justify-around items-center no-wrap">
+          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
+            <q-card-section horizontal>
+              <q-img :src="card.img" style="height: 180px; width: 130px" />
+
+              <q-card-section>
+                <div class="row justify-between items-center">
+                  <div class="text-subtitle2">{{card.name}}</div>
+                  <div class="text-grey text-caption row items-center">
+                    <q-icon name="place" />2.5
+                  </div>
+                </div>
+                <div class="text-caption text-grey">
+                  {{card.descripcion}}
+                </div>
+              </q-card-section>
+            </q-card-section>
+          </q-card>
+        </div>
+      </q-carousel-slide>
+
+      <template v-slot:control>
+        <q-carousel-control
+          position="top-right"
+          :offset="[18, 18]"
+          class="q-gutter-xs"
+        >
+          <q-btn flat no-caps dense text-color="black" class="q-mr-md"><u>Ver todos</u></q-btn>
+          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_left" @click="$refs.carousel5.previous()" />
+          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_right" @click="$refs.carousel5.next()" />
+        </q-carousel-control>
+      </template>
+    </q-carousel>
+    <q-separator />
+
+    <q-carousel
+      v-model="slide6"
+      ref="carousel6"
+      animated
+      infinite
+      height="360px"
+      class="bg-transparent q-my-md"
+    >
+      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad1" :key="index" class="column no-wrap">
+        <div class="text-h5 text-bold q-ml-md">Tienda</div>
+        <div class="row fit justify-around items-center no-wrap">
+          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
+            <q-img :src="card.img" style="height: 120px; width: 250px" />
+
+            <q-card-section>
+              <div class="row justify-between items-center">
+                <div class="text-subtitle2">{{card.name}}</div>
+                <div class="text-grey text-caption row items-center">
+                  <q-icon name="place" />2.5
+                </div>
+              </div>
+            </q-card-section>
+
+            <q-card-section class="q-px-sm q-pt-none">
+              <div class="text-caption text-grey">
+                {{card.descripcion}}
+              </div>
+            </q-card-section>
+
+            <q-separator />
+
+            <q-card-actions class="row justify-center">
+              <q-btn no-caps push icon="add_shopping_cart" color="primary" text-color="black" label="Añadir al carrito" />
+            </q-card-actions>
+          </q-card>
+        </div>
+      </q-carousel-slide>
+
+      <template v-slot:control>
+        <q-carousel-control
+          position="top-right"
+          :offset="[18, 18]"
+          class="q-gutter-xs"
+        >
+          <q-btn flat no-caps dense text-color="black" class="q-mr-md"><u>Ver todos</u></q-btn>
+          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_left" @click="$refs.carousel6.previous()" />
+          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_right" @click="$refs.carousel6.next()" />
+        </q-carousel-control>
+      </template>
+    </q-carousel>
+    <q-separator />
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      direccion: '',
+      slide1: 1,
+      slide2: 1,
+      slide3: 1,
+      slide4: 1,
+      slide5: 1,
+      slide6: 1,
+      autoplay: true,
+      selected: { label: 'Entregar ahora', value: '1', icon: 'watch_later' },
+      options: [{ label: 'Entregar ahora', value: '1', icon: 'watch_later' }, { label: 'Programar para más tarde', value: '2', icon: 'today' }],
+      slPrincipal: [
+        { img: 'slide1.jpg', name: 'Nombre' },
+        { img: 'slide2.jpg', name: 'Nombre' },
+        { img: 'slide3.jpg', name: 'Nombre' },
+        { img: 'slide4.jpg', name: 'Nombre' },
+        { img: 'slide5.jpg', name: 'Nombre' },
+        { img: 'slide1.jpg', name: 'Nombre' }
+      ],
+      slPublicidad1: {},
+      arrPublicidad1: [
+        { img: 'slide1.jpg', name: 'Nombre', descripcion: 'Descripcion de la publicidad' },
+        { img: 'slide2.jpg', name: 'Nombre', descripcion: 'Descripcion de la publicidad' },
+        { img: 'slide3.jpg', name: 'Nombre', descripcion: 'Descripcion de la publicidad' },
+        { img: 'slide4.jpg', name: 'Nombre', descripcion: 'Descripcion de la publicidad' },
+        { img: 'slide5.jpg', name: 'Nombre', descripcion: 'Descripcion de la publicidad' }
+      ],
+      slLogos: {},
+      arrLogos: [
+        { img: 'slide1.jpg', name: 'Nombre' },
+        { img: 'slide2.jpg', name: 'Nombre' },
+        { img: 'slide3.jpg', name: 'Nombre' },
+        { img: 'slide4.jpg', name: 'Nombre' },
+        { img: 'slide5.jpg', name: 'Nombre' },
+        { img: 'slide1.jpg', name: 'Nombre' },
+        { img: 'slide2.jpg', name: 'Nombre' },
+        { img: 'slide3.jpg', name: 'Nombre' },
+        { img: 'slide4.jpg', name: 'Nombre' },
+        { img: 'slide5.jpg', name: 'Nombre' },
+        { img: 'slide1.jpg', name: 'Nombre' },
+        { img: 'slide2.jpg', name: 'Nombre' },
+        { img: 'slide3.jpg', name: 'Nombre' },
+        { img: 'slide4.jpg', name: 'Nombre' },
+        { img: 'slide5.jpg', name: 'Nombre' },
+        { img: 'slide4.jpg', name: 'Nombre' }
+      ]
+    }
+  },
+  mounted () {
+    this.getLogos()
+    this.getPublicidad()
+  },
+  methods: {
+    getLogos () {
+      var arr = []
+      var cc = 1
+      for (let i = 0; i < this.arrLogos.length; i++) {
+        if (arr.length < 6) {
+          arr.push(this.arrLogos[i])
+          if (i === this.arrLogos.length - 1) {
+            this.slLogos['slideL' + cc] = arr
+          }
+        } else {
+          this.slLogos['slideL' + cc] = arr
+          cc = cc + 1
+          arr = []
+          arr.push(this.arrLogos[i])
+        }
+      }
+    },
+    getPublicidad () {
+      var arr = []
+      var cc = 1
+      for (let i = 0; i < this.arrPublicidad1.length; i++) {
+        if (arr.length < 3) {
+          arr.push(this.arrPublicidad1[i])
+          if (i === this.arrPublicidad1.length - 1) {
+            this.slPublicidad1['slideP' + cc] = arr
+          }
+        } else {
+          this.slPublicidad1['slideP' + cc] = arr
+          cc = cc + 1
+          arr = []
+          arr.push(this.arrPublicidad1[i])
+        }
+      }
+      console.log(this.slPublicidad1)
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
+.bordes {
+  border-top: 6px solid $primary
+}
+</style>
