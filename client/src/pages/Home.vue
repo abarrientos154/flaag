@@ -4,6 +4,9 @@
         v-model="slide1"
         style="height: 850px; width: 100%"
         navigation
+        :autoplay="autoplay1"
+        @mouseenter="autoplay1 = false"
+        @mouseleave="autoplay1 = true"
         >
         <q-carousel-slide :name="index + 1" :img-src="img.img"  v-for="(img, index) in slPrincipal" :key="index">
             <div class="absolute-center bg-transparent q-mx-md" style="width: 100%">
@@ -44,19 +47,19 @@
     <q-carousel
       v-model="slide2"
       ref="carousel2"
-      :autoplay="autoplay"
-      @mouseenter="autoplay = false"
-      @mouseleave="autoplay = true"
+      :autoplay="autoplay2"
+      @mouseenter="autoplay2 = false"
+      @mouseleave="autoplay2 = true"
       swipeable
       animated
       infinite
-      height="300px"
+      height="330px"
       class="bg-transparent q-my-md"
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slLogos" :key="index" class="column no-wrap">
         <div class="row fit justify-around items-center no-wrap">
           <div v-for="(img, index2) in value" :key="index2">
-            <q-avatar size="150px"><img :src="img.img" ></q-avatar>
+            <q-avatar size="180px"><img :src="img.img" ></q-avatar>
             <div class="text-center">{{img.name}}</div>
           </div>
         </div>
@@ -88,7 +91,7 @@
         <div class="row fit justify-around items-center no-wrap">
           <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
             <q-card-section horizontal>
-              <q-img :src="card.img" style="height: 180px; width: 130px" />
+              <q-img :src="card.img" style="height: 200px; width: 140px" />
 
               <q-card-section>
                 <div class="row justify-between items-center">
@@ -129,10 +132,10 @@
       class="bg-transparent q-my-md"
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad1" :key="index" class="column no-wrap">
-        <div class="text-h5 text-bold q-ml-md">Lo nuevo de los emprendedores</div>
+        <div class="text-h5 text-bold q-ml-md">Lo nuevo en Flaag</div>
         <div class="row fit justify-around items-center no-wrap">
           <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
-            <q-img :src="card.img" style="height: 120px; width: 300px" />
+            <q-img :src="card.img" style="height: 120px; width: 320px" />
 
             <q-card-section>
               <div class="row justify-between items-center">
@@ -178,7 +181,7 @@
         <div class="row fit justify-around items-center no-wrap">
           <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
             <q-card-section horizontal>
-              <q-img :src="card.img" style="height: 180px; width: 130px" />
+              <q-img :src="card.img" style="height: 200px; width: 140px" />
 
               <q-card-section>
                 <div class="row justify-between items-center">
@@ -275,7 +278,8 @@ export default {
       slide4: 1,
       slide5: 1,
       slide6: 1,
-      autoplay: true,
+      autoplay1: true,
+      autoplay2: true,
       selected: { label: 'Entregar ahora', value: '1', icon: 'watch_later' },
       options: [{ label: 'Entregar ahora', value: '1', icon: 'watch_later' }, { label: 'Programar para más tarde', value: '2', icon: 'today' }],
       slPrincipal: [
@@ -284,7 +288,7 @@ export default {
         { img: 'slide3.jpg', name: 'Nombre' },
         { img: 'slide4.jpg', name: 'Nombre' },
         { img: 'slide5.jpg', name: 'Nombre' },
-        { img: 'slide1.jpg', name: 'Nombre' }
+        { img: 'slide6.jpg', name: 'Nombre' }
       ],
       slPublicidad1: {},
       arrPublicidad1: [
@@ -301,17 +305,17 @@ export default {
         { img: 'slide3.jpg', name: 'Nombre' },
         { img: 'slide4.jpg', name: 'Nombre' },
         { img: 'slide5.jpg', name: 'Nombre' },
+        { img: 'slide6.jpg', name: 'Nombre' },
+        { img: 'slide7.jpg', name: 'Nombre' },
         { img: 'slide1.jpg', name: 'Nombre' },
         { img: 'slide2.jpg', name: 'Nombre' },
         { img: 'slide3.jpg', name: 'Nombre' },
         { img: 'slide4.jpg', name: 'Nombre' },
         { img: 'slide5.jpg', name: 'Nombre' },
+        { img: 'slide6.jpg', name: 'Nombre' },
+        { img: 'slide7.jpg', name: 'Nombre' },
         { img: 'slide1.jpg', name: 'Nombre' },
-        { img: 'slide2.jpg', name: 'Nombre' },
-        { img: 'slide3.jpg', name: 'Nombre' },
-        { img: 'slide4.jpg', name: 'Nombre' },
-        { img: 'slide5.jpg', name: 'Nombre' },
-        { img: 'slide4.jpg', name: 'Nombre' }
+        { img: 'slide2.jpg', name: 'Nombre' }
       ]
     }
   },
