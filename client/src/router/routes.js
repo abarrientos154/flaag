@@ -6,6 +6,8 @@ const routes = [
     children: [
       // Generales
       { path: '/inicio', component: () => import('pages/Home.vue') },
+      // Administrador
+      { path: '/banners_publicidad', component: () => import('pages/Admin/Banners.vue') },
       // Proveedor
       { path: '/perfil_proveedor', component: () => import('pages/Proveedor/Perfil.vue') }
     ]

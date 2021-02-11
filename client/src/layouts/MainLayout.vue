@@ -92,15 +92,9 @@
           <q-separator dark inset class="q-my-md"/>
           <div class="row justify-between" style="width: 100%">
             <div class="col-4 row q-gutter-md q-ml-sm">
-              <q-btn round flat>
-                <q-avatar size="42px"> <img src="facebook.png"> </q-avatar>
-              </q-btn>
-              <q-btn round flat>
-                <q-avatar size="42px"> <img src="instagram.png"> </q-avatar>
-              </q-btn>
-              <q-btn round flat>
-                <q-avatar size="42px"> <img src="twitter.png"> </q-avatar>
-              </q-btn>
+              <q-btn round flat><q-avatar size="42px"> <img src="facebook.png"> </q-avatar></q-btn>
+              <q-btn round flat><q-avatar size="42px"> <img src="instagram.png"> </q-avatar></q-btn>
+              <q-btn round flat><q-avatar size="42px"> <img src="twitter.png"> </q-avatar></q-btn>
             </div>
             <div class="col-7 q-mr-md">
               <div class="row q-gutter-md justify-end">
@@ -124,27 +118,32 @@ export default {
   name: 'MainLayout',
   data () {
     return {
+      rol: 0,
       drawer: false,
       menu: [
         {
           icon: 'inbox',
-          label: 'Inbox',
-          ruta: ''
+          label: 'Inicio',
+          ruta: '',
+          rol: [0, 1, 2]
         },
         {
           icon: 'send',
           label: 'Outbox',
-          ruta: ''
+          ruta: '',
+          rol: [0]
         },
         {
           icon: 'delete',
           label: 'Trash',
-          ruta: ''
+          ruta: '',
+          rol: [1]
         },
         {
           icon: 'error',
           label: 'Spam',
-          ruta: ''
+          ruta: '',
+          rol: [1]
         }
       ]
     }

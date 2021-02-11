@@ -90,22 +90,8 @@
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad1" :key="index" class="column no-wrap">
         <div class="row fit justify-around items-center no-wrap">
-          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
-            <q-card-section horizontal>
-              <q-img :src="card.img" style="height: 200px; width: 140px" />
-
-              <q-card-section>
-                <div class="row justify-between items-center">
-                  <div class="text-subtitle2">{{card.name}}</div>
-                  <div class="text-grey text-caption row items-center">
-                    <q-icon name="place" />2.5
-                  </div>
-                </div>
-                <div class="text-caption text-grey">
-                  {{card.descripcion}}
-                </div>
-              </q-card-section>
-            </q-card-section>
+          <q-card clickable v-ripple class="shadow-11" v-for="(card, index2) in value" :key="index2">
+              <q-img :src="card.img" style="height: 200px; width: 360px" />
           </q-card>
         </div>
       </q-carousel-slide>
@@ -180,22 +166,8 @@
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad1" :key="index" class="column no-wrap">
         <div class="row fit justify-around items-center no-wrap">
-          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
-            <q-card-section horizontal>
-              <q-img :src="card.img" style="height: 200px; width: 140px" />
-
-              <q-card-section>
-                <div class="row justify-between items-center">
-                  <div class="text-subtitle2">{{card.name}}</div>
-                  <div class="text-grey text-caption row items-center">
-                    <q-icon name="place" />2.5
-                  </div>
-                </div>
-                <div class="text-caption text-grey">
-                  {{card.descripcion}}
-                </div>
-              </q-card-section>
-            </q-card-section>
+          <q-card clickable v-ripple class="shadow-11" v-for="(card, index2) in value" :key="index2">
+              <q-img :src="card.img" style="height: 200px; width: 360px" />
           </q-card>
         </div>
       </q-carousel-slide>
@@ -338,7 +310,6 @@ export default {
           this.slLogos['slideL' + cc] = arr
           cc = cc + 1
           arr = []
-          arr.push(this.arrLogos[i])
         }
       }
     },
@@ -358,7 +329,6 @@ export default {
           arr.push(this.arrPublicidad1[i])
         }
       }
-      console.log(this.slPublicidad1)
     }
   }
 }
