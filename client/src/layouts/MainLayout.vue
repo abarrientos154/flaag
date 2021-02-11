@@ -44,8 +44,28 @@
     <q-footer>
         <q-toolbar class="bg-black text-white q-py-xl column">
           <div class="row justify-between" style="width: 100%">
-            <div class="col-6">
+            <div class="col-6 column justify-between">
               <q-img src="logo-210x47.png" style="width:140px" />
+              <div class="row q-gutter-md q-mb-md">
+                <q-btn outline no-caps color="white" style="width: 160px">
+                  <div class="row q-gutter-md items-center no-wrap">
+                    <q-avatar size="30px"> <img src="apple.png"> </q-avatar>
+                    <div>
+                      <div class="text-caption">App Store</div>
+                      <div>App Store</div>
+                    </div>
+                  </div>
+                </q-btn>
+                <q-btn outline no-caps color="white" style="width: 160px">
+                  <div class="row q-gutter-md items-center no-wrap">
+                    <q-avatar size="30px"> <img src="google-play.png"> </q-avatar>
+                    <div>
+                      <div class="text-caption">Google Play</div>
+                      <div>Google Play</div>
+                    </div>
+                  </div>
+                </q-btn>
+              </div>
             </div>
             <div class="col-6 row justify-around">
               <div class="column q-gutter-sm">
@@ -72,9 +92,15 @@
           <q-separator dark inset class="q-my-md"/>
           <div class="row justify-between" style="width: 100%">
             <div class="col-4 row q-gutter-md q-ml-sm">
-              <q-btn round flat color="white" icon="facebook" />
-              <q-btn round flat color="white" icon="facebook" />
-              <q-btn round flat color="white" icon="facebook" />
+              <q-btn round flat>
+                <q-avatar size="42px"> <img src="facebook.png"> </q-avatar>
+              </q-btn>
+              <q-btn round flat>
+                <q-avatar size="42px"> <img src="instagram.png"> </q-avatar>
+              </q-btn>
+              <q-btn round flat>
+                <q-avatar size="42px"> <img src="twitter.png"> </q-avatar>
+              </q-btn>
             </div>
             <div class="col-7 q-mr-md">
               <div class="row q-gutter-md justify-end">
