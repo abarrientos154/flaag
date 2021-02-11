@@ -4,6 +4,7 @@
         v-model="slide1"
         style="height: 850px; width: 100%"
         navigation
+        infinite
         :autoplay="autoplay1"
         @mouseenter="autoplay1 = false"
         @mouseleave="autoplay1 = true"
