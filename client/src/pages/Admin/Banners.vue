@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="row justify-end q-pa-md">
-          <q-btn colo="primary" label="Nuevo" @click="addPublicidad = true" />
+          <q-btn color="primary" text-color="black" label="Nuevo" @click="addPublicidad = true" />
       </div>
       <q-separator />
 
@@ -52,22 +52,23 @@
             </q-card-section>
 
             <q-card-section>
+                <q-input class="q-mt-md" outlined rounded v-model="form.ruta" placeholder="Ingrese la ruta de la publicidad" :error="$v.form.ruta.$error" error-message="Este campo es requerido" @blur="$v.form.ruta.$touch()" />
                 <div class="q-gutter-sm">
                     <q-radio color="primary" v-model="form.tipo" val="principal" label="Publicidad Principal" />
                     <q-radio color="primary" v-model="form.tipo" val="publicidad1" label="Sector publicitario 1" />
                     <q-radio color="primary" v-model="form.tipo" val="publicidad2" label="Sector publicitario 2" />
                 </div>
-                 <q-input class="q-mt-md" outlined rounded v-model="form.ruta" placeholder="Ingrese la ruta de la publicidad" :error="$v.form.ruta.$error" error-message="Este campo es requerido" @blur="$v.form.ruta.$touch()" />
             </q-card-section>
 
             <q-card-section>
+              <div class="text-weight-bold q-mb-md text-h6 text-primary">Foto Publicitaria</div>
                 <div class="row justify-between">
                     <div class="col-10">
-                        <q-file style="width: 100%" @input="filePublicidad" accept=".jpg, image/*" v-model="publicidadFile" outlined label="CLICK AQUÍ" hint="Ingresa una foto para esta publicidad" :error="$v.publicidadFile.$error" error-message="Este campo es requerido" @blur="$v.publicidadFile.$touch()">
+                        <q-file style="width: 100%" @input="filePublicidad" accept=".jpg, image/*" v-model="file" outlined label="CLICK AQUÍ" hint="Ingresa una foto para esta publicidad" :error="$v.file.$error" error-message="Este campo es requerido" @blur="$v.file.$touch()">
                         </q-file>
                     </div>
                     <div class="col-2 row justify-center">
-                        <q-icon size="md" name="close" color="negative" @click="publicidadFile = null, imgPublicidad = ''" class="cursor-pointer" />
+                        <q-icon size="md" name="close" color="negative" @click="file = null, imgPublicidad = ''" class="cursor-pointer" />
                     </div>
                 </div>
             </q-card-section>
@@ -83,6 +84,10 @@
                     />
                 </div>
             </q-card-section>
+
+            <q-card-section class="row absolute-bottom justify-center q-my-md">
+              <q-btn color="primary" text-color="black" glossy label="Agregar" @click="agregarPublicidad()" />
+            </q-card-section>
         </q-card>
       </q-dialog>
   </div>
@@ -94,7 +99,7 @@ export default {
   data () {
     return {
       addPublicidad: false,
-      publicidadFile: null,
+      file: null,
       imgPublicidad: '',
       enable: false,
       form: {
@@ -114,7 +119,7 @@ export default {
       tipo: { required },
       ruta: { required }
     },
-    publicidadFile: { required }
+    file: { required }
   },
   mounted () {
   },
@@ -122,9 +127,32 @@ export default {
     filePublicidad () {
       var img = ''
       var cc = {}
-      cc = this.publicidadFile
+      cc = this.file
       img = URL.createObjectURL(cc)
       this.imgPublicidad = img
+    },
+    agregarPublicidad () {
+      this.$v.$touch()
+      if (!this.$v.form.$error && !this.$v.file.$error) {
+        this.form.enable = false
+        this.$q.loading.show({
+          message: 'Guardando Publicidad, Por Favor Espere...'
+        })
+        var formData = new FormData()
+        formData.append('files', this.file)
+        formData.append('dat', JSON.stringify(this.form))
+        this.$api.post('publicidad', formData, {
+          headers: {
+            'Content-Type': undefined
+          }
+        }).then(res => {
+          this.$q.loading.hide()
+          this.form = {}
+          this.file = null
+          this.imgPublicidad = ''
+          this.addPublicidad = false
+        })
+      }
     }
   }
 }
