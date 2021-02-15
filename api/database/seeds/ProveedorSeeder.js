@@ -15,9 +15,9 @@ const Factory = use('Factory')
 const User = use("App/Models/User")
 const userData = [
   {
-    email: 'proveedor@flaag.cl',
+    email: 'novedadesantho@flaag.cl',
     password: 'flaag2020',
-    nombreEmpresa: 'Proveedor Prueba',
+    nombreEmpresa: 'Novedades Antho',
     rut: '000000',
     direccionFisica: 'En chile',
     telefono: '041254545445',
@@ -25,7 +25,7 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [1]
+    roles: [3]
   }
 ]
 

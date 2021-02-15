@@ -16,18 +16,8 @@ const Permission = use("App/Models/Permission")
 const permissionData = [
   {
     id: 1,
-    name: 'Admin',
-    description: ''
-  },
-  {
-    id: 2,
-    name: 'Cliente',
-    description: ''
-  },
-  {
-    id: 3,
-    name: 'Proveedor',
-    description: ''
+    name: "Bienvenida",
+    description: "Bienvenida",
   }
 ]
 

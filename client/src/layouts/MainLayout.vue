@@ -22,7 +22,7 @@
           <q-list>
 
             <template v-for="(item, index) in menu">
-              <q-item :key="index" clickable v-ripple>
+              <q-item :key="index" clickable v-ripple v-if="can(item.permission)">
                 <q-item-section avatar>
                   <q-icon :name="item.icon" />
                 </q-item-section>
@@ -114,6 +114,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'MainLayout',
   data () {
@@ -125,7 +126,8 @@ export default {
           icon: 'inbox',
           label: 'Inicio',
           ruta: '',
-          rol: [0, 1, 2]
+          rol: [0, 1, 2],
+          permission: 1
         },
         {
           icon: 'send',
@@ -147,6 +149,9 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    ...mapGetters('generals', ['can'])
   },
   mounted () {
   },

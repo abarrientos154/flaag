@@ -96,15 +96,16 @@
             </div>
           </div>
         </div>
-
-        <div class="row text-grey-6 q-mt-lg">Imagenes de la Tienda</div>
-        <div class="row shadow-3 full-width q-pa-md items-center">
+      </div>
+      <div class="column shadow-3 q-mt-md">
+        <div class="text-center text-grey-6 q-mt-lg">Imagenes de la Tienda</div>
+        <div class="row full-width q-pa-md items-center">
           <div class="q-gutter-xs row" v-if="form.images && form.images.length > 0">
             <q-img v-for="(item, index) in form.images" :key="index" :src="rutaCargarImgs + item" style="height:100px;border-radius:12px;width:140px" >
               <q-btn @click="confirmEliminar(item)" flat class="absolute all-pointer-events" size="15px" dense icon="delete" color="negative" style="top: 0px; left: 0px" rounded />
             </q-img>
           </div>
-          <div class="column shadow-3 justify-center items-center q-ma-sm q-ml-sm bg-grey-2" style="height:100px;border-radius:12px;width:140px">
+          <div v-if="images.length < 5"  class="column shadow-3 justify-center items-center q-ma-sm q-ml-sm bg-grey-2" style="height:100px;border-radius:12px;width:140px">
             <div class="text-center text-primary q-mb-sm" style="text-decoration: underline">Agregar Imagen</div>
             <q-avatar size="50px">
               <div style="z-index:1">
@@ -278,6 +279,7 @@ export default {
   border-radius: 30px;
   border: 1px solid #6a6a6a;
   height:40px;
-  width:40px
+  width:40px;
+  cursor: pointer;
 }
 </style>

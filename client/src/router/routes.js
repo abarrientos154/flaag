@@ -9,7 +9,8 @@ const routes = [
       // Administrador
       { path: '/banners_publicidad', component: () => import('pages/Admin/Banners.vue') },
       // Proveedor
-      { path: '/perfil_proveedor', component: () => import('pages/Proveedor/Perfil.vue') }
+      { path: '/perfil_proveedor', component: () => import('pages/Proveedor/Perfil.vue') },
+      { path: '/producto', component: () => import('pages/Proveedor/Producto.vue') }
     ]
   },
   { path: '/login', component: () => import('pages/Login.vue') },
