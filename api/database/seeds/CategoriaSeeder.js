@@ -16,8 +16,23 @@ const Categoria = use("App/Models/Categoria")
 const categoriaData = [
   {
     id: 1,
-    nombre: '',
-    proveedor_id: ''
+    nombre: 'Perfumes Alternativos',
+    proveedor_id: 1
+  },
+  {
+    id: 2,
+    nombre: 'Accesorios de Bebe',
+    proveedor_id: 1
+  },
+  {
+    id: 3,
+    nombre: 'Accesorios de Dama y Varon',
+    proveedor_id: 1
+  },
+  {
+    id: 4,
+    nombre: 'Articulos para el cuidado de la piel',
+    proveedor_id: 1
   }
 ]
 
