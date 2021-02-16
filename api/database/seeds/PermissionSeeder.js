@@ -18,6 +18,11 @@ const permissionData = [
     id: 1,
     name: "Bienvenida",
     description: "Bienvenida",
+  },
+  {
+    id: 2,
+    name: "Admin Bienvenida",
+    description: "Administra las publicidades del inicio",
   }
 ]
 

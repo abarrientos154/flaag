@@ -95,9 +95,11 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators'
+import env from '../../env'
 export default {
   data () {
     return {
+      baseu: '',
       addPublicidad: false,
       file: null,
       imgPublicidad: '',
@@ -122,6 +124,7 @@ export default {
     file: { required }
   },
   mounted () {
+    this.baseu = env.apiUrl + '/publicidad_img'
   },
   methods: {
     filePublicidad () {
