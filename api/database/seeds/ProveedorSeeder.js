@@ -15,6 +15,7 @@ const Factory = use('Factory')
 const User = use("App/Models/User")
 const userData = [
   {
+    id: 1,
     email: 'novedadesantho@flaag.cl',
     password: 'flaag2020',
     nombreEmpresa: 'Novedades Antho',
@@ -32,11 +33,12 @@ const userData = [
 class ProveedorSeeder {
   async run () {
     for (let i of userData) {
-      let user = await User.findBy('email', i.email)
+      let user = await User.findBy('id', i.id)
       if (!user) {
         await User.create(i)
       }
       else {
+        user.id = i.id
         user.email = i.email
         user.password = i.password
         user.nombreEmpresa = i.nombreEmpresa
