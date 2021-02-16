@@ -30,19 +30,47 @@ const userData = [
   },
   {
     id: 2,
-    email: 'artesaniasmaosa@flaag.cl',
+    email: 'artesaniasmaosaysen@flaag.cl',
     password: 'flaag2020',
-    nombreEmpresa: 'Novedades Antho',
-    rut: '000000',
-    direccionFisica: 'En chile',
-    telefono: '041254545445',
+    nombreEmpresa: 'Artesanias Locales y Regionales Maos Aysen',
+    rut: '13.526.647.-7',
+    direccionFisica: '',
+    telefono: '984259155',
+    delivery: false,
+    regiones: false,
+    perfil: false,
+    dias: [],
+    roles: [3]
+  },
+  {
+    id: 3,
+    email: 'caroleyojeda@flaag.cl',
+    password: 'flaag2020',
+    nombreEmpresa: 'Caroley Ojeda',
+    rut: '15.302.969.-5',
+    direccionFisica: '',
+    telefono: '',
+    delivery: false,
+    regiones: false,
+    perfil: false,
+    dias: [],
+    roles: [3]
+  },
+  {
+    id: 4,
+    email: 'elrincondelanonita@flaag.cl',
+    password: 'flaag2020',
+    nombreEmpresa: 'El Rincón de la Nonita',
+    rut: '10.294.604-9',
+    direccionFisica: '',
+    telefono: '+56991080466',
     delivery: false,
     regiones: false,
     perfil: false,
     dias: [],
     roles: [3]
   }
-]
+
 
 class ProveedorSeeder {
   async run () {
