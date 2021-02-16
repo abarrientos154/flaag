@@ -28,6 +28,11 @@ class UploadController {
     response.download(Helpers.appRoot('storage/uploads/perfil') + `/${dir}`)
   }
 
+  async getFilePublicidad ({ params, response, auth }) {
+    let dir = params.file
+    response.download(Helpers.appRoot('storage/uploads/publicidades') + `/${dir}`)
+  }
+
   async subirPerfil ({ request, response, auth }) {
     let user = await auth.getUser()
     let id = user._id.toString()

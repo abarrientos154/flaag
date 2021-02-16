@@ -41,6 +41,8 @@ addPrefixToGroup(
     Route.get("validate_email/:email", "UserController.validateEmail")
     Route.get("perfil_img/:file", "UploadController.perfilImg")
     Route.get("tienda_files/:file", "UploadController.tiendaFiles")
+
+    Route.get('publicidad_img/:file', 'UploadController.getFilePublicidad')
   })
 );
 

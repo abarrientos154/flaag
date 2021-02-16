@@ -74,10 +74,10 @@ export default {
           const client = res.FLAAG_SESSION_INFO.roles.find(value => value === 1)
           if (client) {
             this.login(res)
-            this.$router.push('index')
+            this.$router.push('/inicio')
           } else {
             this.login(res)
-            this.$router.push('index')
+            this.$router.push('/inicio')
           }
         } else {
           console.log('hubo un error')
