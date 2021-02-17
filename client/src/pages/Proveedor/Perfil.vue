@@ -173,7 +173,11 @@ export default {
     }
   },
   async mounted () {
-    await this.getInfo()
+    if (this.$route.params.id) {
+      this.getProvEdit(this.$route.params.id)
+    } else {
+      await this.getInfo()
+    }
     this.rutaCargarImgs = env.apiUrl + '/tienda_files/'
   },
   methods: {
@@ -210,6 +214,12 @@ export default {
     },
     async getInfo () {
       await this.$api.get('user_info').then(res => {
+        this.form = res
+        this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
+      })
+    },
+    getProvEdit (id) {
+      this.$api.post('user_by_id/' + id).then(res => {
         this.form = res
         this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
       })

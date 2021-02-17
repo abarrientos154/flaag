@@ -73,6 +73,16 @@ class UserController {
     response.send(user)
   }
 
+  async userById({ params, response, auth }) {
+    const user = await User.query().where({_id: params.id}).first()
+    response.send(user)
+  }
+
+  async emprendedores ({ request, response, auth }) {
+    let emprendedores = (await User.query().where({roles: [3]}).fetch()).toJSON()
+    response.send(emprendedores)
+  }
+
   async login({ auth, request }) {
     const { email, password } = request.all();
     let token = await auth.attempt(email, password)

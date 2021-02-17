@@ -59,9 +59,9 @@
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slLogos" :key="index" class="column no-wrap">
         <div class="row fit justify-around items-center no-wrap">
-          <div v-for="(img, index2) in value" :key="index2">
-            <q-avatar size="180px"><img :src="img.img" ></q-avatar>
-            <div class="text-center">{{img.name}}</div>
+          <div v-for="(img, index2) in value" :key="index2" style="height: 200px">
+            <q-avatar size="180px"><img :src="img.fileName ? baseuLogos + img.fileName : 'slide3.jpg'" ></q-avatar>
+            <div class="text-center text-weight-bold q-mt-sm" style="width: 180px">{{img.nombreEmpresa}}</div>
           </div>
         </div>
       </q-carousel-slide>
@@ -247,6 +247,7 @@ export default {
     return {
       direccion: '',
       baseu: '',
+      baseuLogos: '',
       slide1: 1,
       slide2: 1,
       slide3: 1,
@@ -263,28 +264,12 @@ export default {
       slPublicidad2: {},
       arrPublicidad2: [],
       slLogos: {},
-      arrLogos: [
-        { img: 'slide1.jpg', name: 'Nombre' },
-        { img: 'slide2.jpg', name: 'Nombre' },
-        { img: 'slide3.jpg', name: 'Nombre' },
-        { img: 'slide4.jpg', name: 'Nombre' },
-        { img: 'slide5.jpg', name: 'Nombre' },
-        { img: 'slide6.jpg', name: 'Nombre' },
-        { img: 'slide7.jpg', name: 'Nombre' },
-        { img: 'slide1.jpg', name: 'Nombre' },
-        { img: 'slide2.jpg', name: 'Nombre' },
-        { img: 'slide3.jpg', name: 'Nombre' },
-        { img: 'slide4.jpg', name: 'Nombre' },
-        { img: 'slide5.jpg', name: 'Nombre' },
-        { img: 'slide6.jpg', name: 'Nombre' },
-        { img: 'slide7.jpg', name: 'Nombre' },
-        { img: 'slide1.jpg', name: 'Nombre' },
-        { img: 'slide2.jpg', name: 'Nombre' }
-      ]
+      arrLogos: []
     }
   },
   mounted () {
     this.baseu = env.apiUrl + 'publicidad_img/'
+    this.baseuLogos = env.apiUrl + 'tienda_files/'
     this.getLogos()
     this.getPublicidad()
   },
@@ -339,21 +324,27 @@ export default {
       })
     },
     getLogos () {
-      var arr = []
-      var cc = 1
-      for (let i = 0; i < this.arrLogos.length; i++) {
-        if (arr.length < 6) {
-          arr.push(this.arrLogos[i])
-          if (i === this.arrLogos.length - 1) {
-            this.slLogos['slideL' + cc] = arr
+      this.$api.get('emprendedores').then(res => {
+        if (res) {
+          this.arrLogos = res
+          // arreglar el slide
+          var arr = []
+          var cc = 1
+          for (let i = 0; i < this.arrLogos.length; i++) {
+            if (arr.length < 6) {
+              arr.push(this.arrLogos[i])
+              if (i === this.arrLogos.length - 1) {
+                this.slLogos['slideL' + cc] = arr
+              }
+            } else {
+              this.slLogos['slideL' + cc] = arr
+              cc = cc + 1
+              arr = []
+              arr.push(this.arrLogos[i])
+            }
           }
-        } else {
-          this.slLogos['slideL' + cc] = arr
-          cc = cc + 1
-          arr = []
-          arr.push(this.arrLogos[i])
         }
-      }
+      })
     }
   }
 }
