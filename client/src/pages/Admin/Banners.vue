@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="row justify-end q-pa-md">
-          <q-btn color="primary" text-color="black" label="Nuevo" @click="addPublicidad = true" />
+          <q-btn color="primary" text-color="black" label="Nuevo" style="width: 150px" @click="form = {}, imgPublicidad = '', file = null, edit = false, addPublicidad = true" />
       </div>
       <q-separator />
 
@@ -10,9 +10,10 @@
             <q-scroll-area v-if="slPrincipal.length" horizontal style="height: 220px" class="q-ma-sm" >
               <div class="row no-wrap">
                 <q-card clickable v-ripple class="shadow-11 q-ml-md" v-for="(card, index) in slPrincipal" :key="index">
-                  <q-img :src="baseu + card.fileName" style="height: 200px; width: 360px">
-                      <div class="row justify-end bg-transparent" style="width:100%">
-                          <q-toggle
+                  <q-card-section horizontal>
+                    <q-img :src="baseu + card.fileName" style="height: 200px; width: 330px" @click="form = card, imgPublicidad = baseu + card.fileName, edit = true, addPublicidad = true"></q-img>
+                    <q-card-actions vertical class="justify-around q-px-xs bg-black">
+                        <q-toggle
                           @input="disableEnable(card._id, card.enable, card.tipo)"
                           v-model="card.enable"
                           checked-icon="lock_open"
@@ -20,8 +21,9 @@
                           :color="card.enable ? 'green-14' : 'red'"
                           keep-color
                           />
-                      </div>
-                  </q-img>
+                        <q-btn round flat color="white" size="md" text-color="red" icon="delete" @click="deletePublicidad(card._id)"/>
+                    </q-card-actions>
+                  </q-card-section>
                 </q-card>
               </div>
             </q-scroll-area>
@@ -35,18 +37,20 @@
             <q-scroll-area v-if="slPublicidad1.length" horizontal style="height: 220px" class="q-ma-sm" >
               <div class="row no-wrap">
               <q-card clickable v-ripple class="shadow-11 q-ml-md" v-for="(card, index) in slPublicidad1" :key="index">
-                <q-img :src="baseu + card.fileName" style="height: 200px; width: 360px">
-                    <div class="row justify-end bg-transparent" style="width:100%">
+                <q-card-section horizontal>
+                    <q-img :src="baseu + card.fileName" style="height: 200px; width: 330px" @click="form = card, imgPublicidad = baseu + card.fileName, edit = true, addPublicidad = true"></q-img>
+                    <q-card-actions vertical class="justify-around q-px-xs bg-black">
                         <q-toggle
-                        @input="disableEnable(card._id, card.enable, card.tipo)"
-                        v-model="card.enable"
-                        checked-icon="lock_open"
-                        unchecked-icon="lock"
-                        :color="card.enable ? 'green-14' : 'red'"
-                        keep-color
-                        />
-                    </div>
-                </q-img>
+                          @input="disableEnable(card._id, card.enable, card.tipo)"
+                          v-model="card.enable"
+                          checked-icon="lock_open"
+                          unchecked-icon="lock"
+                          :color="card.enable ? 'green-14' : 'red'"
+                          keep-color
+                          />
+                        <q-btn round flat color="white" size="md" text-color="red" icon="delete" @click="deletePublicidad(card._id)"/>
+                    </q-card-actions>
+                  </q-card-section>
               </q-card>
             </div>
             </q-scroll-area>
@@ -60,18 +64,20 @@
             <q-scroll-area v-if="slPublicidad2.length" horizontal style="height: 220px" class="q-ma-sm" >
               <div class="row no-wrap">
               <q-card clickable v-ripple class="shadow-11 q-ml-md" v-for="(card, index) in slPublicidad2" :key="index">
-                <q-img :src="baseu + card.fileName" style="height: 200px; width: 360px">
-                    <div class="row justify-end bg-transparent" style="width:100%">
+                <q-card-section horizontal>
+                    <q-img :src="baseu + card.fileName" style="height: 200px; width: 330px" @click="form = card, imgPublicidad = baseu + card.fileName, edit = true, addPublicidad = true"></q-img>
+                    <q-card-actions vertical class="justify-around q-px-xs bg-black">
                         <q-toggle
-                        @input="disableEnable(card._id, card.enable, card.tipo)"
-                        v-model="card.enable"
-                        checked-icon="lock_open"
-                        unchecked-icon="lock"
-                        :color="card.enable ? 'green-14' : 'red'"
-                        keep-color
-                        />
-                    </div>
-                </q-img>
+                          @input="disableEnable(card._id, card.enable, card.tipo)"
+                          v-model="card.enable"
+                          checked-icon="lock_open"
+                          unchecked-icon="lock"
+                          :color="card.enable ? 'green-14' : 'red'"
+                          keep-color
+                          />
+                        <q-btn round flat color="white" size="md" text-color="red" icon="delete" @click="deletePublicidad(card._id)"/>
+                    </q-card-actions>
+                  </q-card-section>
               </q-card>
             </div>
             </q-scroll-area>
@@ -80,18 +86,16 @@
             </q-card>
           </div>
 
-      <q-dialog
-        v-model="addPublicidad"
-        >
+      <q-dialog v-model="addPublicidad">
         <q-card style="width: 100%; height: 90%">
             <q-card-section class="row items-center q-pb-none">
-                <div class="text-h6">Nueva Publicidad</div>
+                <div class="text-h6">{{!edit ? 'Nueva Publicidad' : 'Modificar Publicidad'}}</div>
                 <q-space />
-                <q-btn icon="close" flat round dense v-close-popup />
+                <q-btn icon="close" flat round dense v-close-popup/>
             </q-card-section>
 
             <q-card-section>
-                <q-input class="q-mt-md" outlined rounded v-model="form.ruta" placeholder="Ingrese la ruta de la publicidad" :error="$v.form.ruta.$error" error-message="Este campo es requerido" @blur="$v.form.ruta.$touch()" />
+                <q-input class="q-mt-md" outlined rounded v-model="form.ruta" label="Ingrese la ruta de la publicidad" :error="$v.form.ruta.$error" error-message="Este campo es requerido" @blur="$v.form.ruta.$touch()" />
                 <div class="q-gutter-sm">
                     <q-radio color="primary" v-model="form.tipo" val="principal" label="Publicidad Principal" />
                     <q-radio color="primary" v-model="form.tipo" val="publicidad1" label="Sector publicitario 1" />
@@ -107,7 +111,7 @@
                         </q-file>
                     </div>
                     <div class="col-2 row justify-center">
-                        <q-icon size="md" name="close" color="negative" @click="file = null, imgPublicidad = ''" class="cursor-pointer" />
+                        <q-icon size="md" name="close" color="negative" @click="file = null, !edit ? imgPublicidad = '' : imgPublicidad = baseu + form.fileName" class="cursor-pointer" />
                     </div>
                 </div>
             </q-card-section>
@@ -125,7 +129,7 @@
             </q-card-section>
 
             <q-card-section class="row absolute-bottom justify-center q-my-md">
-              <q-btn color="primary" text-color="black" glossy label="Agregar" @click="agregarPublicidad()" />
+              <q-btn color="primary" text-color="black" glossy :label="!edit ? 'Agregar' : 'Guardar'" @click="!edit ? agregarPublicidad() : editarPublicidad()" />
             </q-card-section>
         </q-card>
       </q-dialog>
@@ -140,6 +144,7 @@ export default {
     return {
       baseu: '',
       addPublicidad: false,
+      edit: false,
       file: null,
       imgPublicidad: '',
       enable: false,
@@ -203,19 +208,78 @@ export default {
         })
       }
     },
+    editarPublicidad () {
+      this.$v.$touch()
+      if (!this.$v.form.$error) {
+        this.$q.loading.show({
+          message: 'Actualizando Publicidad, Por Favor Espere...'
+        })
+        var formData = new FormData()
+        if (this.file) {
+          this.form.buscar_file = true
+          formData.append('files', this.file)
+        } else {
+          this.form.buscar_file = false
+        }
+        formData.append('dat', JSON.stringify(this.form))
+        this.$api.put('publicidad/' + this.form._id, formData, {
+          headers: {
+            'Content-Type': undefined
+          }
+        }).then(res => {
+          this.$q.loading.hide()
+          this.form = {}
+          this.file = null
+          this.imgPublicidad = ''
+          this.getData()
+          this.addPublicidad = false
+        })
+      }
+    },
+    deletePublicidad (id) {
+      this.$q.dialog({
+        title: 'Confirma',
+        message: '¿Seguro deseas eliminar esta publicidad?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.$api.delete('publicidad/' + id).then(res => {
+          if (res) {
+            this.$q.notify({
+              color: 'positive',
+              message: 'Eliminado Correctamente'
+            })
+            this.getData()
+          }
+        })
+      }).onCancel(() => {
+        // console.log('>>>> Cancel')
+      })
+    },
     disableEnable (id, enable, tipo) {
       this.$api.post('publicidad_enable/' + id, { enable: enable, tipo: tipo }).then(res => {
         if (res) {
           this.getData()
         } else {
-          this.$q.dialog({
-            title: 'Atención',
-            message: 'Ya tienes 5 publicidades activas, para activar otra debes desactivar alguna de las activas.',
-            persistent: false
-          }).onOk(() => {
+          if (enable) {
+            this.$q.dialog({
+              title: 'Atención',
+              message: 'Ya tienes 5 publicidades activas, para activar otra debes desactivar alguna de las activas.',
+              persistent: false
+            }).onOk(() => {
 
-          })
-          this.getData()
+            })
+            this.getData()
+          } else {
+            this.$q.dialog({
+              title: 'Atención',
+              message: 'No puedes desactivar todas las publicidades de esta categoria.',
+              persistent: false
+            }).onOk(() => {
+
+            })
+            this.getData()
+          }
         }
       })
     }
