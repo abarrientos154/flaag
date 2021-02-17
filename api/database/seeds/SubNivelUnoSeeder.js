@@ -2353,6 +2353,78 @@ const data = [
     categoria_id: 76,
     nombre: 'Varon',
     proveedor_id: 15
+  },
+  {
+    id: 385,
+    categoria_id: 78,
+    nombre: 'Pantalones',
+    proveedor_id: 16
+  },
+  {
+    id: 386,
+    categoria_id: 78,
+    nombre: 'Camisas',
+    proveedor_id: 16
+  },
+  {
+    id: 387,
+    categoria_id: 78,
+    nombre: 'Poleras',
+    proveedor_id: 16
+  },
+  {
+    id: 388,
+    categoria_id: 78,
+    nombre: 'Chaquetas',
+    proveedor_id: 16
+  },
+  {
+    id: 389,
+    categoria_id: 78,
+    nombre: 'Sweaters',
+    proveedor_id: 16
+  },
+  {
+    id: 390,
+    categoria_id: 78,
+    nombre: 'Short',
+    proveedor_id: 16
+  },
+  {
+    id: 391,
+    categoria_id: 78,
+    nombre: 'Ropa Formal',
+    proveedor_id: 16
+  },
+  {
+    id: 392,
+    categoria_id: 78,
+    nombre: 'Polerones',
+    proveedor_id: 16
+  },
+  {
+    id: 393,
+    categoria_id: 79,
+    nombre: 'Pantalones',
+    proveedor_id: 16
+  },
+  {
+    id: 394,
+    categoria_id: 79,
+    nombre: 'Camisas',
+    proveedor_id: 16
+  },
+  {
+    id: 395,
+    categoria_id: 79,
+    nombre: 'Poleras',
+    proveedor_id: 16
+  },
+  {
+    id: 396,
+    categoria_id: 79,
+    nombre: 'Short',
+    proveedor_id: 16
   }
 ]
 

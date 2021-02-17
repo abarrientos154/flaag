@@ -223,6 +223,20 @@ const userData = [
     perfil: false,
     dias: [],
     roles: [3]
+  },
+  {
+    id: 16,
+    email: 'katherinediaz@flaag.cl',
+    password: 'flaag2020',
+    nombreEmpresa: 'Katherine Diaz',
+    rut: '18.217.849-7',
+    direccionFisica: '',
+    telefono: '66851722',
+    delivery: false,
+    regiones: false,
+    perfil: false,
+    dias: [],
+    roles: [3]
   }
 ]
 
