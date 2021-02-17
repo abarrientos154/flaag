@@ -517,7 +517,200 @@ const data = [
     subniveluno_id: 267,
     nombre: 'Protectores Faciales',
     proveedor_id: 9
+  },
+  {
+    id: 75,
+    subniveluno_id: 385,
+    nombre: 'Pantalon Cargo',
+    proveedor_id: 16
+  },
+  {
+    id: 76,
+    subniveluno_id: 385,
+    nombre: 'Pantalon Liso de Gabardina',
+    proveedor_id: 16
+  },
+  {
+    id: 77,
+    subniveluno_id: 385,
+    nombre: 'Pantalon de Jeans',
+    proveedor_id: 16
+  },
+  {
+    id: 78,
+    subniveluno_id: 385,
+    nombre: 'Calzoncillo Largo',
+    proveedor_id: 16
+  },
+  {
+    id: 79,
+    subniveluno_id: 386,
+    nombre: 'Camisa Formal',
+    proveedor_id: 16
+  },
+  {
+    id: 80,
+    subniveluno_id: 386,
+    nombre: 'Camisa de Franela',
+    proveedor_id: 16
+  },
+  {
+    id: 81,
+    subniveluno_id: 387,
+    nombre: 'Polera Manga Corta',
+    proveedor_id: 16
+  },
+  {
+    id: 82,
+    subniveluno_id: 387,
+    nombre: 'Polera Manga Larga',
+    proveedor_id: 16
+  },
+  {
+    id: 83,
+    subniveluno_id: 388,
+    nombre: 'Chaqueta Militar',
+    proveedor_id: 16
+  },
+  {
+    id: 84,
+    subniveluno_id: 388,
+    nombre: 'Chaqueta de Cuero',
+    proveedor_id: 16
+  },
+  {
+    id: 85,
+    subniveluno_id: 388,
+    nombre: 'Corta Vientos',
+    proveedor_id: 16
+  },
+  {
+    id: 86,
+    subniveluno_id: 389,
+    nombre: 'Sweater Manga Larga',
+    proveedor_id: 16
+  },
+  {
+    id: 87,
+    subniveluno_id: 390,
+    nombre: 'Short de Gabardina',
+    proveedor_id: 16
+  },
+  {
+    id: 88,
+    subniveluno_id: 390,
+    nombre: 'Traje de Baño',
+    proveedor_id: 16
+  },
+  {
+    id: 89,
+    subniveluno_id: 391,
+    nombre: 'Traje Completo',
+    proveedor_id: 16
+  },
+  {
+    id: 90,
+    subniveluno_id: 391,
+    nombre: 'Veston',
+    proveedor_id: 16
+  },
+  {
+    id: 91,
+    subniveluno_id: 391,
+    nombre: 'Corbatas',
+    proveedor_id: 16
+  },
+  {
+    id: 92,
+    subniveluno_id: 392,
+    nombre: 'Poleron de Algodón',
+    proveedor_id: 16
+  },
+  {
+    id: 93,
+    subniveluno_id: 393,
+    nombre: 'Pantalon Cargo',
+    proveedor_id: 16
+  },
+  {
+    id: 94,
+    subniveluno_id: 393,
+    nombre: 'Pantalon Liso de Gabardina',
+    proveedor_id: 16
+  },
+  {
+    id: 95,
+    subniveluno_id: 393,
+    nombre: 'Pantalon de Jeans',
+    proveedor_id: 16
+  },
+  {
+    id: 96,
+    subniveluno_id: 393,
+    nombre: 'Pantalon Formal',
+    proveedor_id: 16
+  },
+  {
+    id: 97,
+    subniveluno_id: 394,
+    nombre: 'Camisa Formal',
+    proveedor_id: 16
+  },
+  {
+    id: 98,
+    subniveluno_id: 394,
+    nombre: 'Camisa de Franela',
+    proveedor_id: 16
+  },
+  {
+    id: 99,
+    subniveluno_id: 394,
+    nombre: 'Camisa Outdoor',
+    proveedor_id: 16
+  },
+  {
+    id: 100,
+    subniveluno_id: 395,
+    nombre: 'Polera Manga Corta',
+    proveedor_id: 16
+  },
+  {
+    id: 101,
+    subniveluno_id: 395,
+    nombre: 'Polera Manga Larga',
+    proveedor_id: 16
+  },
+  {
+    id: 102,
+    subniveluno_id: 396,
+    nombre: 'Short Liso de Gabardina',
+    proveedor_id: 16
+  },
+  {
+    id: 103,
+    subniveluno_id: 396,
+    nombre: 'Short Cargo',
+    proveedor_id: 16
+  },
+  {
+    id: 104,
+    subniveluno_id: 396,
+    nombre: 'Short Microfibra',
+    proveedor_id: 16
+  },
+  {
+    id: 105,
+    subniveluno_id: 396,
+    nombre: 'Short Outdoor',
+    proveedor_id: 16
+  },
+  {
+    id: 106,
+    subniveluno_id: 396,
+    nombre: 'Traje de Baño',
+    proveedor_id: 16
   }
+
 ]
 
 class SubNivelDoSeeder {

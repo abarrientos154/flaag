@@ -398,6 +398,16 @@ const categoriaData = [
     id: 77,
     nombre: 'Esmaltes',
     proveedor_id: 15
+  },
+  {
+    id: 78,
+    nombre: 'Ropa de Hombres',
+    proveedor_id: 16
+  },
+  {
+    id: 79,
+    nombre: 'Ropa de Hombre Extra Grande',
+    proveedor_id: 16
   }
 
 ]

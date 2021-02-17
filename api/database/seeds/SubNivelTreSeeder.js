@@ -247,6 +247,66 @@ const data = [
     subniveldos_id: 6,
     nombre: 'Pantys',
     proveedor_id: 4
+  },
+  {
+    id: 40,
+    subniveldos_id: 79,
+    nombre: 'Manga Corta',
+    proveedor_id: 16
+  },
+  {
+    id: 41,
+    subniveldos_id: 79,
+    nombre: 'Manga Larga',
+    proveedor_id: 16
+  },
+  {
+    id: 42,
+    subniveldos_id: 97,
+    nombre: 'Manga Corta',
+    proveedor_id: 16
+  },
+  {
+    id: 43,
+    subniveldos_id: 97,
+    nombre: 'Manga Larga',
+    proveedor_id: 16
+  },
+  {
+    id: 44,
+    subniveldos_id: 99,
+    nombre: 'Manga Corta',
+    proveedor_id: 16
+  },
+  {
+    id: 45,
+    subniveldos_id: 99,
+    nombre: 'Manga Larga',
+    proveedor_id: 16
+  },
+  {
+    id: 46,
+    subniveldos_id: 100,
+    nombre: 'Algodón',
+    proveedor_id: 16
+  },
+  {
+    id: 47,
+    subniveldos_id: 100,
+    nombre: 'Microfibra',
+    proveedor_id: 16
+  },
+  {
+    id: 48,
+    subniveldos_id: 101,
+    nombre: 'Algodón',
+    proveedor_id: 16
+  },
+  {
+    id: 49,
+    subniveldos_id: 101,
+    nombre: 'Microfibra',
+    proveedor_id: 16
   }
 ]
 
