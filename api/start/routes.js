@@ -58,6 +58,8 @@ addPrefixToGroup(
 
     Route.post("publicidad", "PublicidadController.create")
     Route.get("publicidad", "PublicidadController.index")
+    Route.put('publicidad/:id', 'PublicidadController.update')
+    Route.delete('publicidad/:id', 'PublicidadController.destroy')
     Route.post("publicidad_enable/:id", "PublicidadController.publicidadEnable")
 
     ////////////////CATEGORIAS Y SUBCATEGORIAS//////////////////

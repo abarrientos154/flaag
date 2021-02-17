@@ -2,6 +2,7 @@
 const Publicidad = use("App/Models/Publicidad")
 const Helpers = use('Helpers')
 var randomize = require('randomatic')
+const fs = require('fs')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -97,15 +98,17 @@ class PublicidadController {
   async publicidadEnable({ params, request, response }) {
     let dat = request.all()
     let respuesta = false
+    let activos = (await Publicidad.query().where({enable: true, tipo: dat.tipo}).fetch()).toJSON()
     if (dat.enable) {
-      let activos = (await Publicidad.query().where({enable: true, tipo: dat.tipo}).fetch()).toJSON()
       if (activos.length < 5) {
         let enable = await Publicidad.query().where('_id', params.id).update({enable: dat.enable})
         respuesta = true
       }
     } else {
-      let disable = await Publicidad.query().where('_id', params.id).update({enable: dat.enable})
-      respuesta = true
+      if (activos.length > 1) {
+        let disable = await Publicidad.query().where('_id', params.id).update({enable: dat.enable})
+        respuesta = true
+      }
     }
     response.send(respuesta)
   }
@@ -119,6 +122,32 @@ class PublicidadController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    var dat = request.only(['dat'])
+    dat = JSON.parse(dat.dat)
+    if (dat.buscar_file) {
+      let codeFile = randomize('Aa0', 30)
+      const profilePic = request.file('files', {
+        types: ['image'],
+        size: '20mb'
+      })
+      if (Helpers.appRoot('storage/uploads/publicidades')) {
+        await profilePic.move(Helpers.appRoot('storage/uploads/publicidades'), {
+          name: codeFile,
+          overwrite: true
+        })
+      } else {
+        mkdirp.sync(`${__dirname}/storage/Excel`)
+      }
+      const data = { name: profilePic.fileName }
+      if (!profilePic.moved()) {
+        return profilePic.error()
+      } else {
+        dat.fileName = data.name
+        delete dat.buscar_file
+      }
+    } else { }
+    let modificar = await Publicidad.query().where('_id', params.id).update(dat)
+    response.send(modificar)
   }
 
   /**
@@ -130,6 +159,13 @@ class PublicidadController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    let publicidad = await Publicidad.find(params.id)
+    fs.unlink(`storage/uploads/publicidades/${publicidad.fileName}`, (err) => {
+      if (err) throw err;
+      console.log(`${publicidad.fileName} Eliminado por el Administrador`);
+    });
+    await publicidad.delete()
+    response.send(publicidad)
   }
 }
 
