@@ -59,5 +59,15 @@ addPrefixToGroup(
     Route.post("publicidad", "PublicidadController.create")
     Route.get("publicidad", "PublicidadController.index")
     Route.post("publicidad_enable/:id", "PublicidadController.publicidadEnable")
+
+    ////////////////CATEGORIAS Y SUBCATEGORIAS//////////////////
+    Route.get("categorias_y_sub", "CategoriaController.index")
+    ///////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////PRODUCTOS///////////////////////////////////////
+    Route.post("producto", "ProductoController.store")
+    Route.get("productos", "ProductoController.index")
+    //////////////////////////////////////////////////////////////////////////
+
   }).middleware("auth")
 );
