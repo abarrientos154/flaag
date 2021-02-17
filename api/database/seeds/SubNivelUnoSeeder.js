@@ -2371,7 +2371,7 @@ class SubNivelUnoSeeder {
         await cat.save()
       }
     }
-    console.log('Finished Categorias')
+    console.log('Finished SubNivelUno')
   }
 }
 

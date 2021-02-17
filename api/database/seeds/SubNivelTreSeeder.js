@@ -247,9 +247,7 @@ const data = [
     subniveldos_id: 6,
     nombre: 'Pantys',
     proveedor_id: 4
-  },
-
-
+  }
 ]
 
 class SubNivelTreSeeder {

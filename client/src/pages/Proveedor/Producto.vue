@@ -12,6 +12,26 @@
           />
         </div>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-pa-sm">
+          <q-select v-model.number="form.categoria_id" label="Categoria" outlined :options="categorias" map-options emit-value @input="reiniciarCat(1)"
+          option-value="id" option-label="nombre"
+          />
+        </div>
+        <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-pa-sm" v-if="optionNivelUno.length > 0">
+          <q-select v-model.number="form.subniveluno_id" label="SubCategoria A" outlined :options="optionNivelUno" map-options emit-value @input="reiniciarCat(2)"
+          option-value="id" option-label="nombre"
+          />
+        </div>
+        <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-pa-sm" v-if="optionNivelDos.length > 0">
+          <q-select v-model.number="form.subniveldos_id" label="SubCategoria B" outlined :options="optionNivelDos" map-options emit-value @input="reiniciarCat(3)"
+          option-value="id" option-label="nombre"
+          />
+        </div>
+        <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-pa-sm" v-if="optionNivelTres.length > 0">
+          <q-select v-model.number="form.subniveltres_id" label="SubCategoria B" outlined :options="optionNivelTres" map-options emit-value
+          option-value="id" option-label="nombre"
+          />
+        </div>
+        <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-pa-sm">
           <q-input v-model.number="form.cantidad" label="Cantidad" outlined type="number"
           />
         </div>
@@ -20,8 +40,8 @@
           />
         </div>
       </div>
-      <div class="column shadow-3 q-mt-md">
-        <div class="text-center text-grey-6 q-mt-lg">Imagenes de la Tienda</div>
+      <div class="column q-mt-md q-ma-sm" style="border-radius:12px;box-shadow: -2px 2px grey;">
+        <div class="text-center text-grey-6 q-mt-lg">Imagenes del producto (hasta 5 imagenes)</div>
         <div class="row full-width q-pa-md items-center">
           <div class="q-gutter-xs row" v-if="images && images.length > 0">
             <q-img v-for="(item, index) in imagesSubir" :key="index" :src="item" style="height:100px;border-radius:12px;width:140px" >
@@ -40,6 +60,10 @@
           </div>
         </div>
       </div>
+
+      <q-card-actions align="center">
+        <q-btn label="guardar" @click="guardar()" color="primary" push style="width:50%" />
+      </q-card-actions>
     </q-card>
   </q-page>
 </template>
@@ -48,6 +72,10 @@
 export default {
   data () {
     return {
+      categorias: [],
+      subnivelunoOpciones: [],
+      subniveldosOpciones: [],
+      subniveltresOpciones: [],
       form: {
       },
       images: [],
@@ -56,15 +84,73 @@ export default {
     }
   },
   computed: {
+    optionNivelUno () {
+      return this.subnivelunoOpciones.filter(v => v.categoria_id === this.form.categoria_id)
+    },
+    optionNivelDos () {
+      return this.subniveldosOpciones.filter(v => v.subniveluno_id === this.form.subniveluno_id)
+    },
+    optionNivelTres () {
+      return this.subniveltresOpciones.filter(v => v.subniveldos_id === this.form.subniveldos_id)
+    }
   },
   mounted () {
+    this.getCategorias()
   },
   methods: {
+    reiniciarCat (ind) {
+      if (ind === 1) {
+        delete this.form.subniveluno_id
+        delete this.form.subniveldos_id
+        delete this.form.subniveltres_id
+      } else if (ind === 2) {
+        delete this.form.subniveldos_id
+        delete this.form.subniveltres_id
+      } else if (ind === 3) {
+        delete this.form.subniveltres_id
+      }
+    },
+    async guardar () {
+      console.log(this.form, 'formmm')
+      var formData = new FormData()
+      var files = this.images
+      console.log(files, 'afiles')
+      if (files.length > 0) {
+        for (let i = 0; i < this.images.length; i++) {
+          formData.append('files' + i, files[i])
+        }
+        this.form.cantidadFiles = files.length
+      } else { this.form.cantidadFiles = 0 }
+      formData.append('dat', JSON.stringify(this.form))
+      await this.$api.post('producto', formData, {
+        headers: {
+          'Content-Type': undefined
+        }
+      }).then(res => {
+        if (res) {
+          this.$q.notify({
+            message: 'Producto agregado Correctamente',
+            color: 'positive'
+          })
+        }
+      })
+    },
     insertarImagen () {
       this.images.push(this.img)
       this.imagesSubir.push(URL.createObjectURL(this.img))
       this.img = null
       console.log(this.images, 'asasdsd')
+    },
+    getCategorias () {
+      this.$api.get('categorias_y_sub').then(res => {
+        if (res) {
+          console.log(res, 'resss')
+          this.categorias = res.categoria
+          this.subnivelunoOpciones = res.subniveluno
+          this.subniveldosOpciones = res.subniveldos
+          this.subniveltresOpciones = res.subniveltres
+        }
+      })
     }
   }
 }

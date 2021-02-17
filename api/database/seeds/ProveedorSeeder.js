@@ -224,6 +224,7 @@ const userData = [
     dias: [],
     roles: [3]
   }
+]
 
 
 class ProveedorSeeder {
