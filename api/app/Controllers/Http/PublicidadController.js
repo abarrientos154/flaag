@@ -20,6 +20,8 @@ class PublicidadController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    let datos = (await Publicidad.query().where({}).fetch()).toJSON()
+    response.send(datos)
   }
 
   /**
@@ -90,6 +92,22 @@ class PublicidadController {
    * @param {View} ctx.view
    */
   async edit ({ params, request, response, view }) {
+  }
+
+  async publicidadEnable({ params, request, response }) {
+    let dat = request.all()
+    let respuesta = false
+    if (dat.enable) {
+      let activos = (await Publicidad.query().where({enable: true, tipo: dat.tipo}).fetch()).toJSON()
+      if (activos.length < 5) {
+        let enable = await Publicidad.query().where('_id', params.id).update({enable: dat.enable})
+        respuesta = true
+      }
+    } else {
+      let disable = await Publicidad.query().where('_id', params.id).update({enable: dat.enable})
+      respuesta = true
+    }
+    response.send(respuesta)
   }
 
   /**

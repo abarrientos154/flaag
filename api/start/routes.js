@@ -57,5 +57,7 @@ addPrefixToGroup(
     Route.delete("eliminar_archivo_proveedor/:file", "UploadController.eliminarImgTienda")
 
     Route.post("publicidad", "PublicidadController.create")
+    Route.get("publicidad", "PublicidadController.index")
+    Route.post("publicidad_enable/:id", "PublicidadController.publicidadEnable")
   }).middleware("auth")
 );

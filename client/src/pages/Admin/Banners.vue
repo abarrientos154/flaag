@@ -5,41 +5,80 @@
       </div>
       <q-separator />
 
-      <div class="row justify-around q-my-xl">
-          <div class="q-gutter-xl">
-            <div class="text-h5 estilo-titulos text-center text-weight-bold">Carrusel Principal</div>
-            <q-card clickable v-ripple class="shadow-11" v-for="(card, index) in slPublicidad1" :key="index">
-                <q-img :src="card.img" style="height: 200px; width: 360px">
-                    <div class="row justify-end bg-transparent" style="width:100%">
-                        <q-toggle
-                        v-model="enable"
-                        checked-icon="lock_open"
-                        unchecked-icon="lock"
-                        :color="enable ? 'green-14' : 'red'"
-                        keep-color
-                        />
-                    </div>
-                </q-img>
+      <div class="q-my-xl">
+            <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Carrusel Principal</div>
+            <q-scroll-area v-if="slPrincipal.length" horizontal style="height: 220px" class="q-ma-sm" >
+              <div class="row no-wrap">
+                <q-card clickable v-ripple class="shadow-11 q-ml-md" v-for="(card, index) in slPrincipal" :key="index">
+                  <q-img :src="baseu + card.fileName" style="height: 200px; width: 360px">
+                      <div class="row justify-end bg-transparent" style="width:100%">
+                          <q-toggle
+                          @input="disableEnable(card._id, card.enable, card.tipo)"
+                          v-model="card.enable"
+                          checked-icon="lock_open"
+                          unchecked-icon="lock"
+                          :color="card.enable ? 'green-14' : 'red'"
+                          keep-color
+                          />
+                      </div>
+                  </q-img>
+                </q-card>
+              </div>
+            </q-scroll-area>
+            <q-card v-else clickable v-ripple class="shadow-11" style="height: 100px; width: 360px">
+              <div class="absolute-center text-weight-bold">Crea nuevas publicidades ...</div>
             </q-card>
           </div>
 
-          <div class="q-gutter-xl">
-            <div class="text-h5 estilo-titulos text-center text-weight-bold">Carrusel Publicitario</div>
-            <q-card clickable v-ripple class="shadow-11" v-for="(card, index) in slPublicidad1" :key="index">
-                <q-img :src="card.img" style="height: 200px; width: 360px">
+          <div class="q-my-xl">
+            <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Carrusel Publicitario 1</div>
+            <q-scroll-area v-if="slPublicidad1.length" horizontal style="height: 220px" class="q-ma-sm" >
+              <div class="row no-wrap">
+              <q-card clickable v-ripple class="shadow-11 q-ml-md" v-for="(card, index) in slPublicidad1" :key="index">
+                <q-img :src="baseu + card.fileName" style="height: 200px; width: 360px">
                     <div class="row justify-end bg-transparent" style="width:100%">
                         <q-toggle
-                        v-model="enable"
+                        @input="disableEnable(card._id, card.enable, card.tipo)"
+                        v-model="card.enable"
                         checked-icon="lock_open"
                         unchecked-icon="lock"
-                        :color="enable ? 'green-14' : 'red'"
+                        :color="card.enable ? 'green-14' : 'red'"
                         keep-color
                         />
                     </div>
                 </q-img>
+              </q-card>
+            </div>
+            </q-scroll-area>
+            <q-card v-else clickable v-ripple class="shadow-11" style="height: 100px; width: 360px">
+              <div class="absolute-center text-weight-bold">Crea nuevas publicidades ...</div>
             </q-card>
           </div>
-      </div>
+
+          <div class="q-my-xl">
+            <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Carrusel Publicitario 2</div>
+            <q-scroll-area v-if="slPublicidad2.length" horizontal style="height: 220px" class="q-ma-sm" >
+              <div class="row no-wrap">
+              <q-card clickable v-ripple class="shadow-11 q-ml-md" v-for="(card, index) in slPublicidad2" :key="index">
+                <q-img :src="baseu + card.fileName" style="height: 200px; width: 360px">
+                    <div class="row justify-end bg-transparent" style="width:100%">
+                        <q-toggle
+                        @input="disableEnable(card._id, card.enable, card.tipo)"
+                        v-model="card.enable"
+                        checked-icon="lock_open"
+                        unchecked-icon="lock"
+                        :color="card.enable ? 'green-14' : 'red'"
+                        keep-color
+                        />
+                    </div>
+                </q-img>
+              </q-card>
+            </div>
+            </q-scroll-area>
+            <q-card v-else clickable v-ripple class="shadow-11" style="height: 100px; width: 360px">
+              <div class="absolute-center text-weight-bold">Crea nuevas publicidades ...</div>
+            </q-card>
+          </div>
 
       <q-dialog
         v-model="addPublicidad"
@@ -107,13 +146,9 @@ export default {
       form: {
         tipo: 'principal'
       },
-      slPublicidad1: [
-        { img: 'slide1.jpg', ruta: '/', tipo: 'Publicidad1' },
-        { img: 'slide2.jpg', ruta: '/', tipo: 'Publicidad1' },
-        { img: 'slide3.jpg', ruta: '/', tipo: 'Publicidad1' },
-        { img: 'slide4.jpg', ruta: '/', tipo: 'Publicidad1' },
-        { img: 'slide5.jpg', ruta: '/', tipo: 'Publicidad1' }
-      ]
+      slPrincipal: [],
+      slPublicidad1: [],
+      slPublicidad2: []
     }
   },
   validations: {
@@ -124,9 +159,19 @@ export default {
     file: { required }
   },
   mounted () {
-    this.baseu = env.apiUrl + '/publicidad_img'
+    this.getData()
+    this.baseu = env.apiUrl + 'publicidad_img/'
   },
   methods: {
+    getData () {
+      this.$api.get('publicidad').then(res => {
+        if (res) {
+          this.slPrincipal = res.filter(v => v.tipo === 'principal')
+          this.slPublicidad1 = res.filter(v => v.tipo === 'publicidad1')
+          this.slPublicidad2 = res.filter(v => v.tipo === 'publicidad2')
+        }
+      })
+    },
     filePublicidad () {
       var img = ''
       var cc = {}
@@ -153,9 +198,26 @@ export default {
           this.form = {}
           this.file = null
           this.imgPublicidad = ''
+          this.getData()
           this.addPublicidad = false
         })
       }
+    },
+    disableEnable (id, enable, tipo) {
+      this.$api.post('publicidad_enable/' + id, { enable: enable, tipo: tipo }).then(res => {
+        if (res) {
+          this.getData()
+        } else {
+          this.$q.dialog({
+            title: 'Atención',
+            message: 'Ya tienes 5 publicidades activas, para activar otra debes desactivar alguna de las activas.',
+            persistent: false
+          }).onOk(() => {
+
+          })
+          this.getData()
+        }
+      })
     }
   }
 }
@@ -164,6 +226,7 @@ export default {
 <style>
 .estilo-titulos {
   background-color: #fff599;
+  width: 300px;
   border-radius: 12px
 }
 </style>
