@@ -105,7 +105,7 @@
               <q-btn @click="confirmEliminar(item)" flat class="absolute all-pointer-events" size="15px" dense icon="delete" color="negative" style="top: 0px; left: 0px" rounded />
             </q-img>
           </div>
-          <div v-if="images.length < 5"  class="column shadow-3 justify-center items-center q-ma-sm q-ml-sm bg-grey-2" style="height:100px;border-radius:12px;width:140px">
+          <div v-if="form.images.length < 5"  class="column shadow-3 justify-center items-center q-ma-sm q-ml-sm bg-grey-2" style="height:100px;border-radius:12px;width:140px">
             <div class="text-center text-primary q-mb-sm" style="text-decoration: underline">Agregar Imagen</div>
             <q-avatar size="50px">
               <div style="z-index:1">
@@ -208,8 +208,8 @@ export default {
         }
       })
     },
-    getInfo () {
-      this.$api.get('user_info').then(res => {
+    async getInfo () {
+      await this.$api.get('user_info').then(res => {
         this.form = res
         this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
       })

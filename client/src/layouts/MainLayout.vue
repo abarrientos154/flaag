@@ -140,6 +140,12 @@ export default {
           permission: 2
         },
         {
+          icon: 'person',
+          label: 'Perfil',
+          ruta: '/perfil_proveedor',
+          permission: 3
+        },
+        {
           icon: 'logout',
           label: 'Cerrar Sesión',
           ruta: '/login',

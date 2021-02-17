@@ -26,7 +26,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 2,
@@ -40,7 +41,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 3,
@@ -54,7 +56,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 4,
@@ -68,7 +71,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 5,
@@ -82,7 +86,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 6,
@@ -96,7 +101,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 7,
@@ -110,7 +116,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 8,
@@ -124,7 +131,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 9,
@@ -138,7 +146,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 10,
@@ -152,7 +161,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 11,
@@ -166,7 +176,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 12,
@@ -180,7 +191,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 13,
@@ -194,7 +206,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 14,
@@ -208,7 +221,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 15,
@@ -222,7 +236,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   },
   {
     id: 16,
@@ -236,7 +251,8 @@ const userData = [
     regiones: false,
     perfil: false,
     dias: [],
-    roles: [3]
+    roles: [3],
+    images: []
   }
 ]
 
@@ -260,6 +276,7 @@ class ProveedorSeeder {
         user.regiones = i.regiones
         user.perfil = i.perfil
         user.roles = i.roles
+        user.images = i.images
         await user.save()
       }
     }
