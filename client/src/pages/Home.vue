@@ -122,7 +122,7 @@
         <div class="text-h5 text-bold q-ml-md">Lo nuevo en Flaag</div>
         <div class="row fit justify-around items-center no-wrap">
           <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
-            <q-img :src="baseu + card.fileName" style="height: 120px; width: 320px" />
+            <q-img :src="!card.caso ? baseu + card.fileName : card.fileName" style="height: 120px; width: 320px" />
 
             <q-card-section>
               <div class="row justify-between items-center">
@@ -198,7 +198,7 @@
         <div class="text-h5 text-bold q-ml-md">Tienda</div>
         <div class="row fit justify-around items-center no-wrap">
           <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
-            <q-img :src="baseu + card.fileName" style="height: 120px; width: 250px" />
+            <q-img :src="!card.caso ? baseu + card.fileName : card.fileName" style="height: 120px; width: 250px" />
 
             <q-card-section>
               <div class="row justify-between items-center">
