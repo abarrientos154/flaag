@@ -10,7 +10,8 @@ const routes = [
       { path: '/banners_publicidad', component: () => import('pages/Admin/Banners.vue') },
       // Proveedor
       { path: '/perfil_proveedor', component: () => import('pages/Proveedor/Perfil.vue') },
-      { path: '/producto', component: () => import('pages/Proveedor/Producto.vue') }
+      { path: '/producto', component: () => import('pages/Proveedor/Producto.vue') },
+      { path: '/productos', component: () => import('pages/Proveedor/ListaProductos.vue') }
     ]
   },
   { path: '/login', component: () => import('pages/Login.vue') },

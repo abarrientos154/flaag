@@ -6,6 +6,7 @@
 const Helpers = use('Helpers')
 const mkdirp = use('mkdirp')
 const Producto = use('App/Models/Producto')
+const Categoria = use('App/Models/Categoria')
 const fs = require('fs')
 const { validate } = use("Validator")
 var randomize = require('randomatic');
@@ -25,7 +26,15 @@ class ProductoController {
   async index ({ response, auth }) {
     let user = await auth.getUser()
     let productos = (await Producto.query().where({ proveedor_id: user._id.toString()}).with('datos_proveedor').fetch()).toJSON()
-    response.send(productos)
+    let enviar = productos.map(v => {
+      console.log(v.categoria_id, 'categoria id')
+      //let categoria = (await Categoria.query().where('id', v.categoria_id).first().fetch()).toJSON()
+      return {
+        ...v,
+        //categoria: categoria.nombre
+      }
+    })
+    response.send(enviar)
   }
 
   /**
