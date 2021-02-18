@@ -60,7 +60,7 @@
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slLogos" :key="index" class="column no-wrap">
         <div class="row fit justify-around items-center no-wrap">
           <div v-for="(img, index2) in value" :key="index2" style="height: 200px">
-            <q-avatar size="180px"><img :src="img.perfil ? baseuLogos + img._id : 'slide3.jpg'" ></q-avatar>
+            <q-avatar size="180px"><img :src="img.perfil ? baseuLogos + img._id : 'noimg.png'" ></q-avatar>
             <div class="text-center text-weight-bold q-mt-sm" style="width: 180px">{{img.nombreEmpresa}}</div>
           </div>
         </div>
@@ -324,9 +324,9 @@ export default {
       })
     },
     getLogos () {
-      this.$api.get('emprendedores').then(res => {
+      this.$api.get('proveedores').then(res => {
         if (res) {
-          this.arrLogos = res
+          this.arrLogos = res.filter(v => v.enable)
           // arreglar el slide
           var arr = []
           var cc = 1

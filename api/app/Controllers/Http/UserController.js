@@ -78,9 +78,15 @@ class UserController {
     response.send(user)
   }
 
-  async emprendedores ({ request, response, auth }) {
+  async proveedores ({ request, response, auth }) {
     let emprendedores = (await User.query().where({roles: [3]}).fetch()).toJSON()
     response.send(emprendedores)
+  }
+
+  async proveedorEnable({ params, request, response }) {
+    let dat = request.all()
+    let enable = await User.query().where({_id: params.id}).update({enable: dat.enable})
+    response.send(enable)
   }
 
   async login({ auth, request }) {

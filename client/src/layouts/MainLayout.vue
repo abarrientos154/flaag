@@ -128,21 +128,21 @@ export default {
       drawer: false,
       menu: [
         {
-          icon: 'inbox',
+          icon: 'home',
           label: 'Inicio',
           ruta: '/inicio',
           permission: 1
         },
         {
-          icon: 'inbox',
+          icon: 'dashboard',
           label: 'Baaners Publicitarios',
           ruta: '/banners_publicidad',
           permission: 2
         },
         {
-          icon: 'inbox',
+          icon: 'people',
           label: 'Emprendedores',
-          ruta: '/banners_publicidad',
+          ruta: '/emprendedores',
           permission: 2
         },
         {
