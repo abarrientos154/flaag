@@ -20,8 +20,14 @@ class UserController {
   async editarP ({ request, response, auth }) {
     const userL = (await auth.getUser()).toJSON()
     let body = request.only(User.fillableProveedor)
-    let user = await User.query().where('_id', userL._id.toString()).update(body)
-    response.send(user)
+    let id = request.only('_id')
+    if (userL.roles[0] !== 1) {
+      let user = await User.query().where('_id', userL._id.toString()).update(body)
+      response.send(user)
+    } else {
+      let prov = await User.query().where({_id: id._id}).update(body)
+      response.send(prov)
+    }
   }
 
   async register({ request, response }) {

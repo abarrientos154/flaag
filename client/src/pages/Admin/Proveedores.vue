@@ -4,7 +4,7 @@
 
         <div class="row justify-around">
             <div class="col-4 row justify-center q-mb-xl" v-for="(card, index) in proveedores" :key="index">
-                <q-card clickable v-ripple class="shadow-11" style="width: 330px">
+                <q-card class="shadow-11" style="width: 330px">
                     <q-img :src="card.perfil ? baseu + card._id : 'noimg.png'" style="width: 330px; height: 200px" @click="$router.push('/perfil_proveedor/' + card._id)" />
 
                     <q-card-section>
