@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
 })
 
 export default async ({ store, Vue }) => {
-  // Vue.prototype.$axios = axios
+  Vue.prototype.$axios = axios
   Vue.prototype.$api = axiosInstance
 
   axiosInstance.interceptors.response.use(function (response) {
