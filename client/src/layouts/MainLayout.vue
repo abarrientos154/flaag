@@ -37,7 +37,7 @@
         </q-scroll-area>
       </q-drawer>
 
-    <q-page-container>
+    <q-page-container @click="drawer = false">
       <router-view />
     </q-page-container>
 
