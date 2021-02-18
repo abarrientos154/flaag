@@ -105,7 +105,7 @@
               <q-btn @click="confirmEliminar(item)" flat class="absolute all-pointer-events" size="15px" dense icon="delete" color="negative" style="top: 0px; left: 0px" rounded />
             </q-img>
           </div>
-          <div v-if="form.images.length < 5"  class="column shadow-3 justify-center items-center q-ma-sm q-ml-sm bg-grey-2" style="height:100px;border-radius:12px;width:140px">
+          <div v-if="form.images && form.images.length < 5"  class="column shadow-3 justify-center items-center q-ma-sm q-ml-sm bg-grey-2" style="height:100px;border-radius:12px;width:140px">
             <div class="text-center text-primary q-mb-sm" style="text-decoration: underline">Agregar Imagen</div>
             <q-avatar size="50px">
               <div style="z-index:1">
@@ -173,15 +173,16 @@ export default {
     }
   },
   async mounted () {
+    this.rutaCargarImgs = env.apiUrl + '/tienda_files/'
     if (this.$route.params.id) {
       this.getProvEdit(this.$route.params.id)
     } else {
       await this.getInfo()
     }
-    this.rutaCargarImgs = env.apiUrl + '/tienda_files/'
   },
   methods: {
     guardar () {
+      this.$q.loading.show()
       console.log(this.form, 'form', this.model, 'model')
       this.$api.put('editar_proveedor', this.form).then(res => {
         if (res) {
@@ -191,8 +192,10 @@ export default {
           })
         }
       })
+      this.$q.loading.hide()
     },
     async changePerfil () {
+      this.$q.loading.show()
       var formData = new FormData()
       var files = []
       files[0] = this.perfil
@@ -208,23 +211,30 @@ export default {
             message: 'Haz Cambiado tu foto de perfil',
             color: 'positive'
           })
+          this.$q.loading.hide()
           location.reload()
         }
+        this.$q.loading.hide()
       })
     },
     async getInfo () {
+      this.$q.loading.show()
       await this.$api.get('user_info').then(res => {
         this.form = res
         this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
+        this.$q.loading.hide()
       })
     },
     getProvEdit (id) {
+      this.$q.loading.show()
       this.$api.post('user_by_id/' + id).then(res => {
         this.form = res
         this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
+        this.$q.loading.hide()
       })
     },
     async addImg () {
+      this.$q.loading.show()
       console.log('add img', this.img)
       if (this.img) {
         var formData = new FormData()
@@ -236,13 +246,16 @@ export default {
             'Content-Type': undefined
           }
         }).then((res) => {
+          this.$q.loading.hide()
           console.log(res, 'respuesta')
           this.form.images = res.images
         })
       }
     },
     eliminarImg (nameFile) {
+      this.$q.loading.show()
       this.$api.delete('eliminar_archivo_proveedor/' + nameFile).then(res => {
+        this.$q.loading.hide()
         if (res) {
           this.form.images = res.images
         }
