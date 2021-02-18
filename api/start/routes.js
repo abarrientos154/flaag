@@ -37,8 +37,12 @@ addPrefixToGroup(
   Route.group(() => {
     // Insertar rutas sin protección de autenticación aquí
     Route.post("login", "UserController.login");
-    Route.post("register", "UserController.register")
+    Route.post("registrar_cliente", "UserController.register")
     Route.get("validate_email/:email", "UserController.validateEmail")
+    Route.get("perfil_img/:file", "UploadController.perfilImg")
+    Route.get("tienda_files/:file", "UploadController.tiendaFiles")
+
+    Route.get('publicidad_img/:file', 'UploadController.getFilePublicidad')
   })
 );
 
@@ -47,5 +51,29 @@ addPrefixToGroup(
     // Insertar rutas con protección de autenticación aquí
 
     Route.get("user_info", "UserController.userInfo") // metodo para obtener informacion del usuario que esta logueado
+    Route.post("user_by_id/:id", "UserController.userById")
+    Route.put("editar_proveedor", "UserController.editarP")
+    Route.post("subir_foto_perfil", "UploadController.subirPerfil")
+    Route.post("subir_archivo_proveedor", "UploadController.subirImgTienda")
+    Route.delete("eliminar_archivo_proveedor/:file", "UploadController.eliminarImgTienda")
+
+    Route.get("proveedores", "UserController.proveedores")
+    Route.post("proveedor_enable/:id", "UserController.proveedorEnable")
+
+    Route.post("publicidad", "PublicidadController.create")
+    Route.get("publicidad", "PublicidadController.index")
+    Route.put('publicidad/:id', 'PublicidadController.update')
+    Route.delete('publicidad/:id', 'PublicidadController.destroy')
+    Route.post("publicidad_enable/:id", "PublicidadController.publicidadEnable")
+
+    ////////////////CATEGORIAS Y SUBCATEGORIAS//////////////////
+    Route.get("categorias_y_sub", "CategoriaController.index")
+    ///////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////PRODUCTOS///////////////////////////////////////
+    Route.post("producto", "ProductoController.store")
+    Route.get("productos", "ProductoController.index")
+    //////////////////////////////////////////////////////////////////////////
+
   }).middleware("auth")
 );

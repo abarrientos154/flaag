@@ -17,7 +17,44 @@ const { validate } = use("Validator")
  */
 class UserController {
 
+  async editarP ({ request, response, auth }) {
+    const userL = (await auth.getUser()).toJSON()
+    let body = request.only(User.fillableProveedor)
+    let user = await User.query().where('_id', userL._id.toString()).update(body)
+    response.send(user)
+  }
+
   async register({ request, response }) {
+    let dat = request.only(['dat'])
+    dat = JSON.parse(dat.dat)
+    const validation = await validate(dat, User.fieldValidationRules())
+    if (validation.fails()) {
+      response.unprocessableEntity(validation.messages())
+    } else if (((await User.where({email: dat.email}).fetch()).toJSON()).length) {
+      response.unprocessableEntity([{
+        message: 'Correo ya registrado en el sistema!'
+      }])
+    } else {
+      let body = dat
+      body.roles = [2]
+      const user = await User.create(body)
+
+      const profilePic = request.file('perfil', {
+      })
+      if (Helpers.appRoot('storage/uploads/perfil')) {
+        await profilePic.move(Helpers.appRoot('storage/uploads/perfil'), {
+          name: user._id.toString(),
+          overwrite: true
+        })
+      } else {
+        mkdirp.sync(`${__dirname}/storage/Excel`)
+      }
+      if (!profilePic.moved()) {
+        return profilePic.error()
+      }
+
+      response.send(user)
+    }
   }
 
   async validateEmail({ request, response, params }) {
@@ -34,6 +71,22 @@ class UserController {
   async userInfo({ request, response, auth }) {
     const user = (await auth.getUser()).toJSON()
     response.send(user)
+  }
+
+  async userById({ params, response, auth }) {
+    const user = await User.query().where({_id: params.id}).first()
+    response.send(user)
+  }
+
+  async proveedores ({ request, response, auth }) {
+    let emprendedores = (await User.query().where({roles: [3]}).fetch()).toJSON()
+    response.send(emprendedores)
+  }
+
+  async proveedorEnable({ params, request, response }) {
+    let dat = request.all()
+    let enable = await User.query().where({_id: params.id}).update({enable: dat.enable})
+    response.send(enable)
   }
 
   async login({ auth, request }) {

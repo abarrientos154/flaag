@@ -2,20 +2,21 @@
   <q-layout>
     <q-page-container class="bg-grey-2">
       <q-page class="row justify-center items-center">
-        <q-card class="shadow-3 q-ma-md" style="border-radius:12px">
+        <q-card class="shadow-3 q-ma-md" style="border-radius:12px;width:400px;">
           <q-card-section>
             <div class="col column items-center justify-center">
                 <div class="row justify-center">
                   <img src="icons/favicon-128x128.png" alt="logo" style="width: 50%;height:50%">
                 </div>
 
-                <div>
+                <div class="column">
                   <div class="text-h6 text-grey-9" style="text-align: center">FLAAG</div>
+                  <div class="q-mt-sm text-primary text-h6">Inicia Sesión</div>
                 </div>
             </div>
-            <q-form @submit="onSubmit" class="q-gutter-sm q-ma-sm">
+            <q-form @submit="onSubmit" class="q-gutter-sm q-ma-sm q-mt-lg">
               <div>
-                <q-input class="text-bold q-pl-sm" type="email" v-model="form.email" label="Correo electrónico">
+                <q-input class="text-bold q-pl-sm" type="email" v-model="form.email" label="Correo electrónico" outlined>
                   <template v-slot:prepend>
                     <q-icon color="primary" name="mail"></q-icon>
                   </template>
@@ -23,7 +24,7 @@
               </div>
 
               <div>
-                <q-input class="text-bold q-pl-sm q-pr-sm" :type="isPwd ? 'password' : 'text'" v-model="form.password" label="Contraseña">
+                <q-input class="text-bold q-pl-sm q-pr-sm q-mt-lg" :type="isPwd ? 'password' : 'text'" v-model="form.password" label="Contraseña" outlined>
                   <template v-slot:prepend>
                     <q-icon color="primary" name="vpn_key"></q-icon>
                   </template>
@@ -73,10 +74,10 @@ export default {
           const client = res.FLAAG_SESSION_INFO.roles.find(value => value === 1)
           if (client) {
             this.login(res)
-            this.$router.push('index')
+            this.$router.push('/inicio')
           } else {
             this.login(res)
-            this.$router.push('index')
+            this.$router.push('/inicio')
           }
         } else {
           console.log('hubo un error')

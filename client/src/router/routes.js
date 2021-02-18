@@ -5,7 +5,15 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       // Generales
-      { path: '/inicio', component: () => import('pages/Home.vue') }
+      { path: '/inicio', component: () => import('pages/Home.vue') },
+      // Administrador
+      { path: '/banners_publicidad', component: () => import('pages/Admin/Banners.vue') },
+      { path: '/emprendedores', component: () => import('pages/Admin/Proveedores.vue') },
+      { path: '/perfil_proveedor/:id', component: () => import('pages/Proveedor/Perfil.vue') },
+      // Proveedor
+      { path: '/perfil_proveedor', component: () => import('pages/Proveedor/Perfil.vue') },
+      { path: '/producto', component: () => import('pages/Proveedor/Producto.vue') },
+      { path: '/productos', component: () => import('pages/Proveedor/ListaProductos.vue') }
     ]
   },
   { path: '/login', component: () => import('pages/Login.vue') },

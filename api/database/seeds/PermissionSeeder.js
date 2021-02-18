@@ -16,18 +16,18 @@ const Permission = use("App/Models/Permission")
 const permissionData = [
   {
     id: 1,
-    name: 'Admin',
-    description: ''
+    name: "Bienvenida",
+    description: "Bienvenida",
   },
   {
     id: 2,
-    name: 'Cliente',
-    description: ''
+    name: "Admin Bienvenida",
+    description: "Administra las publicidades del inicio y el perfil de los proveedores",
   },
   {
     id: 3,
-    name: 'Proveedor',
-    description: ''
+    name: "Perfil Proveedor",
+    description: "Editar Perfil Proveedor",
   }
 ]
 

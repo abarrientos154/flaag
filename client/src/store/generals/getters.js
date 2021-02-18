@@ -18,7 +18,3 @@ export function can (state) {
 export function UserInfo (state) {
   return JSON.parse(localStorage.getItem('FLAAG_SESSION_INFO'))
 }
-
-export function dataEvent (state) {
-  return JSON.parse(localStorage.getItem('HEV_DATA_EVENT'))
-}
