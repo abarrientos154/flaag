@@ -22,7 +22,7 @@ const permissionData = [
   {
     id: 2,
     name: "Admin Bienvenida",
-    description: "Administra las publicidades del inicio",
+    description: "Administra las publicidades del inicio y el perfil de los proveedores",
   },
   {
     id: 3,

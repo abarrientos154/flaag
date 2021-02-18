@@ -140,6 +140,12 @@ export default {
           permission: 2
         },
         {
+          icon: 'inbox',
+          label: 'Emprendedores',
+          ruta: '/banners_publicidad',
+          permission: 2
+        },
+        {
           icon: 'person',
           label: 'Perfil',
           ruta: '/perfil_proveedor',
