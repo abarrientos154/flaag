@@ -58,7 +58,7 @@ addPrefixToGroup(
     Route.delete("eliminar_archivo_proveedor/:file", "UploadController.eliminarImgTienda")
 
     Route.get("proveedores", "UserController.proveedores")
-    Route.post("proveedor_enable/:id", "UserController.proveedorEnable")
+    Route.post("proveedor_status/:id", "UserController.proveedorStatus")
 
     Route.post("publicidad", "PublicidadController.create")
     Route.get("publicidad", "PublicidadController.index")

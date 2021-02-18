@@ -4,22 +4,12 @@
 
         <div class="row justify-around">
             <div class="col-4 row justify-center q-mb-xl" v-for="(card, index) in proveedores" :key="index">
-                <q-card class="shadow-11" style="width: 330px">
-                    <q-img :src="card.perfil ? baseu + card._id : 'noimg.png'" style="width: 330px; height: 200px" @click="$router.push('/perfil_proveedor/' + card._id)" />
+                <q-card :class="card.status !== 1 ? 'bg-amber-3 shadow-11 bordes' : 'shadow-11 bordes'" style="width: 330px">
+                    <q-img :src="card.perfil ? baseu + card._id : 'noimg.png'" style="width: 322px; height: 200px" @click="$router.push('/perfil_proveedor/' + card._id)" />
 
                     <q-card-section>
                         <div class="row no-wrap items-center">
                             <div class="col text-h6 ellipsis">{{card.nombreEmpresa}}</div>
-                            <div class="col-auto q-pt-xs row items-center">
-                                <q-toggle
-                                    @input="disableEnable(card._id, card.enable)"
-                                    v-model="card.enable"
-                                    checked-icon="lock_open"
-                                    unchecked-icon="lock"
-                                    :color="card.enable ? 'green-14' : 'red'"
-                                    keep-color
-                                />
-                            </div>
                         </div>
                     </q-card-section>
 
@@ -40,9 +30,16 @@
 
                     <q-separator />
 
-                    <q-card-actions>
+                    <q-card-actions align="between">
                         <q-btn flat round icon="event" />
-                        <div>Abierto</div>
+                        <div v-if="card.status === 2" class="row q-gutter-md">
+                            <q-btn round icon="clear" color="negative" @click="statusProv(card._id, 3)">
+                                <q-tooltip content-class="bg-negative text-white" :offset="[10, 10]">Rechazar</q-tooltip>
+                            </q-btn>
+                            <q-btn round icon="check" color="positive" @click="statusProv(card._id, 1)">
+                                <q-tooltip content-class="bg-positive text-white" :offset="[10, 10]">Aprobar</q-tooltip>
+                            </q-btn>
+                        </div>
                     </q-card-actions>
                 </q-card>
             </div>
@@ -68,11 +65,12 @@ export default {
       this.$api.get('proveedores').then(res => {
         if (res) {
           this.proveedores = res
+          console.log(this.proveedores)
         }
       })
     },
-    disableEnable (id, enable) {
-      this.$api.post('proveedor_enable/' + id, { enable: enable }).then(res => {
+    statusProv (id, val) {
+      this.$api.post('proveedor_status/' + id, { status: val }).then(res => {
         if (res) {
           this.getData()
         }
@@ -82,10 +80,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="scss">
 .estilo-titulos {
   background-color: #fff599;
   width: 300px;
   border-radius: 12px
+}
+.bordes {
+  border-left: 8px solid $primary
 }
 </style>

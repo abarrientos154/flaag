@@ -22,6 +22,7 @@ class UserController {
     let body = request.only(User.fillableProveedor)
     let id = request.only('_id')
     if (userL.roles[0] !== 1) {
+      body.status = 2
       let user = await User.query().where('_id', userL._id.toString()).update(body)
       response.send(user)
     } else {
@@ -89,9 +90,9 @@ class UserController {
     response.send(emprendedores)
   }
 
-  async proveedorEnable({ params, request, response }) {
+  async proveedorStatus({ params, request, response }) {
     let dat = request.all()
-    let enable = await User.query().where({_id: params.id}).update({enable: dat.enable})
+    let enable = await User.query().where({_id: params.id}).update({status: dat.status})
     response.send(enable)
   }
 

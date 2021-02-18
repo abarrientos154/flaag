@@ -326,7 +326,7 @@ export default {
     getLogos () {
       this.$api.get('proveedores').then(res => {
         if (res) {
-          this.arrLogos = res.filter(v => v.enable)
+          this.arrLogos = res.filter(v => v.status === 1)
           // arreglar el slide
           var arr = []
           var cc = 1
