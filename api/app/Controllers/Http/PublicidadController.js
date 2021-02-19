@@ -100,7 +100,7 @@ class PublicidadController {
     let respuesta = false
     let activos = (await Publicidad.query().where({enable: true, tipo: dat.tipo}).fetch()).toJSON()
     if (dat.enable) {
-      if (activos.length < 5) {
+      if (activos.length < 6) {
         let enable = await Publicidad.query().where('_id', params.id).update({enable: dat.enable})
         respuesta = true
       }

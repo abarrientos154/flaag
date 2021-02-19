@@ -264,7 +264,7 @@ export default {
           if (enable) {
             this.$q.dialog({
               title: 'Atención',
-              message: 'Ya tienes 5 publicidades activas, para activar otra debes desactivar alguna de las activas.',
+              message: 'Ya tienes las publicidades activas disponibles, para activar otra debes desactivar alguna de las activas.',
               persistent: false
             }).onOk(() => {
 

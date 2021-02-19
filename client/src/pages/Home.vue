@@ -9,7 +9,7 @@
         @mouseenter="autoplay1 = false"
         @mouseleave="autoplay1 = true"
         >
-        <q-carousel-slide :name="index + 1" :img-src="!img.caso ? baseu + img.fileName : img.fileName"  v-for="(img, index) in slPrincipal" :key="index">
+        <q-carousel-slide :name="index + 1" :img-src="!img.caso ? baseuPublicidad + img.fileName : img.fileName"  v-for="(img, index) in slPrincipal" :key="index">
             <div class="absolute-center bg-transparent q-mx-md" style="width: 100%">
                 <div class="text-h3 text-bold text-black q-mb-md">¿Tienes hambre? Estás en el lugar correcto</div>
                 <div class="row items-center">
@@ -91,7 +91,7 @@
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad1" :key="index" class="column no-wrap">
         <div class="row fit justify-around items-center no-wrap">
           <q-card clickable v-ripple class="shadow-11" v-for="(card, index2) in value" :key="index2">
-              <q-img :src="!card.caso ? baseu + card.fileName : card.fileName" style="height: 200px; width: 360px" />
+              <q-img :src="!card.caso ? baseuPublicidad + card.fileName : card.fileName" style="height: 200px; width: 360px" />
           </q-card>
         </div>
       </q-carousel-slide>
@@ -115,29 +115,33 @@
       ref="carousel4"
       animated
       infinite
-      height="300px"
+      height="360px"
       class="bg-transparent q-my-md"
     >
-      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad1" :key="index" class="column no-wrap">
+      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slNuevo" :key="index" class="column no-wrap">
         <div class="text-h5 text-bold q-ml-md">Lo nuevo en Flaag</div>
         <div class="row fit justify-around items-center no-wrap">
           <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
-            <q-img :src="!card.caso ? baseu + card.fileName : card.fileName" style="height: 120px; width: 320px" />
+            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" />
 
             <q-card-section>
               <div class="row justify-between items-center">
-                <div class="text-subtitle2">{{card.tipo}}</div>
-                <div class="text-grey text-caption row items-center">
-                  <q-icon name="place" />2.5
-                </div>
+                <div class="text-subtitle2">{{card.nombre}}</div>
+                <div class="text-orange text-bold text-caption row items-center">$ . {{card.valor}}</div>
               </div>
             </q-card-section>
 
             <q-card-section class="q-px-sm q-pt-none">
               <div class="text-caption text-grey">
-                {{card.ruta}}
+                {{card.descripcion}}
               </div>
             </q-card-section>
+
+            <q-separator />
+
+            <q-card-actions class="row justify-center">
+              <q-btn no-caps push icon="add_shopping_cart" color="primary" text-color="black" label="Añadir al carrito" />
+            </q-card-actions>
           </q-card>
         </div>
       </q-carousel-slide>
@@ -167,7 +171,7 @@
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad2" :key="index" class="column no-wrap">
         <div class="row fit justify-around items-center no-wrap">
           <q-card clickable v-ripple class="shadow-11" v-for="(card, index2) in value" :key="index2">
-              <q-img :src="!card.caso ? baseu + card.fileName : card.fileName" style="height: 200px; width: 360px" />
+              <q-img :src="!card.caso ? baseuPublicidad + card.fileName : card.fileName" style="height: 200px; width: 360px" />
           </q-card>
         </div>
       </q-carousel-slide>
@@ -194,24 +198,22 @@
       height="360px"
       class="bg-transparent q-my-md"
     >
-      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad2" :key="index" class="column no-wrap">
+      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slTienda" :key="index" class="column no-wrap">
         <div class="text-h5 text-bold q-ml-md">Tienda</div>
         <div class="row fit justify-around items-center no-wrap">
           <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
-            <q-img :src="!card.caso ? baseu + card.fileName : card.fileName" style="height: 120px; width: 250px" />
+            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" />
 
             <q-card-section>
               <div class="row justify-between items-center">
-                <div class="text-subtitle2">{{card.tipo}}</div>
-                <div class="text-grey text-caption row items-center">
-                  <q-icon name="place" />2.5
-                </div>
+                <div class="text-subtitle2">{{card.nombre}}</div>
+                <div class="text-orange text-bold text-caption row items-center">$ . {{card.valor}}</div>
               </div>
             </q-card-section>
 
             <q-card-section class="q-px-sm q-pt-none">
               <div class="text-caption text-grey">
-                {{card.ruta}}
+                {{card.descripcion}}
               </div>
             </q-card-section>
 
@@ -246,7 +248,8 @@ export default {
   data () {
     return {
       direccion: '',
-      baseu: '',
+      baseuPublicidad: '',
+      baseuProducto: '',
       baseuLogos: '',
       slide1: 1,
       slide2: 1,
@@ -263,17 +266,71 @@ export default {
       arrPublicidad1: [],
       slPublicidad2: {},
       arrPublicidad2: [],
+      slTienda: {},
+      arrTienda: [],
+      slNuevo: {},
+      arrNuevo: [],
       slLogos: {},
       arrLogos: []
     }
   },
   mounted () {
-    this.baseu = env.apiUrl + '/publicidad_img/'
+    this.baseuPublicidad = env.apiUrl + '/publicidad_img/'
+    this.baseuProducto = env.apiUrl + '/tienda_files/'
     this.baseuLogos = env.apiUrl + '/perfil_img/'
     this.getLogos()
     this.getPublicidad()
+    this.getTienda()
   },
   methods: {
+    getTienda () {
+      this.$api.get('all_productos').then(res => {
+        if (res) {
+          this.arrTienda = res
+          if (!this.arrTienda.length) {
+            this.arrTienda = [{ nombre: 'Nombre Producto', descripcion: 'Descripcion', images: ['nopublicidad.jpg'], cantidad: 0, valor: 0, caso: true }]
+          }
+          var largo = this.arrTienda.length - 1
+          for (let i = 0; i < 25; i++) {
+            if (largo >= 0) {
+              this.arrNuevo.push(this.arrTienda[largo])
+              largo = largo - 1
+            }
+          }
+          // arreglar el slide
+          var arr = []
+          var cc = 1
+          for (let i = 0; i < this.arrNuevo.length; i++) {
+            if (arr.length < 4) {
+              arr.push(this.arrNuevo[i])
+              if (i === this.arrNuevo.length - 1) {
+                this.slNuevo['slideN' + cc] = arr
+              }
+            } else {
+              this.slNuevo['slideN' + cc] = arr
+              cc = cc + 1
+              arr = []
+              arr.push(this.arrNuevo[i])
+            }
+          }
+          arr = []
+          cc = 1
+          for (let i = 0; i < this.arrTienda.length; i++) {
+            if (arr.length < 4) {
+              arr.push(this.arrTienda[i])
+              if (i === this.arrTienda.length - 1) {
+                this.slTienda['slideT' + cc] = arr
+              }
+            } else {
+              this.slTienda['slideT' + cc] = arr
+              cc = cc + 1
+              arr = []
+              arr.push(this.arrTienda[i])
+            }
+          }
+        }
+      })
+    },
     getPublicidad () {
       this.$api.get('publicidad').then(res => {
         if (res) {
