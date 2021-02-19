@@ -33,15 +33,21 @@ class UploadController {
     response.download(Helpers.appRoot('storage/uploads/publicidades') + `/${dir}`)
   }
 
-  async subirPerfil ({ request, response, auth }) {
+  async subirPerfil ({ request, response, params, auth }) {
     let user = await auth.getUser()
-    let id = user._id.toString()
+    let id = params.id
+    var status
     var profilePic = request.file('perfil', {
     })
     if (profilePic) {
       if (Helpers.appRoot('storage/uploads/perfil')) {
+        if (user.roles[0] !== 1) {
+          status = await User.query().where({_id: id}).update({status: 2})
+        } else {
+          status = await User.query().where({_id: id}).update({status: 1})
+        }
         await profilePic.move(Helpers.appRoot('storage/uploads/perfil'), {
-          name: user._id.toString(),
+          name: id,
           overwrite: true
         })
       } else {
@@ -51,8 +57,7 @@ class UploadController {
       if (!profilePic.moved()) {
         return profilePic.error()
       } else {
-        console.log(id, 'iddddddddd')
-        user = await User.query().where('_id', id.toString()).update({perfil: true})
+        user = await User.query().where({_id: id}).update({perfil: true})
         response.send(user)
       }
     }

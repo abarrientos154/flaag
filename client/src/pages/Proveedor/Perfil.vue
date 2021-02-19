@@ -201,7 +201,7 @@ export default {
       files[0] = this.perfil
       console.log(files, 'afiles')
       formData.append('perfil', files[0])
-      await this.$api.post('subir_foto_perfil', formData, {
+      await this.$api.post('subir_foto_perfil/' + this.form._id, formData, {
         headers: {
           'Content-Type': undefined
         }

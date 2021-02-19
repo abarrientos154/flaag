@@ -26,6 +26,7 @@ class UserController {
       let user = await User.query().where('_id', userL._id.toString()).update(body)
       response.send(user)
     } else {
+      body.status = 1
       let prov = await User.query().where({_id: id._id}).update(body)
       response.send(prov)
     }

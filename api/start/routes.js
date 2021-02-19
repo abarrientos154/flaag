@@ -53,7 +53,7 @@ addPrefixToGroup(
     Route.get("user_info", "UserController.userInfo") // metodo para obtener informacion del usuario que esta logueado
     Route.post("user_by_id/:id", "UserController.userById")
     Route.put("editar_proveedor", "UserController.editarP")
-    Route.post("subir_foto_perfil", "UploadController.subirPerfil")
+    Route.post("subir_foto_perfil/:id", "UploadController.subirPerfil")
     Route.post("subir_archivo_proveedor", "UploadController.subirImgTienda")
     Route.delete("eliminar_archivo_proveedor/:file", "UploadController.eliminarImgTienda")
 
