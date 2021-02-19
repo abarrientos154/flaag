@@ -281,13 +281,13 @@ export default {
           this.arrPublicidad1 = res.filter(v => v.tipo === 'publicidad1' && v.enable)
           this.arrPublicidad2 = res.filter(v => v.tipo === 'publicidad2' && v.enable)
           if (!this.slPrincipal.length) {
-            this.slPrincipal = [{ tipo: 'principal', enable: true, fileName: 'slide3.jpg', caso: true }]
+            this.slPrincipal = [{ tipo: 'principal', enable: true, fileName: 'nopublicidad.jpg', caso: true }]
           }
           if (!this.arrPublicidad1.length) {
-            this.arrPublicidad1 = [{ tipo: 'principal', enable: true, fileName: 'slide3.jpg', caso: true }]
+            this.arrPublicidad1 = [{ tipo: 'principal', enable: true, fileName: 'nopublicidad.jpg', caso: true }]
           }
           if (!this.arrPublicidad2.length) {
-            this.arrPublicidad2 = [{ tipo: 'principal', enable: true, fileName: 'slide3.jpg', caso: true }]
+            this.arrPublicidad2 = [{ tipo: 'principal', enable: true, fileName: 'nopublicidad.jpg', caso: true }]
           }
           // arreglar los slides
           var arr = []
