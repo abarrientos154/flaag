@@ -268,7 +268,7 @@ export default {
     }
   },
   mounted () {
-    this.baseu = env.apiUrl + 'publicidad_img/'
+    this.baseu = env.apiUrl + '/publicidad_img/'
     this.baseuLogos = env.apiUrl + '/perfil_img/'
     this.getLogos()
     this.getPublicidad()

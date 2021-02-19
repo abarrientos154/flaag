@@ -165,7 +165,7 @@ export default {
   },
   mounted () {
     this.getData()
-    this.baseu = env.apiUrl + 'publicidad_img/'
+    this.baseu = env.apiUrl + '/publicidad_img/'
   },
   methods: {
     getData () {

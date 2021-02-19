@@ -65,7 +65,6 @@ export default {
       this.$api.get('proveedores').then(res => {
         if (res) {
           this.proveedores = res
-          console.log(this.proveedores)
         }
       })
     },
