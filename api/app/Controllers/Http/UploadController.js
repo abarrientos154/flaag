@@ -24,7 +24,6 @@ class UploadController {
 
   async perfilImg ({ params, response, auth }) {
     let dir = params.file
-    console.log(dir, 'dirrrrrrrrrr')
     response.download(Helpers.appRoot('storage/uploads/perfil') + `/${dir}`)
   }
 
