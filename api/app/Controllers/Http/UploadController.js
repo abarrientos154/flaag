@@ -61,9 +61,9 @@ class UploadController {
       }
     }
   }
-  async subirImgTienda ({ request, response, auth }) {
+  async subirImgTienda ({ request, response, params }) {
     let codeFile = randomize('Aa0', 30)
-    let user = await auth.getUser()
+    let user = params.id
     var profilePic = request.file('files', {
     })
     if (profilePic) {
@@ -79,7 +79,7 @@ class UploadController {
       if (!profilePic.moved()) {
         return profilePic.error()
       } else {
-        let proveedor = await User.find(user._id)
+        let proveedor = await User.find(user)
         if (proveedor.images) {
           proveedor.images.push(codeFile)
         } else {

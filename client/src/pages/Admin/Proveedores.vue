@@ -35,6 +35,7 @@
                           class="glossy"
                           color="amber"
                           icon="event"
+                          text-color="black"
                         >
                           <div class="q-pa-md bg-primary" style="width: 310px">
                             <div class="row justify-around q-gutter-md">
