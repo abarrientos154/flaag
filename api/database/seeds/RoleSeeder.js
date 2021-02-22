@@ -30,7 +30,7 @@ const roleData = [
     id: 3,
     name: 'Proveedor',
     description: 'Rol de Proveedor',
-    permissions: [1, 3]
+    permissions: [1, 3, 4]
   },
 
 ]

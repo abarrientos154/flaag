@@ -28,6 +28,11 @@ const permissionData = [
     id: 3,
     name: "Perfil Proveedor",
     description: "Editar Perfil Proveedor",
+  },
+  {
+    id: 4,
+    name: "Productos Proveedor",
+    description: "Productos del Proveedor",
   }
 ]
 
