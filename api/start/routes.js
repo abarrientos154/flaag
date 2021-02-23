@@ -70,7 +70,7 @@ addPrefixToGroup(
 
     ////////////////CATEGORIAS Y SUBCATEGORIAS//////////////////
     Route.get("categorias_y_sub", "CategoriaController.index")
-    Route.get("categorias_no_logueado/:proveedor_id", "CategoriaController.indexNoLogueado")
+    Route.post("categorias_no_logueado/:proveedor_id", "CategoriaController.indexNoLogueado")
     ///////////////////////////////////////////////////////////////////////////
 
     //////////////////////////PRODUCTOS///////////////////////////////////////
