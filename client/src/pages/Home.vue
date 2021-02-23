@@ -13,33 +13,15 @@
             <div class="absolute-center bg-transparent q-mx-md" style="width: 100%">
                 <div class="text-h3 text-bold text-black q-mb-md">¿Tienes hambre? Estás en el lugar correcto</div>
                 <div class="row items-center">
-                    <q-input class="col-4 q-mt-md" color="black" bg-color="white" filled bottom-slots v-model="direccion" placeholder="Ingresa la dirección de entrega">
+                    <q-input class="col-6 q-mt-md" color="black" bg-color="white" filled bottom-slots v-model="tienda" placeholder="Ingresa el nombre de una tienda">
                         <template v-slot:prepend>
-                            <q-icon name="place" color="black" />
+                            <q-icon name="store" color="black" />
                         </template>
                         <template v-slot:append>
-                            <q-btn :label="direccion.length ? 'Borrar' : ''" @click="direccion.length ? direccion = '' : ''" no-caps flat />
+                            <q-btn :label="tienda.length ? 'Borrar' : ''" @click="tienda.length ? tienda = '' : ''" no-caps flat />
                         </template>
                     </q-input>
-                    <q-select class="col-3 q-ml-sm" color="black" bg-color="white" filled v-model="selected" :options="options">
-                        <template v-slot:prepend>
-                            <q-icon :name="selected.icon" color="black" />
-                        </template>
-                        <template v-slot:option="scope">
-                            <q-item
-                                v-bind="scope.itemProps"
-                                v-on="scope.itemEvents"
-                            >
-                                <q-item-section avatar>
-                                <q-icon :name="scope.opt.icon" />
-                                </q-item-section>
-                                <q-item-section>
-                                <q-item-label v-html="scope.opt.label" />
-                                </q-item-section>
-                            </q-item>
-                        </template>
-                    </q-select>
-                    <q-btn class="q-ml-sm q-py-sm" size="md" color="black" label="Buscar comida" no-caps />
+                    <q-btn class="col-2 q-ml-sm q-py-sm" size="md" color="black" label="Buscar" no-caps />
                 </div>
             </div>
         </q-carousel-slide>
@@ -121,27 +103,24 @@
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slNuevo" :key="index" class="column no-wrap">
         <div class="text-h5 text-bold q-ml-md">Lo nuevo en Flaag</div>
         <div class="row fit justify-around items-center no-wrap">
-          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
+          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2" style="width: 250px">
             <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" />
 
             <q-card-section>
-              <div class="row justify-between items-center">
-                <div class="text-subtitle2">{{card.nombre}}</div>
-                <div class="text-orange text-bold text-caption row items-center">$ . {{card.valor}}</div>
+              <div class="row no-wrap items-center">
+                <div class="col text-subtitle2 ellipsis">{{card.nombre}}</div>
+              </div>
+              <div class="row no-wrap justify-end q-mt-md">
+                <q-chip v-if="!card.oferta" icon="attach_money" color="amber" class="text-caption">
+                  <div class="q-mr-md">{{card.valor}}</div>
+                </q-chip>
+                <q-chip v-if="card.oferta" icon="attach_money" color="positive" class="text-caption">
+                  <div class="q-mr-md text-strike">{{card.valor}}</div>
+                  -
+                  <div class="q-ml-md text-bold">{{card.ofertaVal}}</div>
+                </q-chip>
               </div>
             </q-card-section>
-
-            <q-card-section class="q-px-sm q-pt-none">
-              <div class="text-caption text-grey">
-                {{card.descripcion}}
-              </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-actions class="row justify-center">
-              <q-btn no-caps push icon="add_shopping_cart" color="primary" text-color="black" label="Añadir al carrito" />
-            </q-card-actions>
           </q-card>
         </div>
       </q-carousel-slide>
@@ -201,27 +180,24 @@
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slTienda" :key="index" class="column no-wrap">
         <div class="text-h5 text-bold q-ml-md">Tienda</div>
         <div class="row fit justify-around items-center no-wrap">
-          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
+          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2" style="width: 250px">
             <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" />
 
             <q-card-section>
-              <div class="row justify-between items-center">
-                <div class="text-subtitle2">{{card.nombre}}</div>
-                <div class="text-orange text-bold text-caption row items-center">$ . {{card.valor}}</div>
+              <div class="row no-wrap items-center">
+                <div class="col text-subtitle2 ellipsis">{{card.nombre}}</div>
+              </div>
+              <div class="row no-wrap justify-end q-mt-md">
+                <q-chip v-if="!card.oferta" icon="attach_money" color="amber" class="text-caption">
+                  <div class="q-mr-md">{{card.valor}}</div>
+                </q-chip>
+                <q-chip v-if="card.oferta" icon="attach_money" color="positive" class="text-caption">
+                  <div class="q-mr-md text-strike">{{card.valor}}</div>
+                  -
+                  <div class="q-ml-md text-bold">{{card.ofertaVal}}</div>
+                </q-chip>
               </div>
             </q-card-section>
-
-            <q-card-section class="q-px-sm q-pt-none">
-              <div class="text-caption text-grey">
-                {{card.descripcion}}
-              </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-actions class="row justify-center">
-              <q-btn no-caps push icon="add_shopping_cart" color="primary" text-color="black" label="Añadir al carrito" />
-            </q-card-actions>
           </q-card>
         </div>
       </q-carousel-slide>
@@ -247,7 +223,7 @@ import env from '../env'
 export default {
   data () {
     return {
-      direccion: '',
+      tienda: '',
       baseuPublicidad: '',
       baseuProducto: '',
       baseuLogos: '',
@@ -259,8 +235,6 @@ export default {
       slide6: 1,
       autoplay1: true,
       autoplay2: true,
-      selected: { label: 'Entregar ahora', value: '1', icon: 'watch_later' },
-      options: [{ label: 'Entregar ahora', value: '1', icon: 'watch_later' }, { label: 'Programar para más tarde', value: '2', icon: 'today' }],
       slPrincipal: [],
       slPublicidad1: {},
       arrPublicidad1: [],
@@ -276,7 +250,7 @@ export default {
   },
   mounted () {
     this.baseuPublicidad = env.apiUrl + '/publicidad_img/'
-    this.baseuProducto = env.apiUrl + '/tienda_files/'
+    this.baseuProducto = env.apiUrl + '/producto_files/'
     this.baseuLogos = env.apiUrl + '/perfil_img/'
     this.getLogos()
     this.getPublicidad()

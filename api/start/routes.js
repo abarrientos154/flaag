@@ -44,6 +44,9 @@ addPrefixToGroup(
     Route.get("producto_files/:file", "UploadController.productoFiles")
 
     Route.get('publicidad_img/:file', 'UploadController.getFilePublicidad')
+    Route.get("publicidad", "PublicidadController.index")
+    Route.get("proveedores", "UserController.proveedores")
+    Route.get("all_productos", "ProductoController.allProductos")
   })
 );
 
@@ -58,11 +61,9 @@ addPrefixToGroup(
     Route.post("subir_archivo_proveedor/:id", "UploadController.subirImgTienda")
     Route.delete("eliminar_archivo_proveedor/:file", "UploadController.eliminarImgTienda")
 
-    Route.get("proveedores", "UserController.proveedores")
     Route.post("proveedor_status/:id", "UserController.proveedorStatus")
 
     Route.post("publicidad", "PublicidadController.create")
-    Route.get("publicidad", "PublicidadController.index")
     Route.put('publicidad/:id', 'PublicidadController.update')
     Route.delete('publicidad/:id', 'PublicidadController.destroy')
     Route.post("publicidad_enable/:id", "PublicidadController.publicidadEnable")
@@ -81,7 +82,6 @@ addPrefixToGroup(
     Route.post("subir_archivo_producto/:producto_id", "UploadController.subirImgProducto")
     Route.delete("eliminar_archivo_producto/:file/:producto_id", "UploadController.eliminarImgProducto")
     Route.get("productos/:proveedor_id", "ProductoController.productosByProveedorId")
-    Route.get("all_productos", "ProductoController.allProductos")
     //////////////////////////////////////////////////////////////////////////
 
   }).middleware("auth")
