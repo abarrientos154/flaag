@@ -103,7 +103,7 @@ export default {
       this.proveedor_id = this.$route.params.proveedor_id
       this.getProductosByProveedor(this.proveedor_id)
       this.getCategoriasNoLogueado(this.proveedor_id)
-      this.baseuImgTienda = env.apiUrl + '/perfil_img/' + this.proveedor_id
+      this.getInfoById(this.proveedor_id)
     } else {
       this.getProductos()
       this.getCategorias()
@@ -119,6 +119,12 @@ export default {
     },
     async getInfo () {
       await this.$api.get('user_info').then(res => {
+        this.user = res
+        this.baseuImgTienda = env.apiUrl + '/perfil_img/' + res._id
+      })
+    },
+    getInfoById (id) {
+      this.$api.post('user_by_id/' + id).then(res => {
         this.user = res
         this.baseuImgTienda = env.apiUrl + '/perfil_img/' + res._id
       })
@@ -197,15 +203,13 @@ export default {
       this.$api.get('productos').then(res => {
         if (res) {
           this.data = res
-          console.log(res, 'res')
         }
       })
     },
-    getProductosByProveedor () {
-      this.$api.get('productos/' + this.proveedor_id).then(res => {
+    getProductosByProveedor (id) {
+      this.$api.get('productos/' + id).then(res => {
         if (res) {
           this.data = res
-          console.log(res, 'res')
         }
       })
     }
