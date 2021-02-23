@@ -6,23 +6,24 @@
           <q-btn class="q-mr-md" round dense flat icon="menu" size="1em" color="black" @click="drawer = !drawer"/>
           <q-img src="logo-210x47.png" style="width:140px" />
         </div>
-        <q-btn rounded no-caps class="text-black text-subtitle1" color="grey-4" label="Iniciar Sesión" @click="$router.push('/login')" />
+        <q-btn v-if="!login" rounded no-caps class="text-black text-subtitle1" color="grey-4" label="Iniciar Sesión" @click="$router.push('/login')" />
       </q-toolbar>
     </q-header>
 
     <q-drawer
         v-model="drawer"
-        :width="400"
+        :width="350"
         :breakpoint="500"
         overlay
         bordered
-        content-class="bg-grey-3"
+        content-class="bg-white"
       >
-        <q-scroll-area class="fit">
+      <q-separator/>
+        <q-scroll-area v-if="login" class="fit">
           <q-list>
 
             <template v-for="(item, index) in menu">
-              <q-item :key="index" clickable v-ripple v-if="can(item.permission)" @click="$router.push(item.ruta)">
+              <q-item :key="index" clickable v-ripple v-if="can(item.permission)" @click="item.label === 'Cerrar Sesión' ? cerrarSesion() : $router.push(item.ruta)">
                 <q-item-section avatar>
                   <q-icon :name="item.icon" />
                 </q-item-section>
@@ -35,6 +36,11 @@
 
           </q-list>
         </q-scroll-area>
+        <div v-else class="q-py-md">
+          <div class="row justify-center">
+            <q-btn no-caps class="text-white text-subtitle1 q-px-xl q-py-sm" color="black" label="Inicia Sesión" @click="$router.push('/login')" />
+          </div>
+        </div>
       </q-drawer>
 
     <q-page-container @click="drawer = false">
@@ -118,13 +124,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'MainLayout',
   data () {
     return {
       // dialogo: true,
       rol: 0,
+      login: false,
       drawer: false,
       menu: [
         {
@@ -160,7 +167,7 @@ export default {
         {
           icon: 'logout',
           label: 'Cerrar Sesión',
-          ruta: '/login',
+          ruta: '',
           permission: 1
         }
       ]
@@ -170,8 +177,17 @@ export default {
     ...mapGetters('generals', ['can'])
   },
   mounted () {
+    const value = localStorage.getItem('FLAAG_SESSION_INFO')
+    if (value) {
+      this.login = true
+    }
   },
   methods: {
+    ...mapMutations('generals', ['logout']),
+    cerrarSesion () {
+      this.logout()
+      this.$router.push('/login')
+    }
   }
 }
 </script>

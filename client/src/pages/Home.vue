@@ -13,33 +13,15 @@
             <div class="absolute-center bg-transparent q-mx-md" style="width: 100%">
                 <div class="text-h3 text-bold text-black q-mb-md">¿Tienes hambre? Estás en el lugar correcto</div>
                 <div class="row items-center">
-                    <q-input class="col-4 q-mt-md" color="black" bg-color="white" filled bottom-slots v-model="direccion" placeholder="Ingresa la dirección de entrega">
+                    <q-input class="col-6 q-mt-md" color="black" bg-color="white" filled bottom-slots v-model="tienda" placeholder="Ingresa el nombre de una tienda">
                         <template v-slot:prepend>
-                            <q-icon name="place" color="black" />
+                            <q-icon name="store" color="black" />
                         </template>
                         <template v-slot:append>
-                            <q-btn :label="direccion.length ? 'Borrar' : ''" @click="direccion.length ? direccion = '' : ''" no-caps flat />
+                            <q-btn :label="tienda.length ? 'Borrar' : ''" @click="tienda.length ? tienda = '' : ''" no-caps flat />
                         </template>
                     </q-input>
-                    <q-select class="col-3 q-ml-sm" color="black" bg-color="white" filled v-model="selected" :options="options">
-                        <template v-slot:prepend>
-                            <q-icon :name="selected.icon" color="black" />
-                        </template>
-                        <template v-slot:option="scope">
-                            <q-item
-                                v-bind="scope.itemProps"
-                                v-on="scope.itemEvents"
-                            >
-                                <q-item-section avatar>
-                                <q-icon :name="scope.opt.icon" />
-                                </q-item-section>
-                                <q-item-section>
-                                <q-item-label v-html="scope.opt.label" />
-                                </q-item-section>
-                            </q-item>
-                        </template>
-                    </q-select>
-                    <q-btn class="q-ml-sm q-py-sm" size="md" color="black" label="Buscar comida" no-caps />
+                    <q-btn class="col-2 q-ml-sm q-py-sm" size="md" color="black" label="Buscar" no-caps />
                 </div>
             </div>
         </q-carousel-slide>
@@ -241,7 +223,7 @@ import env from '../env'
 export default {
   data () {
     return {
-      direccion: '',
+      tienda: '',
       baseuPublicidad: '',
       baseuProducto: '',
       baseuLogos: '',
@@ -253,8 +235,6 @@ export default {
       slide6: 1,
       autoplay1: true,
       autoplay2: true,
-      selected: { label: 'Entregar ahora', value: '1', icon: 'watch_later' },
-      options: [{ label: 'Entregar ahora', value: '1', icon: 'watch_later' }, { label: 'Programar para más tarde', value: '2', icon: 'today' }],
       slPrincipal: [],
       slPublicidad1: {},
       arrPublicidad1: [],
