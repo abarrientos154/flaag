@@ -13,6 +13,7 @@
         </div>
       </q-scroll-area>
     </div>
+    <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Productos</div>
     <div class="row justify-around" v-if="filtrarProCa.length > 0">
       <div class="row justify-around q-mb-lg" v-for="(card, index) in filtrarProCa" :key="index">
         <q-card class="bg-amber-3 shadow-11 bordes" style="width: 330px">
@@ -54,7 +55,11 @@
       </div>
     </div>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
-      <q-btn fab icon="add" color="primary" label="Nuevo Producto" @click="$router.push('/producto')" />
+      <q-btn fab icon="add" color="primary" @click="$router.push('/producto')" >
+        <q-tooltip>
+          Nuevo Producto
+        </q-tooltip>
+      </q-btn>
     </q-page-sticky>
   </q-page>
 </template>
