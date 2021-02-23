@@ -37,16 +37,18 @@ class CategoriaController {
   }
 
   async indexNoLogueado ({ response, params }) {
+    let id = params.proveedor_id
+    console.log(id)
     let form = {
       categoria: [],
       subniveluno: [],
       subniveldos: [],
       subniveltres: []
     }
-    form.categoria = (await Categoria.query().where({proveedor_id: params.proveedor_id}).fetch()).toJSON()
-    form.subniveluno = (await SubNivelUno.query().where({proveedor_id: params.proveedor_id}).fetch()).toJSON()
-    form.subniveldos = (await SubNivelDos.query().where({proveedor_id: params.proveedor_id}).fetch()).toJSON()
-    form.subniveltres = (await SubNivelTres.query().where({proveedor_id: params.proveedor_id}).fetch()).toJSON()
+    form.categoria = (await Categoria.query().where('proveedor_id', Number(id)).fetch()).toJSON()
+    form.subniveluno = (await SubNivelUno.query().where('proveedor_id', Number(id)).fetch()).toJSON()
+    form.subniveldos = (await SubNivelDos.query().where('proveedor_id', Number(id)).fetch()).toJSON()
+    form.subniveltres = (await SubNivelTres.query().where('proveedor_id', Number(id)).fetch()).toJSON()
     response.send(form)
   }
 
