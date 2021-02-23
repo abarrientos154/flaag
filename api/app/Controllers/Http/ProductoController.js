@@ -19,10 +19,14 @@ class ProductoController {
   async productosByProveedorId ({ response, params }) {
     let productos = (await Producto.query().where({ proveedor_id: params.proveedor_id}).with('datos_proveedor').with('categoria_info').fetch()).toJSON()
     let enviar = productos.map(v => {
-      let diferencia =  moment().diff(v.ofertaDate, 'days')
+      let entro = false
+      if (v.oferta) {
+        var diferencia =  moment().diff(v.ofertaDate, 'days')
+        entro = true
+      }
       return {
         ...v,
-        oferta: diferencia < 0 ? false : true
+        oferta: entro ? (diferencia < 0 ? false : true) : null
       }
     })
     response.send(enviar)
@@ -40,10 +44,14 @@ class ProductoController {
     let user = await auth.getUser()
     let productos = (await Producto.query().where({ proveedor_id: user._id.toString()}).with('datos_proveedor').with('categoria_info').fetch()).toJSON()
     let enviar = productos.map(v => {
-      let diferencia =  moment().diff(v.ofertaDate, 'days')
+      let entro = false
+      if (v.oferta) {
+        var diferencia =  moment().diff(v.ofertaDate, 'days')
+        entro = true
+      }
       return {
         ...v,
-        oferta: diferencia < 0 ? false : true
+        oferta: entro ? (diferencia < 0 ? false : true) : null
         //categoria: categoria.nombre
       }
     })
