@@ -262,7 +262,7 @@ export default {
         if (res) {
           this.arrTienda = res
           if (!this.arrTienda.length) {
-            this.arrTienda = [{ nombre: 'Nombre Producto', descripcion: 'Descripcion', images: ['nopublicidad.jpg'], cantidad: 0, valor: 0, caso: true }]
+            this.arrTienda = [{ nombre: 'Nombre Producto', descripcion: 'Descripcion', images: ['nopublicidad.jpg'], valor: 0, caso: true }]
           }
           var largo = this.arrTienda.length - 1
           for (let i = 0; i < 25; i++) {
@@ -285,6 +285,9 @@ export default {
               cc = cc + 1
               arr = []
               arr.push(this.arrNuevo[i])
+              if (i === this.arrNuevo.length - 1) {
+                this.slNuevo['slideN' + cc] = arr
+              }
             }
           }
           arr = []
@@ -300,6 +303,9 @@ export default {
               cc = cc + 1
               arr = []
               arr.push(this.arrTienda[i])
+              if (i === this.arrTienda.length - 1) {
+                this.slTienda['slideT' + cc] = arr
+              }
             }
           }
         }
@@ -334,6 +340,9 @@ export default {
               cc = cc + 1
               arr = []
               arr.push(this.arrPublicidad1[i])
+              if (i === this.arrPublicidad1.length - 1) {
+                this.slPublicidad1['slideP' + cc] = arr
+              }
             }
           }
           arr = []
@@ -349,6 +358,9 @@ export default {
               cc = cc + 1
               arr = []
               arr.push(this.arrPublicidad2[i])
+              if (i === this.arrPublicidad2.length - 1) {
+                this.slPublicidad2['slideP' + cc] = arr
+              }
             }
           }
         }
@@ -372,6 +384,9 @@ export default {
               cc = cc + 1
               arr = []
               arr.push(this.arrLogos[i])
+              if (i === this.arrLogos.length - 1) {
+                this.slLogos['slideL' + cc] = arr
+              }
             }
           }
         }

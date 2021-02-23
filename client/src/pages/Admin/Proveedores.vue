@@ -5,7 +5,7 @@
         <div class="row justify-around">
             <div class="col-4 row justify-center q-mb-xl" v-for="(card, index) in proveedores" :key="index">
                 <q-card :class="card.status !== 1 ? 'bg-amber-3 shadow-11 bordes' : 'shadow-11 bordes'" style="width: 330px">
-                    <q-img :src="card.perfil ? baseu + card._id : 'noimg.png'" style="width: 322px; height: 200px" @click="$router.push('/perfil_proveedor/' + card._id)" />
+                    <q-img :src="card.perfil ? baseu + card._id : 'noimg.png'" style="width: 322px; height: 200px" @click="$router.push('/proveedor/' + card._id)" />
 
                     <q-card-section>
                         <div class="row no-wrap items-center">
