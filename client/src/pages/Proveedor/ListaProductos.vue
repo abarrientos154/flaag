@@ -1,8 +1,20 @@
 <template>
   <q-page>
-    <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Productos</div>
-    <div class="row justify-around">
-      <div class="row justify-around q-mb-lg" v-for="(card, index) in data" :key="index">
+    <q-img :src="baseuImgTienda" class="full-width" style="height:300px;z-index:-1" >
+      <div class="row justify-center items-center full-width full-height" style="position:absolute">
+        <h1 class="text-h4 text-primary text-bold"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </h1>
+      </div>
+    </q-img>
+    <div>
+      <q-scroll-area horizontal style="height: 70px; width: 100%;" class="bg-grey-3" :thumb-style="thumbStyle"
+      >
+        <div class="row no-wrap q-mt-xs">
+          <q-btn class="q-ml-sm" v-for="(item, index) in categorias" :key="index" :label="item.nombre" :color="item.active ? 'primary':'white'" :text-color="item.active ? 'white':'primary'" rounded style="width:200px" @click="activarB(index)" />
+        </div>
+      </q-scroll-area>
+    </div>
+    <div class="row justify-around" v-if="filtrarProCa.length > 0">
+      <div class="row justify-around q-mb-lg" v-for="(card, index) in filtrarProCa" :key="index">
         <q-card class="bg-amber-3 shadow-11 bordes" style="width: 330px">
           <q-img :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'" style="width: 322px; height: 200px" />
           <q-card-section>
@@ -36,6 +48,11 @@
         </q-card>
       </div>
     </div>
+    <div v-else class="row justify-center full-width full-height items-center q-pa-xl">
+      <div class="text-h5">
+        :( Sin Nada Por Aqui
+      </div>
+    </div>
     <q-page-sticky position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" color="primary" label="Nuevo Producto" @click="$router.push('/producto')" />
     </q-page-sticky>
@@ -47,20 +64,103 @@ import env from '../../env'
 export default {
   data () {
     return {
+      thumbStyle: {
+        right: '2px',
+        borderRadius: '0px',
+        backgroundColor: '#027be3',
+        width: '0px',
+        opacity: 0
+      },
+      baseuImgTienda: '',
       data: [],
+      buscar: 0,
       proveedor_id: this.$route.params.proveedor_id,
-      baseu: ''
+      baseu: '',
+      categorias: [],
+      subnivelunoOpciones: [],
+      subniveldosOpciones: [],
+      subniveltresOpciones: [],
+      user: {}
+    }
+  },
+  computed: {
+    filtrarProCa () {
+      if (this.buscar === 0) {
+        return this.data
+      } else {
+        return this.data.filter(v => v.categoria_id === this.buscar)
+      }
     }
   },
   mounted () {
     this.baseu = env.apiUrl + '/producto_files/'
     if (this.$route.params.proveedor_id) {
       this.getProductosByProveedor()
+      this.getCategoriasNoLogueado()
+      this.baseuImgTienda = env.apiUrl + '/perfil_img/' + this.proveedor_id
     } else {
       this.getProductos()
+      this.getCategorias()
+      this.getInfo()
     }
   },
   methods: {
+    activarB (ind) {
+      const indexActual = this.categorias.findIndex(v => v.active)
+      this.categorias[indexActual].active = false
+      this.categorias[ind].active = true
+      this.buscar = ind
+    },
+    async getInfo () {
+      await this.$api.get('user_info').then(res => {
+        this.user = res
+        this.baseuImgTienda = env.apiUrl + '/perfil_img/' + res._id
+      })
+    },
+    getCategorias () {
+      this.$api.get('categorias_y_sub').then(res => {
+        if (res) {
+          console.log(res, 'resss')
+          const cate = res.categoria.map(v => {
+            return {
+              ...v,
+              active: false
+            }
+          })
+          this.categorias.push({
+            nombre: 'Todos',
+            todos: true
+          })
+          this.categorias = this.categorias.concat(cate)
+          this.categorias[0].active = true
+          this.subnivelunoOpciones = res.subniveluno
+          this.subniveldosOpciones = res.subniveldos
+          this.subniveltresOpciones = res.subniveltres
+        }
+      })
+    },
+    getCategoriasNoLogueado () {
+      this.$api.get('categorias_no_logueado/' + this.proveedor_id).then(res => {
+        if (res) {
+          console.log(res, 'resss')
+          const cate = res.categoria.map(v => {
+            return {
+              ...v,
+              active: false
+            }
+          })
+          this.categorias.push({
+            nombre: 'Todos',
+            todos: true
+          })
+          this.categorias = this.categorias.concat(cate)
+          this.categorias[0].active = true
+          this.subnivelunoOpciones = res.subniveluno
+          this.subniveldosOpciones = res.subniveldos
+          this.subniveltresOpciones = res.subniveltres
+        }
+      })
+    },
     eliminar (id) {
       this.$q.loading.show()
       this.$api.delete('producto/' + id).then(res => {
@@ -109,6 +209,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+h1 {
+  text-shadow: 4px 4px 8px $secondary;
+}
 </style>

@@ -36,6 +36,20 @@ class CategoriaController {
     response.send(form)
   }
 
+  async indexNoLogueado ({ response, params }) {
+    let form = {
+      categoria: [],
+      subniveluno: [],
+      subniveldos: [],
+      subniveltres: []
+    }
+    form.categoria = (await Categoria.query().where('proveedor_id', params.proveedor_id).fetch()).toJSON()
+    form.subniveluno = (await SubNivelUno.query().where('proveedor_id', params.proveedor_id).fetch()).toJSON()
+    form.subniveldos = (await SubNivelDos.query().where('proveedor_id', params.proveedor_id).fetch()).toJSON()
+    form.subniveltres = (await SubNivelTres.query().where('proveedor_id', params.proveedor_id).fetch()).toJSON()
+    response.send(form)
+  }
+
   /**
    * Render a form to be used for creating a new categoria.
    * GET categorias/create
