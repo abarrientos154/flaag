@@ -22,7 +22,6 @@ class CategoriaController {
    */
   async index ({ response, auth }) {
     const user = (await auth.getUser()).toJSON()
-    console.log(user.id, 'serrr')
     let form = {
       categoria: [],
       subniveluno: [],
@@ -38,7 +37,6 @@ class CategoriaController {
 
   async indexNoLogueado ({ response, params }) {
     let id = params.proveedor_id
-    console.log(id)
     let form = {
       categoria: [],
       subniveluno: [],
