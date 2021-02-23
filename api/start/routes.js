@@ -55,7 +55,7 @@ addPrefixToGroup(
     Route.post("user_by_id/:id", "UserController.userById")
     Route.put("editar_proveedor", "UserController.editarP")
     Route.post("subir_foto_perfil/:id", "UploadController.subirPerfil")
-    Route.post("subir_archivo_proveedor", "UploadController.subirImgTienda")
+    Route.post("subir_archivo_proveedor/:id", "UploadController.subirImgTienda")
     Route.delete("eliminar_archivo_proveedor/:file", "UploadController.eliminarImgTienda")
 
     Route.get("proveedores", "UserController.proveedores")

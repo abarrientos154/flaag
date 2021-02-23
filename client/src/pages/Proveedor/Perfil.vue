@@ -1,6 +1,9 @@
 <template>
   <q-page>
     <q-card class="shadow-3 q-ma-sm" style="border-radius:12px">
+      <div class="q-pt-md q-pl-md">
+        <q-btn round dense flat icon="keyboard_backspace" color="black" @click="$router.go(-1)"/>
+      </div>
       <div class="column items-center justify-center q-mt-lg">
         <div class="q-mb-md row justify-center">
           <q-img :src="form.perfil ? baseu : 'noimg.png'" style="width:150px;height:150px;border-radius:100%" >
@@ -241,7 +244,7 @@ export default {
         var files = []
         files[0] = this.img
         formData.append('files', files[0])
-        await this.$api.post('subir_archivo_proveedor', formData, {
+        await this.$api.post('subir_archivo_proveedor/' + this.form._id, formData, {
           headers: {
             'Content-Type': undefined
           }
