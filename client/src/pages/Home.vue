@@ -121,27 +121,24 @@
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slNuevo" :key="index" class="column no-wrap">
         <div class="text-h5 text-bold q-ml-md">Lo nuevo en Flaag</div>
         <div class="row fit justify-around items-center no-wrap">
-          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
+          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2" style="width: 250px">
             <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" />
 
             <q-card-section>
-              <div class="row justify-between items-center">
-                <div class="text-subtitle2">{{card.nombre}}</div>
-                <div class="text-orange text-bold text-caption row items-center">$ . {{card.valor}}</div>
+              <div class="row no-wrap items-center">
+                <div class="col text-subtitle2 ellipsis">{{card.nombre}}</div>
+              </div>
+              <div class="row no-wrap justify-end q-mt-md">
+                <q-chip v-if="!card.oferta" icon="attach_money" color="amber" class="text-caption">
+                  <div class="q-mr-md">{{card.valor}}</div>
+                </q-chip>
+                <q-chip v-if="card.oferta" icon="attach_money" color="positive" class="text-caption">
+                  <div class="q-mr-md text-strike">{{card.valor}}</div>
+                  -
+                  <div class="q-ml-md text-bold">{{card.ofertaVal}}</div>
+                </q-chip>
               </div>
             </q-card-section>
-
-            <q-card-section class="q-px-sm q-pt-none">
-              <div class="text-caption text-grey">
-                {{card.descripcion}}
-              </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-actions class="row justify-center">
-              <q-btn no-caps push icon="add_shopping_cart" color="primary" text-color="black" label="Añadir al carrito" />
-            </q-card-actions>
           </q-card>
         </div>
       </q-carousel-slide>
@@ -201,27 +198,24 @@
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slTienda" :key="index" class="column no-wrap">
         <div class="text-h5 text-bold q-ml-md">Tienda</div>
         <div class="row fit justify-around items-center no-wrap">
-          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2">
+          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2" style="width: 250px">
             <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" />
 
             <q-card-section>
-              <div class="row justify-between items-center">
-                <div class="text-subtitle2">{{card.nombre}}</div>
-                <div class="text-orange text-bold text-caption row items-center">$ . {{card.valor}}</div>
+              <div class="row no-wrap items-center">
+                <div class="col text-subtitle2 ellipsis">{{card.nombre}}</div>
+              </div>
+              <div class="row no-wrap justify-end q-mt-md">
+                <q-chip v-if="!card.oferta" icon="attach_money" color="amber" class="text-caption">
+                  <div class="q-mr-md">{{card.valor}}</div>
+                </q-chip>
+                <q-chip v-if="card.oferta" icon="attach_money" color="positive" class="text-caption">
+                  <div class="q-mr-md text-strike">{{card.valor}}</div>
+                  -
+                  <div class="q-ml-md text-bold">{{card.ofertaVal}}</div>
+                </q-chip>
               </div>
             </q-card-section>
-
-            <q-card-section class="q-px-sm q-pt-none">
-              <div class="text-caption text-grey">
-                {{card.descripcion}}
-              </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-actions class="row justify-center">
-              <q-btn no-caps push icon="add_shopping_cart" color="primary" text-color="black" label="Añadir al carrito" />
-            </q-card-actions>
           </q-card>
         </div>
       </q-carousel-slide>
@@ -276,7 +270,7 @@ export default {
   },
   mounted () {
     this.baseuPublicidad = env.apiUrl + '/publicidad_img/'
-    this.baseuProducto = env.apiUrl + '/tienda_files/'
+    this.baseuProducto = env.apiUrl + '/producto_files/'
     this.baseuLogos = env.apiUrl + '/perfil_img/'
     this.getLogos()
     this.getPublicidad()
