@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <q-img :src="baseuImgTienda" class="full-width" style="height:300px;z-index:-1" >
+    <q-img :src="user.perfil ? baseuImgTienda : 'noimg.png'" class="full-width" style="height:300px;z-index:-1" >
       <div class="row justify-center items-center full-width full-height" style="position:absolute">
         <h1 class="text-h4 text-primary text-bold"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </h1>
       </div>
