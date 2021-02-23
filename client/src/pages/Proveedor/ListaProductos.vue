@@ -202,7 +202,7 @@ export default {
       })
     },
     getProductosByProveedor () {
-      this.$api.get('productos').then(res => {
+      this.$api.get('productos/' + this.proveedor_id).then(res => {
         if (res) {
           this.data = res
           console.log(res, 'res')
