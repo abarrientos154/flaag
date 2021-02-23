@@ -41,6 +41,7 @@ addPrefixToGroup(
     Route.get("validate_email/:email", "UserController.validateEmail")
     Route.get("perfil_img/:file", "UploadController.perfilImg")
     Route.get("tienda_files/:file", "UploadController.tiendaFiles")
+    Route.get("producto_files/:file", "UploadController.productoFiles")
 
     Route.get('publicidad_img/:file', 'UploadController.getFilePublicidad')
   })
@@ -72,7 +73,13 @@ addPrefixToGroup(
 
     //////////////////////////PRODUCTOS///////////////////////////////////////
     Route.post("producto", "ProductoController.store")
+    Route.delete("producto/:id", "ProductoController.destroy")
+    Route.get("producto/:id", "ProductoController.show")
+    Route.put("producto/:id", "ProductoController.update")
     Route.get("productos", "ProductoController.index")
+    Route.post("subir_archivo_producto/:producto_id", "UploadController.subirImgProducto")
+    Route.delete("eliminar_archivo_producto/:file/:producto_id", "UploadController.eliminarImgProducto")
+    Route.get("productos/:proveedor_id", "ProductoController.productosByProveedorId")
     Route.get("all_productos", "ProductoController.allProductos")
     //////////////////////////////////////////////////////////////////////////
 

@@ -111,7 +111,6 @@ export default {
       }
     },
     async guardar () {
-      console.log(this.form, 'formmm')
       var formData = new FormData()
       var files = this.images
       console.log(files, 'afiles')
@@ -132,6 +131,7 @@ export default {
             message: 'Producto agregado Correctamente',
             color: 'positive'
           })
+          this.$router.go(-1)
         }
       })
     },

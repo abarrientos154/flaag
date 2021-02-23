@@ -152,6 +152,12 @@ export default {
           permission: 3
         },
         {
+          icon: 'inventory',
+          label: 'Productos',
+          ruta: '/productos',
+          permission: 3
+        },
+        {
           icon: 'logout',
           label: 'Cerrar Sesión',
           ruta: '/login',

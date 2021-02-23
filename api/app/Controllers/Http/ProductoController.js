@@ -9,11 +9,24 @@ const Producto = use('App/Models/Producto')
 const Categoria = use('App/Models/Categoria')
 const fs = require('fs')
 const { validate } = use("Validator")
-var randomize = require('randomatic');
+var randomize = require('randomatic')
+const moment = require("moment")
 /**
  * Resourceful controller for interacting with productos
  */
 class ProductoController {
+
+  async productosByProveedorId ({ response, params }) {
+    let productos = (await Producto.query().where({ proveedor_id: params.proveedor_id}).with('datos_proveedor').with('categoria_info').fetch()).toJSON()
+    let enviar = productos.map(v => {
+      let diferencia =  moment().diff(v.ofertaDate, 'days')
+      return {
+        ...v,
+        oferta: diferencia < 0 ? false : true
+      }
+    })
+    response.send(enviar)
+  }
   /**
    * Show a list of all productos.
    * GET productos
@@ -25,12 +38,12 @@ class ProductoController {
    */
   async index ({ response, auth }) {
     let user = await auth.getUser()
-    let productos = (await Producto.query().where({ proveedor_id: user._id.toString()}).with('datos_proveedor').fetch()).toJSON()
+    let productos = (await Producto.query().where({ proveedor_id: user._id.toString()}).with('datos_proveedor').with('categoria_info').fetch()).toJSON()
     let enviar = productos.map(v => {
-      console.log(v.categoria_id, 'categoria id')
-      //let categoria = (await Categoria.query().where('id', v.categoria_id).first().fetch()).toJSON()
+      let diferencia =  moment().diff(v.ofertaDate, 'days')
       return {
         ...v,
+        oferta: diferencia < 0 ? false : true
         //categoria: categoria.nombre
       }
     })
@@ -111,6 +124,7 @@ class ProductoController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    response.send(await Producto.find(params.id))
   }
 
   /**
@@ -134,6 +148,10 @@ class ProductoController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    let body = request.only(Producto.fillable())
+    console.log(params.id, 'asasdasdasd', body, 'body')
+    await Producto.query().where('_id', params.id).update(body)
+    response.send(body)
   }
 
   /**
@@ -145,6 +163,9 @@ class ProductoController {
    * @param {Response} ctx.response
    */
   async destroy ({ params, request, response }) {
+    let prod = await Producto.find(params.id)
+    prod.delete()
+    response.send(prod)
   }
 }
 

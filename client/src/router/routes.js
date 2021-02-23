@@ -13,6 +13,7 @@ const routes = [
       // Proveedor
       { path: '/perfil_proveedor', component: () => import('pages/Proveedor/Perfil.vue') },
       { path: '/producto', component: () => import('pages/Proveedor/Producto.vue') },
+      { path: '/producto/:id', component: () => import('pages/Proveedor/EditarProducto.vue') },
       { path: '/productos', component: () => import('pages/Proveedor/ListaProductos.vue') }
     ]
   },

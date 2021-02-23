@@ -3,6 +3,7 @@
 const Helpers = use('Helpers')
 const mkdirp = use('mkdirp')
 const User = use("App/Models/User")
+const Producto = use("App/Models/Producto")
 const { validate } = use("Validator")
 const fs = require('fs')
 const { request } = require('http')
@@ -20,6 +21,52 @@ class UploadController {
   async tiendaFiles ({ params, response }) {
     let dir = params.file
     response.download(Helpers.appRoot('storage/uploads/proveedor_images') + `/${dir}`)
+  }
+
+  async productoFiles ({ params, response }) {
+    let dir = params.file
+    response.download(Helpers.appRoot('storage/uploads/productos') + `/${dir}`)
+  }
+
+  async subirImgProducto ({ response, params, request }) {
+    let codeFile = randomize('Aa0', 30)
+    var profilePic = request.file('files', {
+    })
+    if (profilePic) {
+      if (Helpers.appRoot('storage/uploads/productos')) {
+        await profilePic.move(Helpers.appRoot('storage/uploads/productos'), {
+          name: codeFile,
+          overwrite: true
+        })
+      } else {
+        mkdirp.sync(`${__dirname}/storage/Excel`)
+      }
+
+      if (!profilePic.moved()) {
+        return profilePic.error()
+      } else {
+        let producto = await Producto.find(params.producto_id)
+        if (producto.images) {
+          producto.images.push(codeFile)
+        } else {
+          producto.images = []
+          producto.images.push(codeFile)
+        }
+        await producto.save()
+        console.log(producto, 'producto buscar')
+        response.send(producto)
+      }
+    }
+  }
+
+  async eliminarImgProducto ({ params, response }) {
+    const dir = params.file
+    await fs.unlinkSync(Helpers.appRoot(`storage/uploads/productos/${dir}`))
+    let producto = await Producto.find(params.producto_id)
+    let i = producto.images.indexOf(dir)
+    producto.images.splice(i, 1)
+    await producto.save()
+    response.send(producto)
   }
 
   async perfilImg ({ params, response, auth }) {

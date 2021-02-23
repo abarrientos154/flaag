@@ -4,6 +4,10 @@
 const Model = use('Model')
 
 class Producto extends Model {
+  static fillable () {
+    return ['nombre', 'descripcion', 'categoria_id', 'subniveluno_id',
+    'subniveldos_id', 'subniveltres_id', 'cantidad', 'valor', 'oferta', 'ofertaVal', 'ofertaDate']
+  }
   static fieldValidationRules() {
     const rulesUser = {
       nombre: 'string',
@@ -21,6 +25,9 @@ class Producto extends Model {
 
   datos_proveedor () {
     return this.hasOne('App/Models/User', 'proveedor_id', '_id')
+  }
+  categoria_info () {
+    return this.hasOne('App/Models/Categoria', 'categoria_id', 'id')
   }
 }
 
