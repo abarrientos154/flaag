@@ -159,8 +159,8 @@ export default {
           permission: 3
         },
         {
-          icon: 'inventory',
-          label: 'Productos',
+          icon: 'store',
+          label: 'Mi Tienda',
           ruta: '/productos',
           permission: 3
         },
