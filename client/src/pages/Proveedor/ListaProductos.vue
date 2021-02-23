@@ -201,8 +201,8 @@ export default {
         }
       })
     },
-    getProductosByProveedor (id) {
-      this.$api.get('productos/' + id).then(res => {
+    getProductosByProveedor () {
+      this.$api.get('productos/' + this.proveedor_id).then(res => {
         if (res) {
           this.data = res
           console.log(res, 'res')
