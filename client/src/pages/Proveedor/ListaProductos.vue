@@ -101,9 +101,8 @@ export default {
     this.baseu = env.apiUrl + '/producto_files/'
     if (this.$route.params.proveedor_id) {
       this.proveedor_id = this.$route.params.proveedor_id
-      this.getProductosByProveedor(this.proveedor_id)
-      this.getCategoriasNoLogueado(this.proveedor_id)
       this.getInfoById(this.proveedor_id)
+      this.getProductosByProveedor(this.proveedor_id)
     } else {
       this.getProductos()
       this.getCategorias()
@@ -127,6 +126,7 @@ export default {
       this.$api.post('user_by_id/' + id).then(res => {
         this.user = res
         this.baseuImgTienda = env.apiUrl + '/perfil_img/' + res._id
+        this.getCategoriasNoLogueado(this.user.id)
       })
     },
     getCategorias () {
@@ -154,6 +154,7 @@ export default {
     getCategoriasNoLogueado (id) {
       this.$api.post('categorias_no_logueado/' + id).then(res => {
         if (res) {
+          console.log(res, 'resss')
           const cate = res.categoria.map(v => {
             return {
               ...v,
