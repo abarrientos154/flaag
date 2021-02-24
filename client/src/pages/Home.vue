@@ -9,20 +9,9 @@
         @mouseenter="autoplay1 = false"
         @mouseleave="autoplay1 = true"
         >
-        <q-carousel-slide :name="index + 1" :img-src="!img.caso ? baseuPublicidad + img.fileName : img.fileName"  v-for="(img, index) in slPrincipal" :key="index">
+        <q-carousel-slide :name="index + 1" :img-src="!img.caso ? baseuPublicidad + img.fileName : img.fileName"  v-for="(img, index) in slPrincipal" :key="index" @click="!img.caso ? irRuta(img.ruta) : ''">
             <div class="absolute-center bg-transparent q-mx-md" style="width: 100%">
-                <div class="text-h3 text-bold text-black q-mb-md">¿Tienes hambre? Estás en el lugar correcto</div>
-                <div class="row items-center">
-                    <q-input class="col-6 q-mt-md" color="black" bg-color="white" filled bottom-slots v-model="tienda" placeholder="Ingresa el nombre de una tienda">
-                        <template v-slot:prepend>
-                            <q-icon name="store" color="black" />
-                        </template>
-                        <template v-slot:append>
-                            <q-btn :label="tienda.length ? 'Borrar' : ''" @click="tienda.length ? tienda = '' : ''" no-caps flat />
-                        </template>
-                    </q-input>
-                    <q-btn class="col-2 q-ml-sm q-py-sm" size="md" color="black" label="Buscar" no-caps />
-                </div>
+                <div class="text-h2 text-bold text-black q-mb-md">¿Tienes hambre? Estás en el lugar correcto</div>
             </div>
         </q-carousel-slide>
     </q-carousel>
@@ -42,7 +31,7 @@
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slLogos" :key="index" class="column no-wrap">
         <div class="row fit justify-around items-center no-wrap">
           <div v-for="(img, index2) in value" :key="index2" style="height: 200px">
-            <q-avatar size="180px"><img :src="img.perfil ? baseuLogos + img._id : 'noimg.png'" ></q-avatar>
+            <q-avatar size="180px"><img :src="img.perfil ? baseuLogos + img._id : 'noimg.png'" @click="rol === 1 ? $router.push('/proveedor/' + img._id) : ''" ></q-avatar>
             <div class="text-center text-weight-bold q-mt-sm" style="width: 180px">{{img.nombreEmpresa}}</div>
           </div>
         </div>
@@ -72,7 +61,7 @@
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad1" :key="index" class="column no-wrap">
         <div class="row fit justify-around items-center no-wrap">
-          <q-card clickable v-ripple class="shadow-11" v-for="(card, index2) in value" :key="index2">
+          <q-card clickable v-ripple class="shadow-11" v-for="(card, index2) in value" :key="index2" @click="!card.caso ? irRuta(card.ruta) : ''">
               <q-img :src="!card.caso ? baseuPublicidad + card.fileName : card.fileName" style="height: 200px; width: 360px" />
           </q-card>
         </div>
@@ -149,7 +138,7 @@
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad2" :key="index" class="column no-wrap">
         <div class="row fit justify-around items-center no-wrap">
-          <q-card clickable v-ripple class="shadow-11" v-for="(card, index2) in value" :key="index2">
+          <q-card clickable v-ripple class="shadow-11" v-for="(card, index2) in value" :key="index2" @click="!card.caso ? irRuta(card.ruta) : ''">
               <q-img :src="!card.caso ? baseuPublicidad + card.fileName : card.fileName" style="height: 200px; width: 360px" />
           </q-card>
         </div>
@@ -220,10 +209,11 @@
 
 <script>
 import env from '../env'
+import { openURL } from 'quasar'
 export default {
   data () {
     return {
-      tienda: '',
+      rol: 0,
       baseuPublicidad: '',
       baseuProducto: '',
       baseuLogos: '',
@@ -255,8 +245,22 @@ export default {
     this.getLogos()
     this.getPublicidad()
     this.getTienda()
+    const value = localStorage.getItem('FLAAG_SESSION_INFO')
+    if (value) {
+      this.getInfo()
+    }
   },
   methods: {
+    irRuta (ruta) {
+      openURL(ruta)
+    },
+    getInfo () {
+      this.$api.get('user_info').then(res => {
+        if (res) {
+          this.rol = res.roles[0]
+        }
+      })
+    },
     getTienda () {
       this.$api.get('all_productos').then(res => {
         if (res) {

@@ -1,8 +1,13 @@
 <template>
   <q-page>
-    <q-img :src="user.perfil ? baseuImgTienda : 'noimg.png'" class="full-width" style="height:300px;z-index:-1" >
-      <div class="row justify-center items-center full-width full-height" style="position:absolute">
-        <h1 class="text-h4 text-primary text-bold"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </h1>
+    <q-img :src="user.perfil ? baseuImgTienda : 'noimg.png'" style="height:300px; width: 100%" >
+      <div class="full-width full-height">
+        <div class="row justify-end bg-transparent" style="width: 100%">
+          <q-btn v-if="admin" no-caps rounded class="q-ma-xs" label="Editar perfil" icon="edit" color="white" text-color="black" @click="ver()" />
+        </div>
+        <div class="row absolute-center">
+          <h1 class="text-h4 text-primary text-bold"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </h1>
+        </div>
       </div>
     </q-img>
     <div>
@@ -69,6 +74,7 @@ import env from '../../env'
 export default {
   data () {
     return {
+      admin: false,
       thumbStyle: {
         right: '2px',
         borderRadius: '0px',
@@ -101,6 +107,7 @@ export default {
     this.baseu = env.apiUrl + '/producto_files/'
     if (this.$route.params.proveedor_id) {
       this.proveedor_id = this.$route.params.proveedor_id
+      this.admin = true
       this.getInfoById(this.proveedor_id)
       this.getProductosByProveedor(this.proveedor_id)
     } else {
@@ -206,6 +213,10 @@ export default {
           this.data = res
         }
       })
+    },
+    ver () {
+      console.log(this.proveedor_id)
+      this.$router.push('/perfil_proveedor/' + this.proveedor_id)
     },
     getProductosByProveedor (id) {
       this.$api.get('productos/' + id).then(res => {

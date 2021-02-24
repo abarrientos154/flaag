@@ -5,12 +5,12 @@
         <q-card class="shadow-3 q-ma-md" style="border-radius:12px;width:400px;">
           <q-card-section>
             <div class="col column items-center justify-center">
-                <div class="row justify-center">
-                  <img src="icons/favicon-128x128.png" alt="logo" style="width: 50%;height:50%">
+                <div class="row justify-center q-my-md">
+                  <img src="logo.jpg" alt="logo" style="width: 50%;height:50%">
                 </div>
 
                 <div class="column">
-                  <div class="text-h6 text-grey-9" style="text-align: center">FLAAG</div>
+                  <!-- <div class="text-h6 text-grey-9" style="text-align: center">FLAAG</div> -->
                   <div class="q-mt-sm text-primary text-h6">Inicia Sesión</div>
                 </div>
             </div>

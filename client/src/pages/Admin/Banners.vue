@@ -95,7 +95,7 @@
             </q-card-section>
 
             <q-card-section>
-                <q-input class="q-mt-md" outlined rounded v-model="form.ruta" label="Ingrese la ruta de la publicidad" :error="$v.form.ruta.$error" error-message="Este campo es requerido" @blur="$v.form.ruta.$touch()" />
+                <q-input class="q-mt-md" outlined rounded v-model="form.ruta" label="Ingrese la ruta redireccional" :error="$v.form.ruta.$error" error-message="Este campo es requerido" @blur="$v.form.ruta.$touch()" />
                 <div class="q-gutter-sm">
                     <q-radio color="primary" v-model="form.tipo" val="principal" label="Publicidad Principal" />
                     <q-radio color="primary" v-model="form.tipo" val="publicidad1" label="Sector publicitario 1" />

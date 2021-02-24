@@ -4,7 +4,7 @@
       <q-toolbar class="bg-white q-px-xl q-py-md row justify-between">
         <div>
           <q-btn class="q-mr-md" round dense flat icon="menu" size="1em" color="black" @click="drawer = !drawer"/>
-          <q-img src="logo-210x47.png" style="width:140px" />
+          <q-img src="logo.jpg" style="width:140px" @click="$router.push('/inicio')" />
         </div>
         <q-btn v-if="!login" rounded no-caps class="text-black text-subtitle1" color="grey-4" label="Iniciar Sesión" @click="$router.push('/login')" />
       </q-toolbar>
