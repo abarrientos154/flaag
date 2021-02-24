@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <q-img :src="user.perfil ? baseuImgTienda : 'noimg.png'" style="height:300px; width: 100%" >
+    <q-img :src="user.perfil ? baseuImgTienda : 'noimg.png'" style="height:300px; width:" >
       <div class="full-width full-height">
         <div class="row justify-end bg-transparent" style="width: 100%">
           <q-btn v-if="admin" no-caps rounded class="q-ma-xs" label="Editar perfil" icon="edit" color="white" text-color="black" @click="ver()" />
@@ -11,10 +11,12 @@
       </div>
     </q-img>
     <div>
-      <q-scroll-area horizontal style="height: 70px; width: 100%;" class="bg-grey-3" :thumb-style="thumbStyle"
+      <q-scroll-area horizontal style="height: 100px; width: 100%;" class="bg-grey-3"
       >
-        <div class="row no-wrap q-mt-xs">
-          <q-btn class="q-ml-sm" v-for="(item, index) in categorias" :key="index" :label="item.nombre" :color="item.active ? 'primary':'white'" :text-color="item.active ? 'white':'primary'" rounded style="width:200px" @click="activarB(index)" />
+        <div class="row no-wrap q-mx-md">
+            <div class="q-ml-sm column justify-center" style="height: 100px" v-for="(item, index) in categorias" :key="index">
+                <q-btn :label="item.nombre" :color="item.active ? 'primary':'white'" :text-color="item.active ? 'white':'primary'" rounded style="height: 60px; width:200px" @click="activarB(index)" />
+            </div>
         </div>
       </q-scroll-area>
     </div>
@@ -75,13 +77,6 @@ export default {
   data () {
     return {
       admin: false,
-      thumbStyle: {
-        right: '2px',
-        borderRadius: '0px',
-        backgroundColor: '#027be3',
-        width: '0px',
-        opacity: 0
-      },
       baseuImgTienda: '',
       data: [],
       buscar: 0,
