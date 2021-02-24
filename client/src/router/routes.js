@@ -15,7 +15,9 @@ const routes = [
       { path: '/perfil_proveedor', component: () => import('pages/Proveedor/Perfil.vue') },
       { path: '/producto', component: () => import('pages/Proveedor/Producto.vue') },
       { path: '/producto/:id', component: () => import('pages/Proveedor/EditarProducto.vue') },
-      { path: '/productos', component: () => import('pages/Proveedor/ListaProductos.vue') }
+      { path: '/productos', component: () => import('pages/Proveedor/ListaProductos.vue') },
+      // Cliente
+      { path: '/tienda/:proveedor_id', component: () => import('pages/Cliente/Tienda.vue') }
     ]
   },
   { path: '/login', component: () => import('pages/Login.vue') },

@@ -6,7 +6,7 @@
           <q-card-section>
             <div class="col column items-center justify-center">
                 <div class="row justify-center q-my-md">
-                  <img src="logo.jpg" alt="logo" style="width: 50%;height:50%">
+                  <img src="logo.png" alt="logo" style="width: 50%;height:50%">
                 </div>
 
                 <div class="column">
