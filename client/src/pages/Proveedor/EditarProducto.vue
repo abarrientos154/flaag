@@ -143,7 +143,6 @@ export default {
   methods: {
     async addImg () {
       this.$q.loading.show()
-      console.log('add img', this.img)
       if (this.img) {
         var formData = new FormData()
         var files = []
@@ -155,7 +154,6 @@ export default {
           }
         }).then((res) => {
           this.$q.loading.hide()
-          console.log(res, 'respuesta')
           this.form.images = res.images
         })
       }
@@ -197,7 +195,6 @@ export default {
     },
     guardar () {
       this.$q.loading.show()
-      console.log(this.form, 'form')
       this.$api.put('producto/' + this.producto_id, this.form).then(res => {
         if (res) {
           this.$q.notify({
@@ -213,12 +210,10 @@ export default {
       this.images.push(this.img)
       this.imagesSubir.push(URL.createObjectURL(this.img))
       this.img = null
-      console.log(this.images, 'asasdsd')
     },
     getCategorias () {
       this.$api.get('categorias_y_sub').then(res => {
         if (res) {
-          console.log(res, 'resss')
           this.categorias = res.categoria
           this.subnivelunoOpciones = res.subniveluno
           this.subniveldosOpciones = res.subniveldos

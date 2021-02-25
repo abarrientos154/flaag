@@ -5,7 +5,7 @@
         <div class="row justify-end bg-transparent" style="width: 100%">
           <q-btn v-if="admin" no-caps rounded class="q-ma-xs" label="Editar perfil" icon="edit" color="white" text-color="black" @click="ver()" />
         </div>
-        <div class="row absolute-center">
+        <div class="row absolute-center justify-center" style="width:100%">
           <h1 class="text-h4 text-primary text-bold"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </h1>
         </div>
       </div>
@@ -39,16 +39,24 @@
               <q-icon class="col-1" name="category" color="black" style="font-size: 1.3rem;"/>
               <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.categoria_info.nombre}}</div>
             </div>
-            <div class="row items-center" style="width:100%">
-              <q-icon v-if="!card.oferta" class="col-1" name="attach_money" color="black" style="font-size: 1.3rem;"/>
-              <div v-if="!card.oferta" class="q-pl-xs text-grey-9 text-subtitle2" :class="card.oferta ? 'text-strike' : ''" >{{card.valor}}</div>
-              <q-chip v-if="card.oferta" icon="attach_money" color="amber" class="text-subtitle2">
-                <div class="q-mr-md text-strike">{{card.valor}}</div>
-                -
-                <div class="q-ml-md">{{card.ofertaVal}}</div>
-              </q-chip>
+            <div class="row" style="width:100%">
+              <q-icon class="col-1" name="zoom_in" color="black" style="font-size: 1.3rem;"/>
+              <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.cantidad}}</div>
+            </div>
+            <div class="row no-wrap">
+                <q-chip v-if="!card.oferta" icon="attach_money" color="amber" class="text-caption">
+                  <div class="q-mr-md">{{card.valor}}</div>
+                </q-chip>
+                <q-chip v-if="card.oferta" icon="attach_money" color="positive" class="text-caption">
+                  <div class="q-mr-md text-strike">{{card.valor}}</div>
+                  -
+                  <div class="q-ml-md text-bold">{{card.ofertaVal}}</div>
+                </q-chip>
             </div>
           </q-card-section>
+
+          <q-separator />
+
           <q-card-actions align="between">
             <q-btn label="eliminar" icon="delete" color="negative" @click="confirmEliminar(card._id)" />
             <q-btn label="editar" icon="edit" color="primary" @click="$router.push('/producto/' + card._id)" />
@@ -61,7 +69,7 @@
         :( Sin Nada Por Aqui
       </div>
     </div>
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-page-sticky v-if="!admin" position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="add" color="primary" @click="$router.push('/producto')" >
         <q-tooltip>
           Nuevo Producto
@@ -134,7 +142,6 @@ export default {
     getCategorias () {
       this.$api.get('categorias_y_sub').then(res => {
         if (res) {
-          console.log(res, 'resss')
           const cate = res.categoria.map(v => {
             return {
               ...v,
@@ -156,7 +163,6 @@ export default {
     getCategoriasNoLogueado (id) {
       this.$api.post('categorias_no_logueado/' + id).then(res => {
         if (res) {
-          console.log(res, 'resss')
           const cate = res.categoria.map(v => {
             return {
               ...v,
@@ -210,7 +216,6 @@ export default {
       })
     },
     ver () {
-      console.log(this.proveedor_id)
       this.$router.push('/perfil_proveedor/' + this.proveedor_id)
     },
     getProductosByProveedor (id) {

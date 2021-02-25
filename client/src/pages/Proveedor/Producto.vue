@@ -113,7 +113,6 @@ export default {
     async guardar () {
       var formData = new FormData()
       var files = this.images
-      console.log(files, 'afiles')
       if (files.length > 0) {
         for (let i = 0; i < this.images.length; i++) {
           formData.append('files' + i, files[i])
@@ -139,12 +138,10 @@ export default {
       this.images.push(this.img)
       this.imagesSubir.push(URL.createObjectURL(this.img))
       this.img = null
-      console.log(this.images, 'asasdsd')
     },
     getCategorias () {
       this.$api.get('categorias_y_sub').then(res => {
         if (res) {
-          console.log(res, 'resss')
           this.categorias = res.categoria
           this.subnivelunoOpciones = res.subniveluno
           this.subniveldosOpciones = res.subniveldos

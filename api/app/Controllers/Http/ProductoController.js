@@ -116,7 +116,6 @@ class ProductoController {
       delete dat.cantidadFiles
       dat.images = images
       dat.proveedor_id = user._id.toString()
-      console.log(dat, 'dataaaa')
       let guardar = await Producto.create(dat)
       response.send(guardar)
     }
@@ -157,7 +156,6 @@ class ProductoController {
    */
   async update ({ params, request, response }) {
     let body = request.only(Producto.fillable())
-    console.log(params.id, 'asasdasdasd', body, 'body')
     await Producto.query().where('_id', params.id).update(body)
     response.send(body)
   }

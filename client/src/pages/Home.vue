@@ -93,9 +93,9 @@
         <div class="text-h5 text-bold q-ml-md">Lo nuevo en Flaag</div>
         <div class="row fit justify-around items-center no-wrap">
           <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2" style="width: 250px">
-            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" />
+            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" @click="producto = card, verProducto = true" />
 
-            <q-card-section>
+            <q-card-section @click="producto = card, verProducto = true">
               <div class="row no-wrap items-center">
                 <div class="col text-subtitle2 ellipsis">{{card.nombre}}</div>
               </div>
@@ -110,6 +110,12 @@
                 </q-chip>
               </div>
             </q-card-section>
+
+            <q-separator />
+
+            <q-card-actions v-if="rol !== 1" align="center">
+              <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
+            </q-card-actions>
           </q-card>
         </div>
       </q-carousel-slide>
@@ -170,9 +176,9 @@
         <div class="text-h5 text-bold q-ml-md">Tienda</div>
         <div class="row fit justify-around items-center no-wrap">
           <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2" style="width: 250px">
-            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" />
+            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" @click="producto = card, verProducto = true" />
 
-            <q-card-section>
+            <q-card-section @click="producto = card, verProducto = true">
               <div class="row no-wrap items-center">
                 <div class="col text-subtitle2 ellipsis">{{card.nombre}}</div>
               </div>
@@ -187,6 +193,12 @@
                 </q-chip>
               </div>
             </q-card-section>
+
+            <q-separator />
+
+            <q-card-actions v-if="rol !== 1" align="center">
+              <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
+            </q-card-actions>
           </q-card>
         </div>
       </q-carousel-slide>
@@ -203,17 +215,29 @@
         </q-carousel-control>
       </template>
     </q-carousel>
-    <q-separator />
+
+    <q-dialog v-model="verProducto">
+      <q-card style="width: 100%">
+        <q-card-section>
+          <DetalleProducto :data="producto" lugar="inicio" />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
+import DetalleProducto from '../pages/DetalleProducto'
 import env from '../env'
 import { openURL } from 'quasar'
 export default {
+  components: { DetalleProducto },
   data () {
     return {
       rol: 0,
+      producto: {},
+      verProducto: false,
+      login: true,
       baseuPublicidad: '',
       baseuProducto: '',
       baseuLogos: '',
@@ -248,6 +272,8 @@ export default {
     const value = localStorage.getItem('FLAAG_SESSION_INFO')
     if (value) {
       this.getInfo()
+    } else {
+      this.login = false
     }
   },
   methods: {

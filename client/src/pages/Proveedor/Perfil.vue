@@ -186,7 +186,6 @@ export default {
   methods: {
     guardar () {
       this.$q.loading.show()
-      console.log(this.form, 'form', this.model, 'model')
       this.$api.put('editar_proveedor', this.form).then(res => {
         if (res) {
           this.$q.notify({
@@ -202,7 +201,6 @@ export default {
       var formData = new FormData()
       var files = []
       files[0] = this.perfil
-      console.log(files, 'afiles')
       formData.append('perfil', files[0])
       await this.$api.post('subir_foto_perfil/' + this.form._id, formData, {
         headers: {
@@ -238,7 +236,6 @@ export default {
     },
     async addImg () {
       this.$q.loading.show()
-      console.log('add img', this.img)
       if (this.img) {
         var formData = new FormData()
         var files = []
@@ -250,7 +247,6 @@ export default {
           }
         }).then((res) => {
           this.$q.loading.hide()
-          console.log(res, 'respuesta')
           this.form.images = res.images
         })
       }

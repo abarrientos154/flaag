@@ -43,6 +43,11 @@ addPrefixToGroup(
     Route.get("tienda_files/:file", "UploadController.tiendaFiles")
     Route.get("producto_files/:file", "UploadController.productoFiles")
 
+    Route.post("user_by_id/:id", "UserController.userById")
+    Route.get("productos/:proveedor_id", "ProductoController.productosByProveedorId")
+
+    Route.post("categorias_no_logueado/:proveedor_id", "CategoriaController.indexNoLogueado")
+
     Route.get('publicidad_img/:file', 'UploadController.getFilePublicidad')
     Route.get("publicidad", "PublicidadController.index")
     Route.get("proveedores", "UserController.proveedores")
@@ -55,7 +60,6 @@ addPrefixToGroup(
     // Insertar rutas con protección de autenticación aquí
 
     Route.get("user_info", "UserController.userInfo") // metodo para obtener informacion del usuario que esta logueado
-    Route.post("user_by_id/:id", "UserController.userById")
     Route.put("editar_proveedor", "UserController.editarP")
     Route.post("subir_foto_perfil/:id", "UploadController.subirPerfil")
     Route.post("subir_archivo_proveedor/:id", "UploadController.subirImgTienda")
@@ -70,7 +74,6 @@ addPrefixToGroup(
 
     ////////////////CATEGORIAS Y SUBCATEGORIAS//////////////////
     Route.get("categorias_y_sub", "CategoriaController.index")
-    Route.post("categorias_no_logueado/:proveedor_id", "CategoriaController.indexNoLogueado")
     ///////////////////////////////////////////////////////////////////////////
 
     //////////////////////////PRODUCTOS///////////////////////////////////////
@@ -81,7 +84,6 @@ addPrefixToGroup(
     Route.get("productos", "ProductoController.index")
     Route.post("subir_archivo_producto/:producto_id", "UploadController.subirImgProducto")
     Route.delete("eliminar_archivo_producto/:file/:producto_id", "UploadController.eliminarImgProducto")
-    Route.get("productos/:proveedor_id", "ProductoController.productosByProveedorId")
     //////////////////////////////////////////////////////////////////////////
 
   }).middleware("auth")

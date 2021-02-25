@@ -98,15 +98,12 @@ export default {
   },
   methods: {
     async registrar () {
-      console.log(this.form, 'formmmm')
-      console.log(this.perfil, 'perfilllllllll')
       this.$v.$touch()
       if (!this.$v.form.$error && !this.$v.password.$error && !this.$v.repeatPassword.$error && !this.$v.perfil.$error) {
         this.form.password = this.password
         var formData = new FormData()
         var files = []
         files[0] = this.perfil
-        console.log(files, 'afiles')
         formData.append('perfil', files[0])
         formData.append('dat', JSON.stringify(this.form))
         await this.$api.post('registrar_cliente', formData, {

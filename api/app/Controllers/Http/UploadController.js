@@ -53,7 +53,6 @@ class UploadController {
           producto.images.push(codeFile)
         }
         await producto.save()
-        console.log(producto, 'producto buscar')
         response.send(producto)
       }
     }
@@ -134,7 +133,6 @@ class UploadController {
           proveedor.images.push(codeFile)
         }
         await proveedor.save()
-        console.log(proveedor, 'proveedor buscar')
         response.send(proveedor)
       }
     }
