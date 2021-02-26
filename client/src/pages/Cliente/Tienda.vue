@@ -116,7 +116,7 @@
                     <div class="text-h4 text-bold text-primary">$ {{totalCarrito}}</div>
                 </div>
             </q-card>
-            <q-btn :disable="carrito.length ? false : true" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
+            <q-btn :disable="carrito.length ? false : true" @click="test" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -134,6 +134,8 @@
 <script>
 import DetalleProducto from '../DetalleProducto'
 import env from '../../env'
+import Flow from 'flowcl-node-api-client'
+import { openURL } from 'quasar'
 export default {
   components: { DetalleProducto },
   data () {
@@ -152,6 +154,7 @@ export default {
       subniveldosOpciones: [],
       subniveltresOpciones: [],
       user: {},
+      userLog: {},
       producto: {}
     }
   },
@@ -188,9 +191,52 @@ export default {
     const value = localStorage.getItem('FLAAG_SESSION_INFO')
     if (!value) {
       this.login = false
+    } else {
+      this.getInfo()
     }
   },
   methods: {
+    async test () {
+      var config = env.flow
+      console.log(config)
+      const optional = {
+        rut: '9999999-9',
+        otroDato: 'otroDato'
+      }
+      // Prepara el arreglo de datos
+      const params = {
+        commerceOrder: Math.floor(Math.random() * (2000 - 1100 + 1)) + 1100,
+        subject: 'Pago de prueba',
+        currency: 'CLP',
+        amount: this.totalCarrito,
+        email: this.userLog.email,
+        paymentMethod: 9,
+        urlConfirmation: config.baseURL + '/payment_confirm',
+        urlReturn: config.baseURL + '/result',
+        ...optional
+      }
+      console.log(params)
+      // Define el metodo a usar
+      const serviceName = 'payment/create'
+      try {
+        // Instancia la clase FlowApi
+        const flowApi = new Flow(config)
+        // Ejecuta el servicio
+        var response = await flowApi.send(serviceName, params, 'POST')
+        // Prepara url para redireccionar el browser del pagador
+        var redirect = response.url + '?token=' + response.token
+        openURL(redirect)
+        console.log(`location: ${redirect}`)
+      } catch (error) {
+        console.log(error.message)
+      }
+    },
+    getInfo () {
+      this.$api.get('user_info').then(res => {
+        this.userLog = res
+        console.log('user logeado', this.userLog)
+      })
+    },
     editCantidad (index, val) {
       if (val) {
         if (this.carrito[index].cantidad > 0) {
