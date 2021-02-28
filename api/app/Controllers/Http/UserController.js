@@ -4,10 +4,11 @@ const Helpers = use('Helpers')
 const mkdirp = use('mkdirp')
 const fs = require('fs')
 var randomize = require('randomatic');
+const Flow = require('flowcl-node-api-client')
 const User = use("App/Models/User")
 const Role = use("App/Models/Role")
 const { validate } = use("Validator")
-
+const Env = use('Env')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -95,6 +96,41 @@ class UserController {
     let dat = request.all()
     let enable = await User.query().where({_id: params.id}).update({status: dat.status})
     response.send(enable)
+  }
+  async flow({ request, response }) {
+    let dat = request.all()
+    var config = {
+       apiKey: Env.get('FLOW_APIKEY'),
+       secretKey: Env.get('FLOW_SECRETKEY'),
+       apiURL: Env.get('FLOW_APIURL'),
+       baseURL: Env.get('FLOW_BASEURL')
+    }
+    const params = {
+        commerceOrder: Math.floor(Math.random() * (2000 - 1100 + 1)) + 1100,
+        subject: 'Pago de prueba',
+        currency: 'CLP',
+        amount: dat.amount,
+        email: dat.email,
+        paymentMethod: 9,
+        urlConfirmation: config.baseURL + '/payment_confirm',
+        urlReturn: config.baseURL + '/result',
+      }
+    console.log(params,config)
+    const serviceName = 'payment/create'
+    try {
+        console.log(Flow)
+        // Instancia la clase FlowApi
+        const flowApi = new Flow.default(config)
+        // Ejecuta el servicio
+        var respon = await flowApi.send(serviceName, params, 'POST')
+        // Prepara url para redireccionar el browser del pagador
+        var redirect = respon.url + '?token=' + respon.token
+        console.log(`location: ${redirect}`)
+        response.send(redirect)
+      } catch (error) {
+        console.log(error)
+        response.unprocessableEntity(error.message)
+      }
   }
 
   async login({ auth, request }) {

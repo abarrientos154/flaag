@@ -134,7 +134,6 @@
 <script>
 import DetalleProducto from '../DetalleProducto'
 import env from '../../env'
-import Flow from 'flowcl-node-api-client'
 import { openURL } from 'quasar'
 export default {
   components: { DetalleProducto },
@@ -197,39 +196,18 @@ export default {
   },
   methods: {
     async test () {
-      var config = env.flow
-      console.log(config)
-      const optional = {
-        rut: '9999999-9',
-        otroDato: 'otroDato'
-      }
-      // Prepara el arreglo de datos
       const params = {
         commerceOrder: Math.floor(Math.random() * (2000 - 1100 + 1)) + 1100,
         subject: 'Pago de prueba',
         currency: 'CLP',
         amount: this.totalCarrito,
-        email: this.userLog.email,
-        paymentMethod: 9,
-        urlConfirmation: config.baseURL + '/payment_confirm',
-        urlReturn: config.baseURL + '/result',
-        ...optional
+        email: this.userLog.email
       }
-      console.log(params)
-      // Define el metodo a usar
-      const serviceName = 'payment/create'
-      try {
-        // Instancia la clase FlowApi
-        const flowApi = new Flow(config)
-        // Ejecuta el servicio
-        var response = await flowApi.send(serviceName, params, 'POST')
-        // Prepara url para redireccionar el browser del pagador
-        var redirect = response.url + '?token=' + response.token
-        openURL(redirect)
-        console.log(`location: ${redirect}`)
-      } catch (error) {
-        console.log(error.message)
-      }
+      this.$api.post('flow', params).then(v => {
+        if (v) {
+          openURL(v)
+        }
+      })
     },
     getInfo () {
       this.$api.get('user_info').then(res => {

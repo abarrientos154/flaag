@@ -67,6 +67,8 @@ addPrefixToGroup(
 
     Route.post("proveedor_status/:id", "UserController.proveedorStatus")
 
+    Route.post("flow", "UserController.flow")
+
     Route.post("publicidad", "PublicidadController.create")
     Route.put('publicidad/:id', 'PublicidadController.update')
     Route.delete('publicidad/:id', 'PublicidadController.destroy')
