@@ -84,6 +84,7 @@ export default {
             this.$router.push('/inicio')
           }
           console.log(res, 'resss')
+          this.login(res)
         } else {
           console.log('hubo un error')
         }
