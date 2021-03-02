@@ -52,7 +52,7 @@
           <div class="row justify-between" style="width: 100%">
             <div class="col-6 column justify-between">
               <q-img class="q-ml-md" src="flaagweb.png" style="width:170px" />
-              <div class="row q-gutter-md q-mb-md">
+              <div class="row q-gutter-md q-mb-md q-mt-xl">
                 <q-btn outline no-caps color="white" style="width: 160px">
                   <div class="row q-gutter-md items-center no-wrap">
                     <q-avatar size="30px"> <img src="apple.png"> </q-avatar>
@@ -77,17 +77,14 @@
               <div class="column q-gutter-sm">
                 <div class="text-bold">Acerca de Flaag</div>
                 <a class="text-white">Lee nuestro Blog</a>
-                <a class="text-white">Crear una cuenta de negocios</a>
-                <a class="text-white">Agrega tu restaurante</a>
-                <a class="text-white">Regístrate para realizar entregas</a>
+                <a class="text-white">Quieres ser parte</a>
+                <a class="text-white">Regístrate para entregas</a>
               </div>
               <div class="column q-gutter-sm">
                 <div class="text-bold">Obtén ayuda</div>
-                <a class="text-white">Lee las Preguntas frecuentes</a>
-                <a class="text-white">Conoce todas las ciudades</a>
-                <a class="text-white">Ver todos los países</a>
-                <a class="text-white">Restaurantes cerca de mí</a>
-                <a class="text-white">Ahorra en tu primer pedido</a>
+                <a class="text-white">Preguntas frecuentes</a>
+                <a class="text-white">Donde estamos ubicados</a>
+                <a class="text-white">Contáctanos</a>
                 <div class="row">
                   <q-icon name="g_translate" />
                   <div class="q-pl-md">Español</div>
@@ -106,13 +103,12 @@
               <div class="row q-gutter-md justify-end">
                 <a class="text-white">Políticas de privacidad</a>
                 <a class="text-white">Términos</a>
-                <a class="text-white">Tarifas</a>
               </div>
             </div>
           </div>
           <div class="row justify-end q-gutter-md q-mt-md" style="width: 100%">
             <div>reCAPTCHA y Google protegen este sitio. Se aplican la Política de privacidad y los Térmios del servicio</div>
-            <div>@ 2021 Flaag Technologies inc</div>
+            <div>@ 2021 Flaag</div>
           </div>
         </q-toolbar>
       </q-footer>

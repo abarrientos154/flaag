@@ -37,7 +37,7 @@
         </div>
       </q-carousel-slide>
 
-      <template v-slot:control>
+      <!-- <template v-slot:control>
         <q-carousel-control
           position="top-right"
           :offset="[18, 18]"
@@ -47,7 +47,7 @@
           <q-btn push round dense color="grey-4" text-color="black" icon="arrow_left" @click="$refs.carousel2.previous()" />
           <q-btn push round dense color="grey-4" text-color="black" icon="arrow_right" @click="$refs.carousel2.next()" />
         </q-carousel-control>
-      </template>
+      </template> -->
     </q-carousel>
     <q-separator />
 

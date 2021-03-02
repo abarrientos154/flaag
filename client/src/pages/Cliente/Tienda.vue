@@ -275,6 +275,7 @@ export default {
       this.$api.get('producto/' + id).then(res => {
         if (res) {
           this.addCarrito(res)
+          this.verCarrito = true
         }
       })
     },
