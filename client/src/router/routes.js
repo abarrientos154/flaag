@@ -25,13 +25,14 @@ const routes = [
   },
   { path: '/login', component: () => import('pages/Login.vue') },
   { path: '/registro', component: () => import('pages/Registro.vue') },
+  { path: '/splash', component: () => import('pages/Splash.vue') },
   {
     path: '/',
-    redirect: '/login'
+    redirect: '/splash'
   },
   {
     path: '*',
-    redirect: '/login'
+    redirect: '/splash'
   },
 
   // Always leave this as last one,

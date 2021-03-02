@@ -71,14 +71,19 @@ export default {
       })
       this.$api.post('login', this.form).then(res => {
         if (res) {
-          const client = res.FLAAG_SESSION_INFO.roles.find(value => value === 1)
-          if (client) {
-            this.login(res)
-            this.$router.push('/inicio')
+          if (this.$q.platform.is.mobile) {
+            if (res.FLAAG_SESSION_INFO.roles[0] === 3) {
+              this.$router.push('/inicio')
+            } else {
+              console.log('asd')
+              this.$q.notify({
+                message: 'No eres un Emprendedor'
+              })
+            }
           } else {
-            this.login(res)
             this.$router.push('/inicio')
           }
+          console.log(res, 'resss')
         } else {
           console.log('hubo un error')
         }
