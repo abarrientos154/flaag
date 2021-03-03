@@ -91,7 +91,7 @@
                 <q-item-section>
                 <q-item-label class="text-subtitle1">{{producto.nombre}}</q-item-label>
                 <div class="q-mt-sm">
-                    <q-badge class="text-subtitle2" :color="producto.oferta ? 'positive' : 'teal'" :label="!producto.oferta ? '$. ' + producto.valor : '$. ' + producto.oferta" />
+                    <q-badge class="text-subtitle2" :color="producto.oferta ? 'positive' : 'teal'" :label="!producto.oferta ? '$. ' + producto.valor : '$. ' + producto.ofertaVal" />
                 </div>
                 </q-item-section>
 
@@ -172,7 +172,7 @@ export default {
           if (!i.oferta) {
             total = total + (i.valor * i.cantidad_compra)
           } else {
-            total = total + (i.oferta * i.cantidad_compra)
+            total = total + (i.ofertaVal * i.cantidad_compra)
           }
         }
       }
@@ -247,6 +247,9 @@ export default {
           oferta: val.oferta,
           cantidad: val.cantidad - 1,
           cantidad_compra: 1
+        }
+        if (val.oferta) {
+          prod.ofertaVal = val.ofertaVal
         }
         this.carrito.push(prod)
         prod = {}

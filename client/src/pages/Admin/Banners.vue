@@ -1,17 +1,17 @@
 <template>
   <div>
-      <div class="row justify-end q-pa-md">
-          <q-btn color="primary" text-color="black" label="Nuevo" style="width: 150px" @click="form = {}, imgPublicidad = '', file = null, edit = false, addPublicidad = true" />
-      </div>
-      <q-separator />
-
       <div class="q-my-xl">
-            <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Carrusel Principal</div>
-            <q-scroll-area v-if="slPrincipal.length" horizontal style="height: 220px" class="q-ma-sm" >
+            <div class="row">
+              <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Carrusel Principal</div>
+              <div class="q-my-xl">
+                <q-btn round color="primary" text-color="black" icon="add" @click="form = {}, tipo = 'principal', imgPublicidad = '', file = null, edit = false, addPublicidad = true" />
+              </div>
+            </div>
+            <q-scroll-area v-if="slPrincipal.length" horizontal style="height: 300px" class="q-ma-sm" >
               <div class="row no-wrap">
-                <q-card clickable v-ripple class="shadow-11 q-ml-md" v-for="(card, index) in slPrincipal" :key="index">
+                <q-card clickable v-ripple class="q-ml-xl" v-for="(card, index) in slPrincipal" :key="index">
                   <q-card-section horizontal>
-                    <q-img :src="baseu + card.fileName" style="height: 200px; width: 330px" @click="form = card, imgPublicidad = baseu + card.fileName, edit = true, addPublicidad = true"></q-img>
+                    <q-img :src="baseu + card.fileName" style="height: 290px; width: 390px" @click="form = card, imgPublicidad = baseu + card.fileName, edit = true, addPublicidad = true"></q-img>
                     <q-card-actions vertical class="justify-around q-px-xs bg-black">
                         <q-toggle
                           @input="disableEnable(card._id, card.enable, card.tipo)"
@@ -27,63 +27,37 @@
                 </q-card>
               </div>
             </q-scroll-area>
-            <q-card v-else clickable v-ripple class="shadow-11" style="height: 100px; width: 360px">
-              <div class="absolute-center text-weight-bold">Crea nuevas publicidades ...</div>
+            <q-card v-else clickable v-ripple class="shadow-11 q-my-sm q-mx-xl" style="height: 100px; width: 360px">
+              <div class="absolute-center text-weight-bold">Crea una publicidad ...</div>
             </q-card>
           </div>
 
           <div class="q-my-xl">
             <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Carrusel Publicitario 1</div>
-            <q-scroll-area v-if="slPublicidad1.length" horizontal style="height: 220px" class="q-ma-sm" >
-              <div class="row no-wrap">
-              <q-card clickable v-ripple class="shadow-11 q-ml-md" v-for="(card, index) in slPublicidad1" :key="index">
+              <div class="row justify-around">
+              <q-card clickable class="col-5" v-ripple v-for="(card, index) in slPublicidad1" :key="index">
                 <q-card-section horizontal>
-                    <q-img :src="baseu + card.fileName" style="height: 200px; width: 330px" @click="form = card, imgPublicidad = baseu + card.fileName, edit = true, addPublicidad = true"></q-img>
-                    <q-card-actions vertical class="justify-around q-px-xs bg-black">
-                        <q-toggle
-                          @input="disableEnable(card._id, card.enable, card.tipo)"
-                          v-model="card.enable"
-                          checked-icon="lock_open"
-                          unchecked-icon="lock"
-                          :color="card.enable ? 'green-14' : 'red'"
-                          keep-color
-                          />
-                        <q-btn round flat color="white" size="md" text-color="red" icon="delete" @click="deletePublicidad(card._id)"/>
+                    <q-img :src="!card.caso ? baseu + card.fileName : card.fileName" style="height: 290px; width: 90%" @click="!card.caso ? irRuta(card.ruta) : ''"></q-img>
+                    <q-card-actions vertical class="q-px-xs bg-black" style="width: 10%">
+                      <q-btn round flat color="white" size="md" icon="edit" @click="!card.caso ? form = card : form = {}, !card.caso ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', !card.caso ? edit = true : edit = false, tipo = 'publicidad1', addPublicidad = true"/>
                     </q-card-actions>
                   </q-card-section>
               </q-card>
             </div>
-            </q-scroll-area>
-            <q-card v-else clickable v-ripple class="shadow-11" style="height: 100px; width: 360px">
-              <div class="absolute-center text-weight-bold">Crea nuevas publicidades ...</div>
-            </q-card>
           </div>
 
           <div class="q-my-xl">
             <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Carrusel Publicitario 2</div>
-            <q-scroll-area v-if="slPublicidad2.length" horizontal style="height: 220px" class="q-ma-sm" >
-              <div class="row no-wrap">
-              <q-card clickable v-ripple class="shadow-11 q-ml-md" v-for="(card, index) in slPublicidad2" :key="index">
+              <div class="row justify-around">
+              <q-card clickable class="col-5" v-ripple v-for="(card, index) in slPublicidad2" :key="index">
                 <q-card-section horizontal>
-                    <q-img :src="baseu + card.fileName" style="height: 200px; width: 330px" @click="form = card, imgPublicidad = baseu + card.fileName, edit = true, addPublicidad = true"></q-img>
-                    <q-card-actions vertical class="justify-around q-px-xs bg-black">
-                        <q-toggle
-                          @input="disableEnable(card._id, card.enable, card.tipo)"
-                          v-model="card.enable"
-                          checked-icon="lock_open"
-                          unchecked-icon="lock"
-                          :color="card.enable ? 'green-14' : 'red'"
-                          keep-color
-                          />
-                        <q-btn round flat color="white" size="md" text-color="red" icon="delete" @click="deletePublicidad(card._id)"/>
+                    <q-img :src="!card.caso ? baseu + card.fileName : card.fileName" style="height: 290px; width: 90%" @click="!card.caso ? irRuta(card.ruta) : ''"></q-img>
+                    <q-card-actions vertical class="q-px-xs bg-black" style="width: 10%">
+                      <q-btn round flat color="white" size="md" icon="edit" @click="!card.caso ? form = card : form = {}, !card.caso ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', !card.caso ?  edit = true : edit = false, tipo = 'publicidad2', addPublicidad = true"/>
                     </q-card-actions>
                   </q-card-section>
               </q-card>
             </div>
-            </q-scroll-area>
-            <q-card v-else clickable v-ripple class="shadow-11" style="height: 100px; width: 360px">
-              <div class="absolute-center text-weight-bold">Crea nuevas publicidades ...</div>
-            </q-card>
           </div>
 
       <q-dialog v-model="addPublicidad">
@@ -96,11 +70,6 @@
 
             <q-card-section>
                 <q-input class="q-mt-md" outlined rounded v-model="form.ruta" label="Ingrese la ruta redireccional" :error="$v.form.ruta.$error" error-message="Este campo es requerido" @blur="$v.form.ruta.$touch()" />
-                <div class="q-gutter-sm">
-                    <q-radio color="primary" v-model="form.tipo" val="principal" label="Publicidad Principal" />
-                    <q-radio color="primary" v-model="form.tipo" val="publicidad1" label="Sector publicitario 1" />
-                    <q-radio color="primary" v-model="form.tipo" val="publicidad2" label="Sector publicitario 2" />
-                </div>
             </q-card-section>
 
             <q-card-section>
@@ -139,6 +108,7 @@
 <script>
 import { required } from 'vuelidate/lib/validators'
 import env from '../../env'
+import { openURL } from 'quasar'
 export default {
   data () {
     return {
@@ -148,9 +118,8 @@ export default {
       file: null,
       imgPublicidad: '',
       enable: false,
-      form: {
-        tipo: 'principal'
-      },
+      tipo: '',
+      form: {},
       slPrincipal: [],
       slPublicidad1: [],
       slPublicidad2: []
@@ -158,7 +127,6 @@ export default {
   },
   validations: {
     form: {
-      tipo: { required },
       ruta: { required }
     },
     file: { required }
@@ -168,12 +136,27 @@ export default {
     this.baseu = env.apiUrl + '/publicidad_img/'
   },
   methods: {
+    irRuta (ruta) {
+      openURL(ruta)
+    },
     getData () {
       this.$api.get('publicidad').then(res => {
         if (res) {
           this.slPrincipal = res.filter(v => v.tipo === 'principal')
           this.slPublicidad1 = res.filter(v => v.tipo === 'publicidad1')
           this.slPublicidad2 = res.filter(v => v.tipo === 'publicidad2')
+          if (!this.slPublicidad1.length) {
+            this.slPublicidad1 = [
+              { tipo: 'publicidad1', enable: true, fileName: 'nopublicidad.jpg', caso: true },
+              { tipo: 'publicidad1', enable: true, fileName: 'nopublicidad.jpg', caso: true }
+            ]
+          }
+          if (!this.slPublicidad2.length) {
+            this.slPublicidad2 = [
+              { tipo: 'publicidad2', enable: true, fileName: 'nopublicidad.jpg', caso: true },
+              { tipo: 'publicidad2', enable: true, fileName: 'nopublicidad.jpg', caso: true }
+            ]
+          }
         }
       })
     },
@@ -188,6 +171,7 @@ export default {
       this.$v.$touch()
       if (!this.$v.form.$error && !this.$v.file.$error) {
         this.form.enable = false
+        this.form.tipo = this.tipo
         this.$q.loading.show({
           message: 'Guardando Publicidad, Por Favor Espere...'
         })

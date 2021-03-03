@@ -1,17 +1,29 @@
 <template>
   <div style="height:100%">
-      <q-img :src="baseu + perfile" spinner-color="white" style="height: 250px; width: 100%;">
+      <q-img :src="baseu + perfile" spinner-color="white" style="height: 250px; width: 100%; border-radius:25px;">
         <div class="row no-wrap justify-between" style="width:100%">
             <div class="col text-h6 text-white text-weight-bolder ellipsis">{{data.datos_proveedor.nombreEmpresa}}</div>
             <q-btn no-caps flat icon="store" label="Ir" color="white" @click="rol !== 1 ? $router.push('/tienda/' + data.datos_proveedor._id) : $router.push('/proveedor/' + data.datos_proveedor._id)" />
         </div>
-        <div class="row absolute-bottom" style="width:100%">
-          <q-icon class="col-1" name="room" color="blak" style="font-size: 1.5rem;"/>
-          <div class="q-pl-md q-pt-xs text-caption">{{data.datos_proveedor.direccionFisica}}</div>
+        <div class="row justify-between absolute-bottom" style="width:100%">
+          <div class="row">
+            <q-icon class="col-1" name="room" color="blak" style="font-size: 1.5rem;"/>
+            <div class="q-pl-md q-pt-xs text-caption">{{data.datos_proveedor.direccionFisica}}</div>
+          </div>
+          <div class="row no-wrap">
+                <q-chip v-if="!data.oferta" icon="attach_money" color="amber" class="text-caption">
+                  <div class="q-mr-md">{{data.valor}}</div>
+                </q-chip>
+                <q-chip v-if="data.oferta" icon="attach_money" color="amber" class="text-caption">
+                  <div class="q-mr-md text-strike">{{data.valor}}</div>
+                  -
+                  <div class="q-ml-md text-bold">{{data.ofertaVal}}</div>
+                </q-chip>
+          </div>
         </div>
       </q-img>
 
-      <q-card class="q-pa-sm bg-primary shadow-up-3 q-my-sm" style="border-top-left-radius:25px;border-top-right-radius:25px;border-bottom-left-radius:25px;border-bottom-right-radius:25px">
+      <q-card class="q-pa-sm bg-primary q-my-sm" style="border-radius:25px;">
           <q-item>
             <q-item-section>
               <q-item-label class="text-h6 text-weight-bolder">{{data.nombre}}</q-item-label>
@@ -29,7 +41,7 @@
         </q-scroll-area>
       </q-card>
 
-      <q-card class="bordes bg-grey-3 q-pa-md shadow-11" style="border-top-left-radius:25px;border-top-right-radius:25px;border-bottom-left-radius:25px;border-bottom-right-radius:25px;min-height:240px">
+      <q-card class="bordes bg-grey-3 q-pa-md" style="border-top-left-radius:25px;border-top-right-radius:25px;border-bottom-left-radius:25px;border-bottom-right-radius:25px;min-height:240px">
         <div class="q-pa-md">{{data.descripcion}}</div>
       </q-card>
 

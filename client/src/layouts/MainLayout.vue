@@ -51,7 +51,7 @@
         <q-toolbar class="bg-black text-white q-py-xl column">
           <div class="row justify-between" style="width: 100%">
             <div class="col-6 column justify-between">
-              <q-img class="q-ml-md" src="flaagweb.png" style="width:170px" />
+              <q-img class="q-ml-md" src="flaagfooter.png" style="width:100px" />
               <div class="row q-gutter-md q-mb-md q-mt-xl">
                 <q-btn outline no-caps color="white" style="width: 160px">
                   <div class="row q-gutter-md items-center no-wrap">

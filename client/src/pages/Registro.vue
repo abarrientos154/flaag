@@ -4,8 +4,7 @@
       <div class="text-white text-bold text-h6 text-center"> Crea tu Cuenta </div>
       <q-btn color="white" icon="arrow_back" flat style="position:absolute;top:20px;left:10px" label="volver" @click="$router.push('login')" />
     </div>
-    <div class="column items-center justify-center q-mb-sm">
-      <q-card class="q-pa-sm q-ma-sm q-mt-xl shadow-up-4 shadow-3" style="border-radius:20px;width:600px">
+    <div class="column items-center justify-center q-ma-md">
         <div class="column items-center justify-center">
           <div class="q-mb-md row justify-center">
             <q-img :src="perfil ? perfilImg : 'noimg.png'" style="width:150px;height:150px;border-radius:100%" >
@@ -65,10 +64,9 @@
             />
           </div>
         </div>
-        <q-card-actions align="center">
-          <q-btn color="primary" label="Guardar" push style="width:50%" @click="registrar()" />
-        </q-card-actions>
-      </q-card>
+        <div class="col-6 q-my-xl">
+          <q-btn color="primary" label="Guardar" style="width: 100%" push @click="registrar()" />
+        </div>
     </div>
   </div>
 </template>

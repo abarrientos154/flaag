@@ -18,66 +18,43 @@
 
     <q-carousel
       v-model="slide2"
-      ref="carousel2"
       :autoplay="autoplay2"
       @mouseenter="autoplay2 = false"
       @mouseleave="autoplay2 = true"
       swipeable
       animated
       infinite
-      height="330px"
+      height="300px"
       class="bg-transparent q-my-md"
     >
-      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slLogos" :key="index" class="column no-wrap">
-        <div class="row fit justify-around items-center no-wrap">
-          <div v-for="(img, index2) in value" :key="index2" style="height: 200px">
-            <q-avatar size="180px"><img :src="img.perfil ? baseuLogos + img._id : 'noimg.png'" @click="rol === 1 ? $router.push('/proveedor/' + img._id) : $router.push('/tienda/' + img._id)" ></q-avatar>
-            <div class="text-center text-weight-bold q-mt-sm" style="width: 180px">{{img.nombreEmpresa}}</div>
+      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slLogos" :key="index" class="column justify-center no-wrap">
+        <div class="row fit justify-around items-center no-wrap" style="width:100%">
+          <div :class="web ? 'col-2' : 'col-4'" v-for="(img, index2) in value" :key="index2" style="height: 220px">
+            <div style="width: 90%; height: 80%">
+              <q-avatar style="width: 100%; height: 100%"><img :src="img.perfil ? baseuLogos + img._id : 'noimg.png'" @click="rol === 1 ? $router.push('/proveedor/' + img._id) : $router.push('/tienda/' + img._id)" ></q-avatar>
+            </div>
+            <div class="text-center text-weight-bold q-mt-sm" style="width: 95%">{{img.nombreEmpresa}}</div>
           </div>
         </div>
       </q-carousel-slide>
-
-      <!-- <template v-slot:control>
-        <q-carousel-control
-          position="top-right"
-          :offset="[18, 18]"
-          class="q-gutter-xs"
-        >
-          <q-btn flat no-caps dense text-color="black" class="q-mr-md"><u>Ver todos</u></q-btn>
-          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_left" @click="$refs.carousel2.previous()" />
-          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_right" @click="$refs.carousel2.next()" />
-        </q-carousel-control>
-      </template> -->
     </q-carousel>
     <q-separator />
 
     <q-carousel
       v-model="slide3"
-      ref="carousel3"
+      swipeable
       animated
       infinite
       height="330px"
       class="bg-transparent q-my-md"
     >
-      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad1" :key="index" class="column no-wrap">
-        <div class="row fit justify-around items-center no-wrap">
-          <q-card clickable v-ripple class="shadow-11" v-for="(card, index2) in value" :key="index2" @click="!card.caso ? irRuta(card.ruta) : ''">
-              <q-img :src="!card.caso ? baseuPublicidad + card.fileName : card.fileName" style="height: 200px; width: 360px" />
+      <q-carousel-slide :name="1" class="column no-wrap">
+        <div class="row fit justify-around items-center no-wrap" style="width: 100%">
+          <q-card class="col-6 q-mx-sm" clickable v-ripple v-for="(card, index) in slPublicidad1" :key="index" @click="!card.caso ? irRuta(card.ruta) : ''">
+              <q-img :src="!card.caso ? baseuPublicidad + card.fileName : card.fileName" style="height: 290px; width: 100%" />
           </q-card>
         </div>
       </q-carousel-slide>
-
-      <template v-slot:control>
-        <q-carousel-control
-          position="top-right"
-          :offset="[18, 18]"
-          class="q-gutter-xs"
-        >
-          <q-btn flat no-caps dense text-color="black" class="q-mr-md"><u>Ver todos</u></q-btn>
-          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_left" @click="$refs.carousel3.previous()" />
-          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_right" @click="$refs.carousel3.next()" />
-        </q-carousel-control>
-      </template>
     </q-carousel>
     <q-separator />
 
@@ -91,9 +68,9 @@
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slNuevo" :key="index" class="column no-wrap">
         <div class="text-h5 text-bold q-ml-md">Lo nuevo en Flaag</div>
-        <div class="row fit justify-around items-center no-wrap">
-          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2" style="width: 250px">
-            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" @click="producto = card, verProducto = true" />
+        <div class="row fit justify-around items-center no-wrap" style="width: 100%">
+          <q-card :class="web ? 'col-2 q-mx-sm' : 'col-6 q-mx-sm'" v-for="(card, index2) in value" :key="index2">
+            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 100%" @click="producto = card, verProducto = true" />
 
             <q-card-section @click="producto = card, verProducto = true">
               <div class="row no-wrap items-center">
@@ -126,7 +103,6 @@
           :offset="[18, 18]"
           class="q-gutter-xs"
         >
-          <q-btn flat no-caps dense text-color="black" class="q-mr-md"><u>Ver todos</u></q-btn>
           <q-btn push round dense color="grey-4" text-color="black" icon="arrow_left" @click="$refs.carousel4.previous()" />
           <q-btn push round dense color="grey-4" text-color="black" icon="arrow_right" @click="$refs.carousel4.next()" />
         </q-carousel-control>
@@ -136,47 +112,38 @@
 
     <q-carousel
       v-model="slide5"
-      ref="carousel5"
+      swipeable
       animated
       infinite
       height="330px"
       class="bg-transparent q-my-md"
     >
-      <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slPublicidad2" :key="index" class="column no-wrap">
-        <div class="row fit justify-around items-center no-wrap">
-          <q-card clickable v-ripple class="shadow-11" v-for="(card, index2) in value" :key="index2" @click="!card.caso ? irRuta(card.ruta) : ''">
-              <q-img :src="!card.caso ? baseuPublicidad + card.fileName : card.fileName" style="height: 200px; width: 360px" />
+      <q-carousel-slide :name="1" class="column no-wrap">
+        <div class="row fit justify-around items-center no-wrap" style="width: 100%">
+          <q-card class="col-6 q-mx-sm" clickable v-ripple v-for="(card, index) in slPublicidad2" :key="index" @click="!card.caso ? irRuta(card.ruta) : ''">
+              <q-img :src="!card.caso ? baseuPublicidad + card.fileName : card.fileName" style="height: 290px; width: 100%" />
           </q-card>
         </div>
       </q-carousel-slide>
-
-      <template v-slot:control>
-        <q-carousel-control
-          position="top-right"
-          :offset="[18, 18]"
-          class="q-gutter-xs"
-        >
-          <q-btn flat no-caps dense text-color="black" class="q-mr-md"><u>Ver todos</u></q-btn>
-          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_left" @click="$refs.carousel5.previous()" />
-          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_right" @click="$refs.carousel5.next()" />
-        </q-carousel-control>
-      </template>
     </q-carousel>
     <q-separator />
 
     <q-carousel
       v-model="slide6"
-      ref="carousel6"
       animated
       infinite
+      swipeable
+      :autoplay="autoplay6"
+      @mouseenter="autoplay6 = false"
+      @mouseleave="autoplay6 = true"
       height="360px"
       class="bg-transparent q-my-md"
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slTienda" :key="index" class="column no-wrap">
-        <div class="text-h5 text-bold q-ml-md">Tienda</div>
-        <div class="row fit justify-around items-center no-wrap">
-          <q-card class="shadow-11" v-for="(card, index2) in value" :key="index2" style="width: 250px">
-            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 250px" @click="producto = card, verProducto = true" />
+        <div class="text-h5 text-bold text-center q-ml-md">Conoce nuestras tiendas</div>
+        <div class="row fit justify-around items-center no-wrap" style="width: 100%">
+          <q-card :class="web ? 'col-2' : 'col-6 q-mx-sm'" v-for="(card, index2) in value" :key="index2">
+            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 120px; width: 100%" @click="producto = card, verProducto = true" />
 
             <q-card-section @click="producto = card, verProducto = true">
               <div class="row no-wrap items-center">
@@ -202,18 +169,6 @@
           </q-card>
         </div>
       </q-carousel-slide>
-
-      <template v-slot:control>
-        <q-carousel-control
-          position="top-right"
-          :offset="[18, 18]"
-          class="q-gutter-xs"
-        >
-          <q-btn flat no-caps dense text-color="black" class="q-mr-md"><u>Ver todos</u></q-btn>
-          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_left" @click="$refs.carousel6.previous()" />
-          <q-btn push round dense color="grey-4" text-color="black" icon="arrow_right" @click="$refs.carousel6.next()" />
-        </q-carousel-control>
-      </template>
     </q-carousel>
 
     <q-dialog v-model="verProducto">
@@ -238,6 +193,7 @@ export default {
       producto: {},
       verProducto: false,
       login: true,
+      web: true,
       baseuPublicidad: '',
       baseuProducto: '',
       baseuLogos: '',
@@ -249,11 +205,12 @@ export default {
       slide6: 1,
       autoplay1: true,
       autoplay2: true,
+      autoplay3: true,
+      autoplay5: true,
+      autoplay6: true,
       slPrincipal: [],
-      slPublicidad1: {},
-      arrPublicidad1: [],
-      slPublicidad2: {},
-      arrPublicidad2: [],
+      slPublicidad1: [],
+      slPublicidad2: [],
       slTienda: {},
       arrTienda: [],
       slNuevo: {},
@@ -263,6 +220,7 @@ export default {
     }
   },
   mounted () {
+    this.web = this.$q.platform.is.desktop
     this.baseuPublicidad = env.apiUrl + '/publicidad_img/'
     this.baseuProducto = env.apiUrl + '/producto_files/'
     this.baseuLogos = env.apiUrl + '/perfil_img/'
@@ -304,8 +262,14 @@ export default {
           // arreglar el slide
           var arr = []
           var cc = 1
+          var limit = 0
+          if (this.web) {
+            limit = 5
+          } else {
+            limit = 2
+          }
           for (let i = 0; i < this.arrNuevo.length; i++) {
-            if (arr.length < 4) {
+            if (arr.length < limit) {
               arr.push(this.arrNuevo[i])
               if (i === this.arrNuevo.length - 1) {
                 this.slNuevo['slideN' + cc] = arr
@@ -322,8 +286,13 @@ export default {
           }
           arr = []
           cc = 1
+          if (this.web) {
+            limit = 4
+          } else {
+            limit = 2
+          }
           for (let i = 0; i < this.arrTienda.length; i++) {
-            if (arr.length < 4) {
+            if (arr.length < limit) {
               arr.push(this.arrTienda[i])
               if (i === this.arrTienda.length - 1) {
                 this.slTienda['slideT' + cc] = arr
@@ -345,53 +314,16 @@ export default {
       this.$api.get('publicidad').then(res => {
         if (res) {
           this.slPrincipal = res.filter(v => v.tipo === 'principal' && v.enable)
-          this.arrPublicidad1 = res.filter(v => v.tipo === 'publicidad1' && v.enable)
-          this.arrPublicidad2 = res.filter(v => v.tipo === 'publicidad2' && v.enable)
+          this.slPublicidad1 = res.filter(v => v.tipo === 'publicidad1' && v.enable)
+          this.slPublicidad2 = res.filter(v => v.tipo === 'publicidad2' && v.enable)
           if (!this.slPrincipal.length) {
             this.slPrincipal = [{ tipo: 'principal', enable: true, fileName: 'nopublicidad.jpg', caso: true }]
           }
-          if (!this.arrPublicidad1.length) {
-            this.arrPublicidad1 = [{ tipo: 'principal', enable: true, fileName: 'nopublicidad.jpg', caso: true }]
+          if (!this.slPublicidad1.length) {
+            this.slPublicidad1 = [{ tipo: 'principal', enable: true, fileName: 'nopublicidad.jpg', caso: true }]
           }
-          if (!this.arrPublicidad2.length) {
-            this.arrPublicidad2 = [{ tipo: 'principal', enable: true, fileName: 'nopublicidad.jpg', caso: true }]
-          }
-          // arreglar los slides
-          var arr = []
-          var cc = 1
-          for (let i = 0; i < this.arrPublicidad1.length; i++) {
-            if (arr.length < 3) {
-              arr.push(this.arrPublicidad1[i])
-              if (i === this.arrPublicidad1.length - 1) {
-                this.slPublicidad1['slideP' + cc] = arr
-              }
-            } else {
-              this.slPublicidad1['slideP' + cc] = arr
-              cc = cc + 1
-              arr = []
-              arr.push(this.arrPublicidad1[i])
-              if (i === this.arrPublicidad1.length - 1) {
-                this.slPublicidad1['slideP' + cc] = arr
-              }
-            }
-          }
-          arr = []
-          cc = 1
-          for (let i = 0; i < this.arrPublicidad2.length; i++) {
-            if (arr.length < 3) {
-              arr.push(this.arrPublicidad2[i])
-              if (i === this.arrPublicidad2.length - 1) {
-                this.slPublicidad2['slideP' + cc] = arr
-              }
-            } else {
-              this.slPublicidad2['slideP' + cc] = arr
-              cc = cc + 1
-              arr = []
-              arr.push(this.arrPublicidad2[i])
-              if (i === this.arrPublicidad2.length - 1) {
-                this.slPublicidad2['slideP' + cc] = arr
-              }
-            }
+          if (!this.slPublicidad2.length) {
+            this.slPublicidad2 = [{ tipo: 'principal', enable: true, fileName: 'nopublicidad.jpg', caso: true }]
           }
         }
       })
@@ -403,8 +335,14 @@ export default {
           // arreglar el slide
           var arr = []
           var cc = 1
+          var limit = 0
+          if (this.web) {
+            limit = 6
+          } else {
+            limit = 3
+          }
           for (let i = 0; i < this.arrLogos.length; i++) {
-            if (arr.length < 6) {
+            if (arr.length < limit) {
               arr.push(this.arrLogos[i])
               if (i === this.arrLogos.length - 1) {
                 this.slLogos['slideL' + cc] = arr
