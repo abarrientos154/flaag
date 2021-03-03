@@ -1,7 +1,8 @@
 <template>
   <q-page>
     <q-card class="q-ma-sm q-pa-md">
-      <div class="text-h6 text-grey-7"> Editar Producto </div>
+      <q-btn icon="arrow_back" color="primary" @click="$router.go(-1)" flat dense style="position:absolute;top:5px;left:5px" />
+      <div class="text-h6 text-grey-7 q-mt-xl"> Editar Producto </div>
       <div class="row q-pa-sm justify-around q-mt-md">
         <div class="full-width q-pa-sm">
           <q-input v-model="form.nombre" label="Nombre" outlined

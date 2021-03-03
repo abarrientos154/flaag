@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div style="position:absolute; top:5px; left: 5px; z-index:1" >
+    <div v-if="this.$q.platform.is.mobile" style="position:absolute; top:5px; left: 5px; z-index:1" >
       <q-btn color="white" flat round @click="$router.push('/index_app')" icon="arrow_back" />
     </div>
     <q-img :src="user.perfil ? baseuImgTienda : 'noimg.png'" style="height:300px; width:" >
@@ -24,7 +24,10 @@
       </q-scroll-area>
     </div>
     <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Productos</div>
-    <div class="row justify-around" v-if="filtrarProCa.length > 0">
+    <list-app v-if="this.$q.platform.is.mobile && filtrarProCa.length > 0" :data="filtrarProCa" :baseu="baseu" class="full-width"
+      @eliminarPro="confirmEliminar"
+     />
+    <div class="row justify-around" v-else-if="filtrarProCa.length > 0">
       <div class="row justify-around q-mb-lg" v-for="(card, index) in filtrarProCa" :key="index">
         <q-card class="bg-amber-3 shadow-11 bordes" style="width: 330px">
           <q-img :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'" style="width: 322px; height: 200px" />
@@ -84,7 +87,11 @@
 
 <script>
 import env from '../../env'
+import ListApp from '../../components/AppMovil/Productos'
 export default {
+  components: {
+    ListApp
+  },
   data () {
     return {
       admin: false,
@@ -110,19 +117,22 @@ export default {
     }
   },
   mounted () {
-    this.baseu = env.apiUrl + '/producto_files/'
-    if (this.$route.params.proveedor_id) {
-      this.proveedor_id = this.$route.params.proveedor_id
-      this.admin = true
-      this.getInfoById(this.proveedor_id)
-      this.getProductosByProveedor(this.proveedor_id)
-    } else {
-      this.getProductos()
-      this.getCategorias()
-      this.getInfo()
-    }
+    this.ejecutarMounted()
   },
   methods: {
+    ejecutarMounted () {
+      this.baseu = env.apiUrl + '/producto_files/'
+      if (this.$route.params.proveedor_id) {
+        this.proveedor_id = this.$route.params.proveedor_id
+        this.admin = true
+        this.getInfoById(this.proveedor_id)
+        this.getProductosByProveedor(this.proveedor_id)
+      } else {
+        this.getProductos()
+        this.getCategorias()
+        this.getInfo()
+      }
+    },
     activarB (ind) {
       const indexActual = this.categorias.findIndex(v => v.active)
       this.categorias[indexActual].active = false
@@ -193,7 +203,8 @@ export default {
             message: 'Eliminado Correctamente',
             color: 'positive'
           })
-          location.reload()
+          this.ejecutarMounted()
+          this.activarB(0)
         }
       })
     },
