@@ -1,7 +1,9 @@
 <template>
   <q-page>
+
     <q-card class="q-ma-sm q-pa-md">
-      <div class="text-h6 text-grey-7"> Agregar Producto </div>
+      <q-btn icon="arrow_back" color="primary" @click="$router.go(-1)" flat dense style="position:absolute;top:5px;left:5px" />
+      <div class="text-h6 text-grey-7 q-mt-lg"> Agregar Producto </div>
       <div class="full-width row justify-center">
         <q-avatar size="100px">
           <div style="z-index:1">
