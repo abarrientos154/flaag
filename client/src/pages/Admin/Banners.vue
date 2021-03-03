@@ -128,9 +128,9 @@
                 </div>
             </q-card-section>
 
-            <q-card-section class="row absolute-bottom justify-center q-my-md">
+            <q-card-actions class="column justify-center q-my-md">
               <q-btn color="primary" text-color="black" glossy :label="!edit ? 'Agregar' : 'Guardar'" @click="!edit ? agregarPublicidad() : editarPublicidad()" />
-            </q-card-section>
+            </q-card-actions>
         </q-card>
       </q-dialog>
   </div>
