@@ -1,6 +1,6 @@
 <template>
-  <div style="height:100%">
-      <q-img :src="baseu + perfile" spinner-color="white" style="height: 250px; width: 100%; border-radius:25px;">
+  <div style="height:100%;">
+      <q-img :src="baseu + perfile" spinner-color="white" style="height: 390px; width: 100%;">
         <div class="row no-wrap justify-between" style="width:100%">
             <div class="col text-h6 text-white text-weight-bolder ellipsis">{{data.datos_proveedor.nombreEmpresa}}</div>
             <q-btn no-caps flat icon="store" label="Ir" color="white" @click="rol !== 1 ? $router.push('/tienda/' + data.datos_proveedor._id) : $router.push('/proveedor/' + data.datos_proveedor._id)" />
@@ -23,7 +23,7 @@
         </div>
       </q-img>
 
-      <q-card class="q-pa-sm bg-primary q-my-sm" style="border-radius:25px;">
+      <div class="q-pa-sm q-my-sm">
           <q-item>
             <q-item-section>
               <q-item-label class="text-h6 text-weight-bolder">{{data.nombre}}</q-item-label>
@@ -39,11 +39,9 @@
             </q-card>
           </div>
         </q-scroll-area>
-      </q-card>
+      </div>
 
-      <q-card class="bordes bg-grey-3 q-pa-md" style="border-top-left-radius:25px;border-top-right-radius:25px;border-bottom-left-radius:25px;border-bottom-right-radius:25px;min-height:240px">
-        <div class="q-pa-md">{{data.descripcion}}</div>
-      </q-card>
+      <div class="q-mx-md q-mt-sm q-mb-md">{{data.descripcion}}</div>
 
       <div v-if="rol !== 1" class="row justify-center q-pa-sm q-mt-md">
         <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" style="width:80%" @click="login ? addCarrito() : $router.push('/login')" />

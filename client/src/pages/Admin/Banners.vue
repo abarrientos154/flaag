@@ -21,7 +21,7 @@
                           :color="card.enable ? 'green-14' : 'red'"
                           keep-color
                           />
-                        <q-btn round flat color="white" size="md" text-color="red" icon="delete" @click="deletePublicidad(card._id)"/>
+                        <q-btn round flat color="white" size="md" icon="delete" @click="deletePublicidad(card._id)"/>
                     </q-card-actions>
                   </q-card-section>
                 </q-card>
@@ -37,9 +37,9 @@
               <div class="row justify-around">
               <q-card clickable class="col-5" v-ripple v-for="(card, index) in slPublicidad1" :key="index">
                 <q-card-section horizontal>
-                    <q-img :src="!card.caso ? baseu + card.fileName : card.fileName" style="height: 290px; width: 90%" @click="!card.caso ? irRuta(card.ruta) : ''"></q-img>
+                    <q-img :src="!card.nuevo ? baseu + card.fileName : card.fileName" style="height: 290px; width: 90%" @click="!card.nuevo ? irRuta(card.ruta) : ''"></q-img>
                     <q-card-actions vertical class="q-px-xs bg-black" style="width: 10%">
-                      <q-btn round flat color="white" size="md" icon="edit" @click="!card.caso ? form = card : form = {}, !card.caso ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', !card.caso ? edit = true : edit = false, tipo = 'publicidad1', addPublicidad = true"/>
+                      <q-btn round flat color="white" size="md" icon="edit" @click="form = card, !card.nuevo ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', card.nuevo ? edit = false : edit = true, addPublicidad = true"/>
                     </q-card-actions>
                   </q-card-section>
               </q-card>
@@ -51,9 +51,9 @@
               <div class="row justify-around">
               <q-card clickable class="col-5" v-ripple v-for="(card, index) in slPublicidad2" :key="index">
                 <q-card-section horizontal>
-                    <q-img :src="!card.caso ? baseu + card.fileName : card.fileName" style="height: 290px; width: 90%" @click="!card.caso ? irRuta(card.ruta) : ''"></q-img>
+                    <q-img :src="!card.nuevo ? baseu + card.fileName : card.fileName" style="height: 290px; width: 90%" @click="!card.nuevo ? irRuta(card.ruta) : ''"></q-img>
                     <q-card-actions vertical class="q-px-xs bg-black" style="width: 10%">
-                      <q-btn round flat color="white" size="md" icon="edit" @click="!card.caso ? form = card : form = {}, !card.caso ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', !card.caso ?  edit = true : edit = false, tipo = 'publicidad2', addPublicidad = true"/>
+                      <q-btn round flat color="white" size="md" icon="edit" @click="form = card, !card.nuevo ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', card.nuevo ? edit = false : edit = true, addPublicidad = true"/>
                     </q-card-actions>
                   </q-card-section>
               </q-card>
@@ -91,14 +91,14 @@
                 <div v-if="imgPublicidad === ''" class="text-subtitle2 text-grey text-center">Carga una imagen para la publicidad</div>
                 <div v-else>
                     <q-img
-                        :src="imgPublicidad !== '' ? imgPublicidad : 'favicon.ico'"
+                        :src="imgPublicidad"
                         style="width:400px"
                     />
                 </div>
             </q-card-section>
 
             <q-card-actions class="column justify-center q-my-md">
-              <q-btn color="primary" text-color="black" glossy :label="!edit ? 'Agregar' : 'Guardar'" @click="!edit ? agregarPublicidad() : editarPublicidad()" />
+              <q-btn color="primary" text-color="black" glossy :label="!edit ? 'Agregar' : 'Guardar'" @click="!edit && !form.nuevo ? addPublicidadPrincipal() : edit && !form.nuevo ? editarPublicidad() : nuevaPublicidad()" />
             </q-card-actions>
         </q-card>
       </q-dialog>
@@ -145,18 +145,6 @@ export default {
           this.slPrincipal = res.filter(v => v.tipo === 'principal')
           this.slPublicidad1 = res.filter(v => v.tipo === 'publicidad1')
           this.slPublicidad2 = res.filter(v => v.tipo === 'publicidad2')
-          if (!this.slPublicidad1.length) {
-            this.slPublicidad1 = [
-              { tipo: 'publicidad1', enable: true, fileName: 'nopublicidad.jpg', caso: true },
-              { tipo: 'publicidad1', enable: true, fileName: 'nopublicidad.jpg', caso: true }
-            ]
-          }
-          if (!this.slPublicidad2.length) {
-            this.slPublicidad2 = [
-              { tipo: 'publicidad2', enable: true, fileName: 'nopublicidad.jpg', caso: true },
-              { tipo: 'publicidad2', enable: true, fileName: 'nopublicidad.jpg', caso: true }
-            ]
-          }
         }
       })
     },
@@ -167,7 +155,7 @@ export default {
       img = URL.createObjectURL(cc)
       this.imgPublicidad = img
     },
-    agregarPublicidad () {
+    addPublicidadPrincipal () {
       this.$v.$touch()
       if (!this.$v.form.$error && !this.$v.file.$error) {
         this.form.enable = false
@@ -205,6 +193,31 @@ export default {
         } else {
           this.form.buscar_file = false
         }
+        formData.append('dat', JSON.stringify(this.form))
+        this.$api.put('publicidad/' + this.form._id, formData, {
+          headers: {
+            'Content-Type': undefined
+          }
+        }).then(res => {
+          this.$q.loading.hide()
+          this.form = {}
+          this.file = null
+          this.imgPublicidad = ''
+          this.getData()
+          this.addPublicidad = false
+        })
+      }
+    },
+    nuevaPublicidad () {
+      this.$v.$touch()
+      if (!this.$v.form.$error && !this.$v.file.$error) {
+        this.$q.loading.show({
+          message: 'Guardando Publicidad, Por Favor Espere...'
+        })
+        var formData = new FormData()
+        this.form.buscar_file = true
+        this.form.nuevo = false
+        formData.append('files', this.file)
         formData.append('dat', JSON.stringify(this.form))
         this.$api.put('publicidad/' + this.form._id, formData, {
           headers: {

@@ -67,8 +67,8 @@
     </div>
 
     <q-dialog v-model="verProducto">
-      <q-card style="width: 100%">
-        <q-card-section>
+      <q-card style="width: 100%; height: 100%">
+        <q-card-section class="q-pa-none">
           <DetalleProducto :data="producto" lugar="tienda" @compra="addCarrito" />
         </q-card-section>
       </q-card>
