@@ -1,8 +1,27 @@
 <template>
   <q-page>
     <q-card class="q-ma-sm q-pa-md">
-      <div class="text-h6 text-grey-7"> Nuevo Producto </div>
-      <div class="row q-pa-sm justify-around q-mt-md">
+      <div class="text-h6 text-grey-7"> Agregar Producto </div>
+      <div class="full-width row justify-center">
+        <q-avatar size="100px">
+          <div style="z-index:1">
+            <q-file borderless v-model="img" class="button-camera" :disable="images.length > 4" @input="insertarImagen()" accept=".jpg, image/*">
+              <q-icon name="add_a_photo" class="absolute-center" size="30px" color="white" />
+            </q-file>
+          </div>
+        </q-avatar>
+      </div>
+      <div class="text-grey-6">Imagenes del producto (hasta 5 imagenes)</div>
+      <q-scroll-area v-if="images && images.length > 0" horizontal style="height:85px; width: 100%;" class="bg-grey-1"
+        :thumb-style="thumbStyle" :bar-style="barStyle"
+      >
+        <div class="no-wrap q-gutter-xs row" v-if="images && images.length > 0">
+          <q-img v-for="(item, index) in imagesSubir" :key="index" :src="item" style="height:80px;border-radius:12px;width:110px" >
+            <q-btn @click="images.splice(index, 1), imagesSubir.splice(index, 1)" flat class="absolute all-pointer-events" size="15px" dense icon="delete" color="negative" style="top: 0px; left: 0px" rounded />
+          </q-img>
+        </div>
+      </q-scroll-area>
+      <div class="row q-pa-sm justify-around">
         <div class="full-width q-pa-sm">
           <q-input v-model="form.nombre" label="Nombre" outlined
           />
@@ -40,26 +59,6 @@
           />
         </div>
       </div>
-      <div class="column q-mt-md q-ma-sm" style="border-radius:12px;box-shadow: -2px 2px grey;">
-        <div class="text-center text-grey-6 q-mt-lg">Imagenes del producto (hasta 5 imagenes)</div>
-        <div class="row full-width q-pa-md items-center">
-          <div class="q-gutter-xs row" v-if="images && images.length > 0">
-            <q-img v-for="(item, index) in imagesSubir" :key="index" :src="item" style="height:100px;border-radius:12px;width:140px" >
-              <q-btn @click="images.splice(index, 1), imagesSubir.splice(index, 1)" flat class="absolute all-pointer-events" size="15px" dense icon="delete" color="negative" style="top: 0px; left: 0px" rounded />
-            </q-img>
-          </div>
-          <div v-if="images.length < 5"  class="column shadow-3 justify-center items-center q-ma-sm q-ml-sm bg-grey-2" style="height:100px;border-radius:12px;width:140px">
-            <div class="text-center text-primary q-mb-sm" style="text-decoration: underline">Agregar Imagen</div>
-            <q-avatar size="50px">
-              <div style="z-index:1">
-                <q-file borderless v-model="img" class="button-camera" @input="insertarImagen()" accept=".jpg, image/*">
-                  <q-icon name="add" class="absolute-center" size="20px" color="white" />
-                </q-file>
-              </div>
-            </q-avatar>
-          </div>
-        </div>
-      </div>
 
       <q-card-actions align="center">
         <q-btn label="guardar" @click="guardar()" color="primary" push style="width:50%" />
@@ -72,6 +71,20 @@
 export default {
   data () {
     return {
+      thumbStyle: {
+        right: '4px',
+        borderRadius: '5px',
+        backgroundColor: '#027be3',
+        width: '5px',
+        opacity: 0
+      },
+      barStyle: {
+        right: '2px',
+        borderRadius: '9px',
+        backgroundColor: '#027be3',
+        width: '9px',
+        opacity: 0
+      },
       categorias: [],
       subnivelunoOpciones: [],
       subniveldosOpciones: [],
@@ -161,10 +174,9 @@ export default {
   font-size: 0px;
   color: white;
   background-color: $primary;
-  border-radius: 30px;
-  border: 1px solid #6a6a6a;
-  height:40px;
-  width:40px;
+  border-radius: 100%;
+  height:80px;
+  width:80px;
   cursor: pointer;
 }
 </style>
