@@ -13,6 +13,7 @@ const routes = [
       { path: '/proveedor/:proveedor_id', component: () => import('pages/Proveedor/ListaProductos.vue') },
       // Proveedor
       { path: '/perfil_proveedor', component: () => import('pages/Proveedor/Perfil.vue') },
+      { path: '/index_app', component: () => import('pages/Proveedor/Index.vue') },
       { path: '/producto', component: () => import('pages/Proveedor/Producto.vue') },
       { path: '/producto/:id', component: () => import('pages/Proveedor/EditarProducto.vue') },
       { path: '/productos', component: () => import('pages/Proveedor/ListaProductos.vue') },

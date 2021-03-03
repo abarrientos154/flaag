@@ -73,7 +73,7 @@ export default {
         if (res) {
           if (this.$q.platform.is.mobile) {
             if (res.FLAAG_SESSION_INFO.roles[0] === 3) {
-              this.$router.push('/inicio')
+              this.$router.push('/index_app')
             } else {
               console.log('asd')
               this.$q.notify({
