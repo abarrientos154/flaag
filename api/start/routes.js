@@ -86,6 +86,8 @@ addPrefixToGroup(
     Route.get("productos", "ProductoController.index")
     Route.post("subir_archivo_producto/:producto_id", "UploadController.subirImgProducto")
     Route.delete("eliminar_archivo_producto/:file/:producto_id", "UploadController.eliminarImgProducto")
+
+    Route.post("comprar_productos", "ProductoController.comprarProductos")
     //////////////////////////////////////////////////////////////////////////
 
   }).middleware("auth")

@@ -32,7 +32,7 @@
         <div class="row fit justify-around items-center no-wrap" style="width:100%">
           <div :class="web ? 'col-2' : 'col-4'" v-for="(img, index2) in value" :key="index2" style="height: 80%">
             <div style="width: 90%; height: 80%">
-              <q-avatar style="width: 100%; height: 100%"><img :src="img.perfil ? baseuLogos + img._id : 'noimg.png'" @click="rol === 1 ? $router.push('/proveedor/' + img._id) : $router.push('/tienda/' + img._id)" ></q-avatar>
+              <q-avatar style="width: 100%; height: 100%"><img :src="img.perfil ? baseuLogos + img._id : 'noimg.png'" @click="rol === 1 ? $router.push('/proveedor/' + img._id) : irTienda(img._id)" ></q-avatar>
             </div>
             <div class="text-center text-weight-bold q-mt-sm" style="width: 95%">{{img.nombreEmpresa}}</div>
           </div>
@@ -64,7 +64,7 @@
       ref="carousel4"
       animated
       infinite
-      height="420px"
+      height="470px"
       class="bg-transparent q-my-md"
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slNuevo" :key="index" class="column no-wrap">
@@ -90,7 +90,7 @@
 
             <q-separator />
 
-            <q-card-actions v-if="rol !== 1" align="center">
+            <q-card-actions v-if="rol === 2" align="center">
               <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
             </q-card-actions>
           </q-card>
@@ -136,7 +136,7 @@
       :autoplay="autoplay6"
       @mouseenter="autoplay6 = false"
       @mouseleave="autoplay6 = true"
-      height="420px"
+      height="470px"
       class="bg-transparent q-my-md"
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slTienda" :key="index" class="column no-wrap">
@@ -162,7 +162,7 @@
 
             <q-separator />
 
-            <q-card-actions v-if="rol !== 1" align="center">
+            <q-card-actions v-if="rol === 2" align="center">
               <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
             </q-card-actions>
           </q-card>
@@ -171,8 +171,8 @@
     </q-carousel>
 
     <q-dialog v-model="verProducto">
-      <q-card style="width: 100%; height: 100%">
-        <q-card-section class="q-pa-none">
+      <q-card style="width: 100%;">
+        <q-card-section class="q-pa-none" style="width: 100%">
           <DetalleProducto :data="producto" lugar="inicio" />
         </q-card-section>
       </q-card>
@@ -236,6 +236,22 @@ export default {
   methods: {
     irRuta (ruta) {
       openURL(ruta)
+    },
+    irTienda (id) {
+      if (this.login) {
+        this.$api.get('user_info').then(res => {
+          if (res) {
+            var mio = res._id
+            if (mio === id) {
+              this.$router.push('/mi_tienda')
+            } else {
+              this.$router.push('/tienda/' + id)
+            }
+          }
+        })
+      } else {
+        this.$router.push('/tienda/' + id)
+      }
     },
     getInfo () {
       this.$api.get('user_info').then(res => {

@@ -7,6 +7,7 @@ const Helpers = use('Helpers')
 const mkdirp = use('mkdirp')
 const Producto = use('App/Models/Producto')
 const Categoria = use('App/Models/Categoria')
+const Compras = use('App/Models/Compra')
 const fs = require('fs')
 const { validate } = use("Validator")
 var randomize = require('randomatic')
@@ -17,7 +18,8 @@ const moment = require("moment")
 class ProductoController {
 
   async productosByProveedorId ({ response, params }) {
-    let productos = (await Producto.query().where({ proveedor_id: params.proveedor_id}).with('datos_proveedor').with('categoria_info').fetch()).toJSON()
+    let filter = (await Producto.query().where({ proveedor_id: params.proveedor_id}).with('datos_proveedor').with('categoria_info').fetch()).toJSON()
+    let productos = filter.filter(v => !v.disable)
     let enviar = productos.map(v => {
       let entro = false
       if (v.oferta) {
@@ -42,7 +44,8 @@ class ProductoController {
    */
   async index ({ response, auth }) {
     let user = await auth.getUser()
-    let productos = (await Producto.query().where({ proveedor_id: user._id.toString()}).with('datos_proveedor').with('categoria_info').fetch()).toJSON()
+    let filter = (await Producto.query().where({ proveedor_id: user._id.toString()}).with('datos_proveedor').with('categoria_info').fetch()).toJSON()
+    let productos = filter.filter(v => !v.disable)
     let enviar = productos.map(v => {
       let entro = false
       if (v.oferta) {
@@ -59,7 +62,8 @@ class ProductoController {
   }
 
   async allProductos ({ response, auth }) {
-    let productos = (await Producto.query().where({}).with('datos_proveedor').fetch()).toJSON()
+    let filter = (await Producto.query().where({}).with('datos_proveedor').fetch()).toJSON()
+    let productos = filter.filter(v => !v.disable && v.datos_proveedor.status === 1)
     response.send(productos)
   }
 
@@ -119,6 +123,26 @@ class ProductoController {
       let guardar = await Producto.create(dat)
       response.send(guardar)
     }
+  }
+
+  async comprarProductos ({ request, response, auth }) {
+    const user = (await auth.getUser()).toJSON()
+    var carrito = request.all().carrito
+    console.log(user)
+    for (let i = 0; i < carrito.length; i++) {
+      var dat = {
+        producto: carrito[i]._id,
+        comprador: user._id,
+        tienda: carrito[i].proveedor_id,
+        cantidad: carrito[i].cantidad_compra
+      }
+      var compra = await Compras.create(dat)
+      var cantidad = await Producto.query().where({_id: carrito[i]._id}).update({cantidad: carrito[i].cantidad})
+      if (carrito[i].cantidad === 0) {
+        var disable = await Producto.query().where({_id: carrito[i]._id}).update({disable: true})
+      }
+    }
+    response.send(true)
   }
 
   /**
