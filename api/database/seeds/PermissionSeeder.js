@@ -33,6 +33,11 @@ const permissionData = [
     id: 4,
     name: "Productos Proveedor",
     description: "Productos del Proveedor",
+  },
+  {
+    id: 5,
+    name: "Tiendas Favoritas",
+    description: "Tiendas Favoritas",
   }
 ]
 

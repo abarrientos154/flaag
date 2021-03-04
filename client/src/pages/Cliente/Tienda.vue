@@ -1,5 +1,6 @@
 <template>
   <q-page>
+    <q-btn v-if="login" :color="favorito ? 'red': 'white' " flat :icon="favorito ? 'favorite' :'favorite_border'" round style="position:absolute;top:5px;left:5px;z-index:1" @click="addFavorito()" />
     <q-img :src="user.perfil ? baseuImgTienda : 'noimg.png'" style="height:300px; width: 100%" >
       <div class="full-width full-height">
         <div class="row absolute-center justify-center" style="width:100%">
@@ -139,6 +140,7 @@ export default {
   components: { DetalleProducto },
   data () {
     return {
+      favorito: false,
       verProducto: false,
       verCarrito: false,
       login: true,
@@ -193,8 +195,30 @@ export default {
     } else {
       this.getInfo()
     }
+    if (this.$route.params.proveedor_id && this.login) {
+      this.obtenerFavorito()
+    }
   },
   methods: {
+    addFavorito () {
+      if (this.login) {
+        if (this.favorito) {
+          this.$api.delete('favorito/' + this.proveedor_id).then(res => {
+            this.favorito = res
+          })
+        } else {
+          this.$api.post('favorito/' + this.proveedor_id).then(res => {
+            this.favorito = res
+          })
+        }
+      }
+    },
+    obtenerFavorito () {
+      this.$api.get('favorito/' + this.proveedor_id).then(res => {
+        this.favorito = res
+        console.log('FAVORITOOOO', this.favorito)
+      })
+    },
     async test () {
       const params = {
         commerceOrder: Math.floor(Math.random() * (2000 - 1100 + 1)) + 1100,

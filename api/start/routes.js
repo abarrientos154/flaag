@@ -88,5 +88,11 @@ addPrefixToGroup(
     Route.delete("eliminar_archivo_producto/:file/:producto_id", "UploadController.eliminarImgProducto")
     //////////////////////////////////////////////////////////////////////////
 
+    ///////////////////////FAVORITOS/////////////////////////////////////////
+    Route.get("favoritos", "FavoriteController.index")
+    Route.get("favorito/:proveedor_id", "FavoriteController.show")
+    Route.post("favorito/:proveedor_id", "FavoriteController.store")
+    Route.delete("favorito/:proveedor_id", "FavoriteController.destroy")
+
   }).middleware("auth")
 );

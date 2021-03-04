@@ -162,6 +162,12 @@ export default {
           permission: 3
         },
         {
+          icon: 'favorite',
+          label: 'Mis Favoritos',
+          ruta: '/tiendas_favoritas',
+          permission: 5
+        },
+        {
           icon: 'logout',
           label: 'Cerrar Sesión',
           ruta: '',
