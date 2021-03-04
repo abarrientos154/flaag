@@ -290,7 +290,7 @@ class ProveedorSeeder {
         user.telefono = i.telefono
         user.delivery = i.delivery
         user.regiones = i.regiones
-        user.perfil = i.perfil
+        user.perfil = user.perfil ? user.perfil : i.perfil
         user.roles = i.roles
         user.images = i.images
         await user.save()
