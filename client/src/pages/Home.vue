@@ -74,7 +74,7 @@
             <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, verProducto = true" >
               <div class="row no-wrap items-center" style="width: 100%;">
                 <q-icon class="col-1" name="store" size="xs"></q-icon>
-                <div class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
+                <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
               </div>
             </q-img>
 
@@ -146,7 +146,7 @@
             <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, verProducto = true" >
               <div class="row no-wrap items-center" style="width: 100%;">
                 <q-icon class="col-1" name="store" size="xs"></q-icon>
-                <div class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
+                <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
               </div>
             </q-img>
 
@@ -267,6 +267,7 @@ export default {
           if (!this.arrTienda.length) {
             this.arrTienda = [{ nombre: 'Nombre Producto', descripcion: 'Descripcion', images: ['nopublicidad.jpg'], valor: 0, caso: true }]
           }
+          console.log(this.arrTienda)
           var largo = this.arrTienda.length - 1
           for (let i = 0; i < 25; i++) {
             if (largo >= 0) {
