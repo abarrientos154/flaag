@@ -158,7 +158,7 @@ export default {
         {
           icon: 'store',
           label: 'Mi Tienda',
-          ruta: '/productos',
+          ruta: '/mi_tienda',
           permission: 3
         },
         {

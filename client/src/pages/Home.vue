@@ -32,7 +32,7 @@
         <div class="row fit justify-around items-center no-wrap" style="width:100%">
           <div :class="web ? 'col-2' : 'col-4'" v-for="(img, index2) in value" :key="index2" style="height: 80%">
             <div style="width: 90%; height: 80%">
-              <q-avatar style="width: 100%; height: 100%"><img :src="img.perfil ? baseuLogos + img._id : 'noimg.png'" @click="rol === 1 ? $router.push('/proveedor/' + img._id) : $router.push('/tienda/' + img._id)" ></q-avatar>
+              <q-avatar style="width: 100%; height: 100%"><img :src="img.perfil ? baseuLogos + img._id : 'noimg.png'" @click="rol === 1 ? $router.push('/proveedor/' + img._id) : irTienda(img._id)" ></q-avatar>
             </div>
             <div class="text-center text-weight-bold q-mt-sm" style="width: 95%">{{img.nombreEmpresa}}</div>
           </div>
@@ -64,21 +64,21 @@
       ref="carousel4"
       animated
       infinite
-      height="420px"
+      height="470px"
       class="bg-transparent q-my-md"
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slNuevo" :key="index" class="column no-wrap">
         <div class="text-h5 text-bold q-ml-md">Lo nuevo en Flaag</div>
         <div class="row fit justify-around items-center no-wrap" style="width: 100%">
           <q-card :class="web ? 'col-2 q-mx-sm' : 'col-6 q-mx-sm'" v-for="(card, index2) in value" :key="index2">
-            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, verProducto = true" >
+            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, !card.caso ? verProducto = true : ''" >
               <div class="row no-wrap items-center" style="width: 100%;">
                 <q-icon class="col-1" name="store" size="xs"></q-icon>
-                <div class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
+                <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
               </div>
             </q-img>
 
-            <q-card-section @click="producto = card, verProducto = true">
+            <q-card-section @click="producto = card, !card.caso ? verProducto = true : ''">
               <div class="row no-wrap items-center">
                 <div class="col text-subtitle2 text-bold ellipsis">{{card.nombre}}</div>
               </div>
@@ -90,7 +90,7 @@
 
             <q-separator />
 
-            <q-card-actions v-if="rol !== 1" align="center">
+            <q-card-actions v-if="rol === 2" align="center">
               <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
             </q-card-actions>
           </q-card>
@@ -136,21 +136,21 @@
       :autoplay="autoplay6"
       @mouseenter="autoplay6 = false"
       @mouseleave="autoplay6 = true"
-      height="420px"
+      height="470px"
       class="bg-transparent q-my-md"
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slTienda" :key="index" class="column no-wrap">
         <div class="text-h5 text-bold text-center q-ml-md">Conoce nuestras tiendas</div>
         <div class="row fit justify-around items-center no-wrap" style="width: 100%">
           <q-card :class="web ? 'col-2 q-mx-sm' : 'col-6 q-mx-sm'" v-for="(card, index2) in value" :key="index2">
-            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, verProducto = true" >
+            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, !card.caso ? verProducto = true : ''" >
               <div class="row no-wrap items-center" style="width: 100%;">
                 <q-icon class="col-1" name="store" size="xs"></q-icon>
-                <div class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
+                <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
               </div>
             </q-img>
 
-            <q-card-section @click="producto = card, verProducto = true">
+            <q-card-section @click="producto = card, !card.caso ? verProducto = true : ''">
               <div class="row no-wrap items-center">
                 <div class="col text-subtitle2 text-bold ellipsis">{{card.nombre}}</div>
               </div>
@@ -162,7 +162,7 @@
 
             <q-separator />
 
-            <q-card-actions v-if="rol !== 1" align="center">
+            <q-card-actions v-if="rol === 2" align="center">
               <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
             </q-card-actions>
           </q-card>
@@ -171,8 +171,8 @@
     </q-carousel>
 
     <q-dialog v-model="verProducto">
-      <q-card style="width: 100%; height: 100%">
-        <q-card-section class="q-pa-none">
+      <q-card style="width: 100%;">
+        <q-card-section class="q-pa-none" style="width: 100%">
           <DetalleProducto :data="producto" lugar="inicio" />
         </q-card-section>
       </q-card>
@@ -237,6 +237,22 @@ export default {
     irRuta (ruta) {
       openURL(ruta)
     },
+    irTienda (id) {
+      if (this.login) {
+        this.$api.get('user_info').then(res => {
+          if (res) {
+            var mio = res._id
+            if (mio === id) {
+              this.$router.push('/mi_tienda')
+            } else {
+              this.$router.push('/tienda/' + id)
+            }
+          }
+        })
+      } else {
+        this.$router.push('/tienda/' + id)
+      }
+    },
     getInfo () {
       this.$api.get('user_info').then(res => {
         if (res) {
@@ -251,6 +267,7 @@ export default {
           if (!this.arrTienda.length) {
             this.arrTienda = [{ nombre: 'Nombre Producto', descripcion: 'Descripcion', images: ['nopublicidad.jpg'], valor: 0, caso: true }]
           }
+          console.log(this.arrTienda)
           var largo = this.arrTienda.length - 1
           for (let i = 0; i < 25; i++) {
             if (largo >= 0) {
