@@ -113,7 +113,7 @@
                     <div class="text-h4 text-bold text-primary">$ {{totalCarrito}}</div>
                 </div>
             </q-card>
-            <q-btn :disable="carrito.length ? false : true" @click="comprar()" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
+            <q-btn :disable="carrito.length ? false : true" @click="test, comprar()" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
         </q-card-actions>
       </q-card>
     </q-dialog>
