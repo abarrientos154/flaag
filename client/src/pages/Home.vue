@@ -71,14 +71,14 @@
         <div class="text-h5 text-bold q-ml-md">Lo nuevo en Flaag</div>
         <div class="row fit justify-around items-center no-wrap" style="width: 100%">
           <q-card :class="web ? 'col-2 q-mx-sm' : 'col-6 q-mx-sm'" v-for="(card, index2) in value" :key="index2">
-            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, verProducto = true" >
+            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, !card.caso ? verProducto = true : ''" >
               <div class="row no-wrap items-center" style="width: 100%;">
                 <q-icon class="col-1" name="store" size="xs"></q-icon>
                 <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
               </div>
             </q-img>
 
-            <q-card-section @click="producto = card, verProducto = true">
+            <q-card-section @click="producto = card, !card.caso ? verProducto = true : ''">
               <div class="row no-wrap items-center">
                 <div class="col text-subtitle2 text-bold ellipsis">{{card.nombre}}</div>
               </div>
@@ -143,14 +143,14 @@
         <div class="text-h5 text-bold text-center q-ml-md">Conoce nuestras tiendas</div>
         <div class="row fit justify-around items-center no-wrap" style="width: 100%">
           <q-card :class="web ? 'col-2 q-mx-sm' : 'col-6 q-mx-sm'" v-for="(card, index2) in value" :key="index2">
-            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, verProducto = true" >
+            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, !card.caso ? verProducto = true : ''" >
               <div class="row no-wrap items-center" style="width: 100%;">
                 <q-icon class="col-1" name="store" size="xs"></q-icon>
                 <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
               </div>
             </q-img>
 
-            <q-card-section @click="producto = card, verProducto = true">
+            <q-card-section @click="producto = card, !card.caso ? verProducto = true : ''">
               <div class="row no-wrap items-center">
                 <div class="col text-subtitle2 text-bold ellipsis">{{card.nombre}}</div>
               </div>
