@@ -154,7 +154,8 @@ export default {
       subniveltresOpciones: [],
       user: {},
       userLog: {},
-      producto: {}
+      producto: {},
+      token: ''
     }
   },
   computed: {
@@ -179,11 +180,24 @@ export default {
       return total
     }
   },
-  mounted () {
+  async mounted () {
     this.baseu = env.apiUrl + '/producto_files/'
-    this.proveedor_id = this.$route.params.proveedor_id
-    this.getInfoById(this.proveedor_id)
-    this.getProductosByProveedor(this.proveedor_id)
+    console.log(this.$route.params)
+    if (this.$route.params.token) {
+      this.token = this.$route.params.token
+      this.response = await this.$api.get('get_info_flow/' + this.token)
+      this.getInfoById(this.response.localData.tienda_id)
+      this.getProductosByProveedor(this.response.localData.tienda_id)
+      if (this.response.flow.estatus != 1){
+        this.aprobado()
+      }
+      console.log(this.token, this.response)
+    }
+    if (this.$route.params.proveedor_id) {
+      this.proveedor_id = this.$route.params.proveedor_id
+      this.getInfoById(this.proveedor_id)
+      this.getProductosByProveedor(this.proveedor_id)
+    }
     if (this.$route.params.producto_id) {
       this.getProducto(this.$route.params.producto_id)
     }
@@ -196,6 +210,9 @@ export default {
   },
   methods: {
     async test () {
+      this.$q.loading.show({
+        message: 'Iniciando Proceso de Pago'
+      })
       const params = {
         commerceOrder: Math.floor(Math.random() * (2000 - 1100 + 1)) + 1100,
         subject: 'Pago de prueba',
@@ -203,10 +220,13 @@ export default {
         amount: this.totalCarrito,
         email: this.userLog.email
       }
-      this.$api.post('flow', params).then(v => {
+      this.$api.post('flow', params).then(async v => {
         if (v) {
-          openURL(v)
+          await this.$api.post('store_flow', { token: v.token, tienda_id: this.proveedor_id, user: this.userLog._id })
+          this.$q.loading.hide()
+          openURL(v.redirect)
         }
+        this.$q.loading.hide()
       })
     },
     getInfo () {
