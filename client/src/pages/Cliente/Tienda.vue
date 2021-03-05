@@ -114,7 +114,7 @@
                     <div class="text-h4 text-bold text-primary">$ {{totalCarrito}}</div>
                 </div>
             </q-card>
-            <q-btn :disable="carrito.length ? false : true" @click="test, comprar()" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
+            <q-btn :disable="carrito.length ? false : true" @click="test()" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -132,7 +132,6 @@
 <script>
 import DetalleProducto from '../DetalleProducto'
 import env from '../../env'
-import { openURL } from 'quasar'
 export default {
   components: { DetalleProducto },
   data () {
@@ -181,15 +180,20 @@ export default {
     }
   },
   async mounted () {
+    this.$q.loading.show({
+      message: 'Cargando Datos'
+    })
     this.baseu = env.apiUrl + '/producto_files/'
     console.log(this.$route.params)
     if (this.$route.params.token) {
       this.token = this.$route.params.token
       this.response = await this.$api.get('get_info_flow/' + this.token)
-      this.getInfoById(this.response.localData.tienda_id)
-      this.getProductosByProveedor(this.response.localData.tienda_id)
-      if (this.response.flow.estatus !== 1) {
-        this.aprobado()
+      await this.getInfoById(this.response.localData.tienda_id)
+      await this.getProductosByProveedor(this.response.localData.tienda_id)
+      this.proveedor_id = this.response.localData.tienda_id
+      console.log(this.response.flow.status)
+      if (!this.response.flow.status !== 1 && this.response.localData.status === 0) {
+        await this.aprobado()
       }
       console.log(this.token, this.response)
     }
@@ -201,6 +205,7 @@ export default {
     if (this.$route.params.producto_id) {
       this.getProducto(this.$route.params.producto_id)
     }
+    console.log(this.proveedor_id)
     const value = localStorage.getItem('FLAAG_SESSION_INFO')
     if (!value) {
       this.login = false
@@ -210,6 +215,7 @@ export default {
     if (this.$route.params.proveedor_id && this.login) {
       this.obtenerFavorito()
     }
+    this.$q.loading.hide()
   },
   methods: {
     addFavorito () {
@@ -231,13 +237,18 @@ export default {
         console.log('FAVORITOOOO', this.favorito)
       })
     },
-    comprar () {
-      this.$api.post('comprar_productos', { carrito: this.carrito }).then(res => {
+    aprobado () {
+      this.$api.post('comprar_productos', { carrito: this.response.localData.carrito, token: this.token }).then(res => {
         if (res) {
           console.log('carro', this.carrito)
           this.carrito = []
           this.getProductosByProveedor(this.proveedor_id)
           this.verCarrito = false
+          this.$q.notify({
+            message: 'Compra realizada con exito',
+            color: 'positive',
+            positive: 'positive'
+          })
         }
       })
     },
@@ -252,11 +263,12 @@ export default {
         amount: this.totalCarrito,
         email: this.userLog.email
       }
+      console.log(this.proveedor_id)
       this.$api.post('flow', params).then(async v => {
         if (v) {
-          await this.$api.post('store_flow', { token: v.token, tienda_id: this.proveedor_id, user: this.userLog._id })
+          await this.$api.post('store_flow', { token: v.token, tienda_id: this.proveedor_id, user: this.userLog._id, carrito: this.carrito, status: 0 })
           this.$q.loading.hide()
-          openURL(v.redirect)
+          location.href = v.redirect
         }
         this.$q.loading.hide()
       })

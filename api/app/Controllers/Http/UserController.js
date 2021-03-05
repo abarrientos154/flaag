@@ -145,7 +145,7 @@ class UserController {
        apiURL: Env.get('FLOW_APIURL'),
        baseURL: Env.get('FLOW_BASEURL')
     }
-    const params = {
+    const paramss = {
        token: dat
       }
     const serviceName = 'payment/getStatus'
@@ -155,12 +155,12 @@ class UserController {
         // Instancia la clase FlowApi
         const flowApi = new Flow.default(config)
         // Ejecuta el servicio
-        var respon = await flowApi.send(serviceName, params, 'get')
+        var respon = await flowApi.send(serviceName, paramss, 'get')
         // Prepara url para redireccionar el browser del pagador
         //var redirect = respon.url + '?token=' + respon.token
         console.log(`location: ${respon}`)
         const infoLocal = (await Floww.query().where({token: dat}).fetch()).toJSON()
-        response.send({flow:respon , localData: infoLocal})
+        response.send({flow:respon , localData: infoLocal[0]})
       } catch (error) {
         console.log(error)
         response.unprocessableEntity(error.message)
