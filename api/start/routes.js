@@ -1,5 +1,7 @@
 'use strict'
 
+const { route } = require('@adonisjs/framework/src/Route/Manager');
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -47,7 +49,8 @@ addPrefixToGroup(
     Route.get("productos/:proveedor_id", "ProductoController.productosByProveedorId")
 
     Route.post("categorias_no_logueado/:proveedor_id", "CategoriaController.indexNoLogueado")
-
+    Route.get("get_info_flow/:token", "UserController.flowResponse")
+    Route.post("store_flow", "UserController.store_flow")
     Route.get('publicidad_img/:file', 'UploadController.getFilePublicidad')
     Route.get("publicidad", "PublicidadController.index")
     Route.get("proveedores", "UserController.proveedores")

@@ -188,7 +188,7 @@ export default {
       this.response = await this.$api.get('get_info_flow/' + this.token)
       this.getInfoById(this.response.localData.tienda_id)
       this.getProductosByProveedor(this.response.localData.tienda_id)
-      if (this.response.flow.estatus != 1){
+      if (this.response.flow.estatus !== 1) {
         this.aprobado()
       }
       console.log(this.token, this.response)

@@ -19,6 +19,7 @@ const routes = [
       { path: '/productos', component: () => import('pages/Proveedor/ListaProductos.vue') },
       // Cliente
       { path: '/tienda/:proveedor_id', component: () => import('pages/Cliente/Tienda.vue') },
+      { path: '/tienda/verify/:token', component: () => import('pages/Cliente/Tienda.vue') },
       { path: '/tienda/:proveedor_id/:producto_id', component: () => import('pages/Cliente/Tienda.vue') },
       { path: '/payment_confirm', component: () => import('pages/Home.vue') },
       { path: '/result', component: () => import('pages/Login.vue') }
