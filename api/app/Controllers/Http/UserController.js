@@ -7,6 +7,7 @@ var randomize = require('randomatic');
 const Flow = require('flowcl-node-api-client')
 const User = use("App/Models/User")
 const Role = use("App/Models/Role")
+const Floww = use("App/Models/Flow")
 const { validate } = use("Validator")
 const Env = use('Env')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
@@ -112,13 +113,13 @@ class UserController {
         amount: dat.amount,
         email: dat.email,
         paymentMethod: 9,
-        urlConfirmation: config.baseURL + '/payment_confirm',
-        urlReturn: config.baseURL + '/result',
+        urlConfirmation: config.baseURL + '/php/respuesta_flow.php',
+        urlReturn: config.baseURL + '/php/respuesta_flow.php',
       }
-    console.log(params,config)
+    //console.log(params,config)
     const serviceName = 'payment/create'
     try {
-        console.log(Flow)
+        //console.log(Flow)
         // Instancia la clase FlowApi
         const flowApi = new Flow.default(config)
         // Ejecuta el servicio
@@ -126,13 +127,45 @@ class UserController {
         // Prepara url para redireccionar el browser del pagador
         var redirect = respon.url + '?token=' + respon.token
         console.log(`location: ${redirect}`)
-        response.send(redirect)
+        response.send({redirect, token:respon.token})
       } catch (error) {
         console.log(error)
         response.unprocessableEntity(error.message)
       }
   }
-
+  async store_flow ({request, response}) {
+    let dat = request.all()
+    Floww.create(dat)
+  }
+  async flowResponse ({params, response}) {
+    let dat = params.token
+    var config = {
+       apiKey: Env.get('FLOW_APIKEY'),
+       secretKey: Env.get('FLOW_SECRETKEY'),
+       apiURL: Env.get('FLOW_APIURL'),
+       baseURL: Env.get('FLOW_BASEURL')
+    }
+    const paramss = {
+       token: dat
+      }
+    const serviceName = 'payment/getStatus'
+    console.log(dat,'floww')
+    try {
+        //console.log(Flow)
+        // Instancia la clase FlowApi
+        const flowApi = new Flow.default(config)
+        // Ejecuta el servicio
+        var respon = await flowApi.send(serviceName, paramss, 'get')
+        // Prepara url para redireccionar el browser del pagador
+        //var redirect = respon.url + '?token=' + respon.token
+        console.log(`location: ${respon}`)
+        const infoLocal = (await Floww.query().where({token: dat}).fetch()).toJSON()
+        response.send({flow:respon , localData: infoLocal[0]})
+      } catch (error) {
+        console.log(error)
+        response.unprocessableEntity(error.message)
+      }
+  }
   async login({ auth, request }) {
     const { email, password } = request.all();
     let token = await auth.attempt(email, password)

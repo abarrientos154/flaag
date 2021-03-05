@@ -20,6 +20,7 @@ const routes = [
       { path: '/reporte_tienda', component: () => import('pages/Proveedor/Reporte.vue') },
       // Cliente
       { path: '/tienda/:proveedor_id', component: () => import('pages/Cliente/Tienda.vue') },
+      { path: '/tienda/verify/:token', component: () => import('pages/Cliente/Tienda.vue') },
       { path: '/tiendas_favoritas', component: () => import('pages/Cliente/TiendasFavoritas.vue') },
       { path: '/tienda/:proveedor_id/:producto_id', component: () => import('pages/Cliente/Tienda.vue') },
       { path: '/payment_confirm', component: () => import('pages/Home.vue') },

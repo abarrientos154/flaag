@@ -6,7 +6,7 @@
 const Helpers = use('Helpers')
 const mkdirp = use('mkdirp')
 const Producto = use('App/Models/Producto')
-const Categoria = use('App/Models/Categoria')
+const Flow = use('App/Models/Flow')
 const Compras = use('App/Models/Compra')
 const fs = require('fs')
 const { validate } = use("Validator")
@@ -147,6 +147,7 @@ class ProductoController {
         var disable = await Producto.query().where({_id: carrito[i]._id}).update({disable: true})
       }
     }
+    await Flow.query().where({token: request.all().token}).update({status: 1})
     response.send(true)
   }
 
