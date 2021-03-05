@@ -67,6 +67,11 @@ class ProductoController {
     response.send(productos)
   }
 
+  async todo ({ response, auth }) {
+    let filter = (await Producto.query().where({}).with('datos_proveedor').fetch()).toJSON()
+    response.send(filter)
+  }
+
   /**
    * Render a form to be used for creating a new producto.
    * GET productos/create

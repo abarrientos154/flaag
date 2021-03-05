@@ -52,6 +52,7 @@ addPrefixToGroup(
     Route.get("publicidad", "PublicidadController.index")
     Route.get("proveedores", "UserController.proveedores")
     Route.get("all_productos", "ProductoController.allProductos")
+    Route.get("todo", "ProductoController.todo")
   })
 );
 
@@ -95,6 +96,7 @@ addPrefixToGroup(
     Route.get("favorito/:proveedor_id", "FavoriteController.show")
     Route.post("favorito/:proveedor_id", "FavoriteController.store")
     Route.delete("favorito/:proveedor_id", "FavoriteController.destroy")
+    ///////////////////////FAVORITOS/////////////////////////////////////////
 
   }).middleware("auth")
 );

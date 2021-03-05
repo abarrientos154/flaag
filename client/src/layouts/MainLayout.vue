@@ -168,6 +168,18 @@ export default {
           permission: 5
         },
         {
+          icon: 'fact_check',
+          label: 'Reporte',
+          ruta: '/reporte_cliente',
+          permission: 6
+        },
+        {
+          icon: 'fact_check',
+          label: 'Reporte',
+          ruta: '/reporte_tienda',
+          permission: 7
+        },
+        {
           icon: 'logout',
           label: 'Cerrar Sesión',
           ruta: '',

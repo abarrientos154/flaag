@@ -38,6 +38,16 @@ const permissionData = [
     id: 5,
     name: "Tiendas Favoritas",
     description: "Tiendas Favoritas",
+  },
+  {
+    id: 6,
+    name: "Reportes Productos Vendidos Clientes ",
+    description: "Reportes Productos Vendidos Clientes",
+  },
+  {
+    id: 7,
+    name: "Reportes Productos Vendidos Proveedor ",
+    description: "Reportes Productos Vendidos Proveedor",
   }
 ]
 

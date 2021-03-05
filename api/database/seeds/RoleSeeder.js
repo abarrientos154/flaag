@@ -24,15 +24,14 @@ const roleData = [
     id: 2,
     name: 'Cliente',
     description: 'Rol de Cliente',
-    permissions: [1,5]
+    permissions: [1,5,6]
   },
   {
     id: 3,
     name: 'Proveedor',
     description: 'Rol de Proveedor',
-    permissions: [1, 3, 4]
-  },
-
+    permissions: [1, 3, 4, 7]
+  }
 ]
 
 class RoleSeeder {
