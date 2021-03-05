@@ -158,8 +158,14 @@ export default {
         {
           icon: 'store',
           label: 'Mi Tienda',
-          ruta: '/productos',
+          ruta: '/mi_tienda',
           permission: 3
+        },
+        {
+          icon: 'favorite',
+          label: 'Mis Favoritos',
+          ruta: '/tiendas_favoritas',
+          permission: 5
         },
         {
           icon: 'logout',

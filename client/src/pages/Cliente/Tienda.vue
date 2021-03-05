@@ -1,7 +1,11 @@
 <template>
   <q-page>
+    <q-btn v-if="login" :color="favorito ? 'red': 'white' " flat :icon="favorito ? 'favorite' :'favorite_border'" round style="position:absolute;top:5px;left:5px;z-index:1" @click="addFavorito()" />
     <q-img :src="user.perfil ? baseuImgTienda : 'noimg.png'" style="height:300px; width: 100%" >
       <div class="full-width full-height">
+        <div class="row bg-transparent" style="width: 100%">
+          <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="white" @click="$router.go(-1)" />
+        </div>
         <div class="row absolute-center justify-center" style="width:100%">
           <h1 class="text-h4 text-primary text-bold"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </h1>
         </div>
@@ -40,21 +44,15 @@
               <q-icon class="col-1" name="zoom_in" color="black" style="font-size: 1.3rem;"/>
               <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.cantidad}}</div>
             </div>
-            <div class="row no-wrap">
-                <q-chip v-if="!card.oferta" icon="attach_money" color="amber" class="text-caption">
-                  <div class="q-mr-md">{{card.valor}}</div>
-                </q-chip>
-                <q-chip v-if="card.oferta" icon="attach_money" color="positive" class="text-caption">
-                  <div class="q-mr-md text-strike">{{card.valor}}</div>
-                  -
-                  <div class="q-ml-md text-bold">{{card.ofertaVal}}</div>
-                </q-chip>
+            <div class="row no-wrap items-center">
+                <div v-if="!card.oferta" class="col text-subtitle2 ellipsis q-mx-sm">$ . {{card.valor}}</div>
+                <div v-if="card.oferta" class="col text-subtitle2 ellipsis q-mx-sm">$ . <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
             </div>
           </q-card-section>
 
             <q-separator />
 
-          <q-card-actions align="center">
+          <q-card-actions v-if="!login || rol === 2" align="center">
             <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? addCarrito(card) : $router.push('/login')" />
         </q-card-actions>
         </q-card>
@@ -67,8 +65,8 @@
     </div>
 
     <q-dialog v-model="verProducto">
-      <q-card style="width: 100%; height: 100%">
-        <q-card-section class="q-pa-none">
+      <q-card style="width: 100%;">
+        <q-card-section class="q-pa-none" style="width: 100%;">
           <DetalleProducto :data="producto" lugar="tienda" @compra="addCarrito" />
         </q-card-section>
       </q-card>
@@ -116,12 +114,12 @@
                     <div class="text-h4 text-bold text-primary">$ {{totalCarrito}}</div>
                 </div>
             </q-card>
-            <q-btn :disable="carrito.length ? false : true" @click="test" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
+            <q-btn :disable="carrito.length ? false : true" @click="test, comprar()" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
         </q-card-actions>
       </q-card>
     </q-dialog>
 
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-page-sticky v-if="!login || rol === 2" position="bottom-right" :offset="[18, 18]">
       <q-btn fab icon="shopping_cart" color="primary" @click="verCarrito = true" >
         <q-tooltip>
           Carrito
@@ -139,6 +137,7 @@ export default {
   components: { DetalleProducto },
   data () {
     return {
+      favorito: false,
       verProducto: false,
       verCarrito: false,
       login: true,
@@ -146,6 +145,7 @@ export default {
       baseuImgTienda: '',
       proveedor_id: '',
       buscar: 0,
+      rol: 0,
       data: [],
       carrito: [],
       categorias: [],
@@ -207,8 +207,40 @@ export default {
     } else {
       this.getInfo()
     }
+    if (this.$route.params.proveedor_id && this.login) {
+      this.obtenerFavorito()
+    }
   },
   methods: {
+    addFavorito () {
+      if (this.login) {
+        if (this.favorito) {
+          this.$api.delete('favorito/' + this.proveedor_id).then(res => {
+            this.favorito = res
+          })
+        } else {
+          this.$api.post('favorito/' + this.proveedor_id).then(res => {
+            this.favorito = res
+          })
+        }
+      }
+    },
+    obtenerFavorito () {
+      this.$api.get('favorito/' + this.proveedor_id).then(res => {
+        this.favorito = res
+        console.log('FAVORITOOOO', this.favorito)
+      })
+    },
+    comprar () {
+      this.$api.post('comprar_productos', { carrito: this.carrito }).then(res => {
+        if (res) {
+          console.log('carro', this.carrito)
+          this.carrito = []
+          this.getProductosByProveedor(this.proveedor_id)
+          this.verCarrito = false
+        }
+      })
+    },
     async test () {
       this.$q.loading.show({
         message: 'Iniciando Proceso de Pago'
@@ -232,7 +264,7 @@ export default {
     getInfo () {
       this.$api.get('user_info').then(res => {
         this.userLog = res
-        console.log('user logeado', this.userLog)
+        this.rol = res.roles[0]
       })
     },
     editCantidad (index, val) {
@@ -286,7 +318,6 @@ export default {
 
         })
       }
-      console.log('carrito', this.carrito)
     },
     activarB (ind) {
       const indexActual = this.categorias.findIndex(v => v.active)

@@ -16,10 +16,11 @@ const routes = [
       { path: '/index_app', component: () => import('pages/Proveedor/Index.vue') },
       { path: '/producto', component: () => import('pages/Proveedor/Producto.vue') },
       { path: '/producto/:id', component: () => import('pages/Proveedor/EditarProducto.vue') },
-      { path: '/productos', component: () => import('pages/Proveedor/ListaProductos.vue') },
+      { path: '/mi_tienda', component: () => import('pages/Proveedor/ListaProductos.vue') },
       // Cliente
       { path: '/tienda/:proveedor_id', component: () => import('pages/Cliente/Tienda.vue') },
       { path: '/tienda/verify/:token', component: () => import('pages/Cliente/Tienda.vue') },
+      { path: '/tiendas_favoritas', component: () => import('pages/Cliente/TiendasFavoritas.vue') },
       { path: '/tienda/:proveedor_id/:producto_id', component: () => import('pages/Cliente/Tienda.vue') },
       { path: '/payment_confirm', component: () => import('pages/Home.vue') },
       { path: '/result', component: () => import('pages/Login.vue') }

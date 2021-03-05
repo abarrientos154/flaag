@@ -5,8 +5,9 @@
     </div>
     <q-img :src="user.perfil ? baseuImgTienda : 'noimg.png'" style="height:300px; width:" >
       <div class="full-width full-height">
-        <div class="row justify-end bg-transparent" style="width: 100%">
-          <q-btn v-if="admin" no-caps rounded class="q-ma-xs" label="Editar perfil" icon="edit" color="white" text-color="black" @click="ver()" />
+        <div class="row justify-between bg-transparent" style="width: 100%">
+          <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="white" @click="$router.go(-1)" />
+          <q-btn no-caps rounded class="q-ma-xs" label="Editar perfil" icon="edit" color="white" text-color="black" @click="ver()" />
         </div>
         <div class="row absolute-center justify-center" style="width:100%">
           <h1 class="text-h4 text-primary text-bold"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </h1>
@@ -49,15 +50,9 @@
               <q-icon class="col-1" name="zoom_in" color="black" style="font-size: 1.3rem;"/>
               <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.cantidad}}</div>
             </div>
-            <div class="row no-wrap">
-                <q-chip v-if="!card.oferta" icon="attach_money" color="amber" class="text-caption">
-                  <div class="q-mr-md">{{card.valor}}</div>
-                </q-chip>
-                <q-chip v-if="card.oferta" icon="attach_money" color="positive" class="text-caption">
-                  <div class="q-mr-md text-strike">{{card.valor}}</div>
-                  -
-                  <div class="q-ml-md text-bold">{{card.ofertaVal}}</div>
-                </q-chip>
+            <div class="row no-wrap items-center">
+                <div v-if="!card.oferta" class="col text-subtitle2 ellipsis q-mx-sm">$ . {{card.valor}}</div>
+                <div v-if="card.oferta" class="col text-subtitle2 ellipsis q-mx-sm">$ . <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
             </div>
           </q-card-section>
 
@@ -230,7 +225,11 @@ export default {
       })
     },
     ver () {
-      this.$router.push('/perfil_proveedor/' + this.proveedor_id)
+      if (this.admin) {
+        this.$router.push('/perfil_proveedor/' + this.proveedor_id)
+      } else {
+        this.$router.push('/perfil_proveedor')
+      }
     },
     getProductosByProveedor (id) {
       this.$api.get('productos/' + id).then(res => {
