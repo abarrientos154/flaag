@@ -20,7 +20,7 @@ export default {
       console.log('es emprendedor')
     } else {
       console.log('no es emprendedor')
-      this.$router.push('login')
+      this.$router.push('inicio')
     }
   },
   methods: {
