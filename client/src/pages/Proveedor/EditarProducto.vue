@@ -194,9 +194,9 @@ export default {
         delete this.form.subniveltres_id
       }
     },
-    guardar () {
+    async guardar () {
       this.$q.loading.show()
-      this.$api.put('producto/' + this.producto_id, this.form).then(res => {
+      await this.$api.put('producto/' + this.producto_id, this.form).then(res => {
         if (res) {
           this.$q.notify({
             message: 'Guardado Correctamente',

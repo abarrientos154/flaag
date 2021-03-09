@@ -104,6 +104,7 @@ export default {
         files[0] = this.perfil
         formData.append('perfil', files[0])
         formData.append('dat', JSON.stringify(this.form))
+        this.$q.loading.show()
         await this.$api.post('registrar_cliente', formData, {
           headers: {
             'Content-Type': undefined
@@ -115,6 +116,7 @@ export default {
               color: 'positive'
             })
             this.$router.push('login')
+            this.$q.loading.hide()
           }
         })
       }

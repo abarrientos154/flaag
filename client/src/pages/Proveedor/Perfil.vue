@@ -6,7 +6,7 @@
       </div>
       <div class="column items-center justify-center q-mt-lg">
         <div class="q-mb-md row justify-center">
-          <q-img :src="form.perfil ? baseu : 'noimg.png'" style="width:150px;height:150px;border-radius:100%" >
+          <q-img :src="form.perfil ? baseu : form.perfilEstatico ? 'logos/' + form.id.toString() + '.jpeg' : 'noimg.png'" style="width:150px;height:150px;border-radius:100%" >
             <div class="absolute-center bg-transparent text-center" style="width: 100%">
               <div class="absolute-center" style="z-index:1">
                 <q-file borderless v-model="perfil" class="button-subir" @input="changePerfil()" accept=".jpg, image/*"

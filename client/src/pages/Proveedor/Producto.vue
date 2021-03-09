@@ -126,6 +126,7 @@ export default {
       }
     },
     async guardar () {
+      this.$q.loading.show()
       var formData = new FormData()
       var files = this.images
       if (files.length > 0) {
@@ -146,6 +147,7 @@ export default {
             color: 'positive'
           })
           this.$router.go(-1)
+          this.$q.loading.hide()
         }
       })
     },

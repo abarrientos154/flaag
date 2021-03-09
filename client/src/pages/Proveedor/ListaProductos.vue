@@ -3,7 +3,7 @@
     <div v-if="this.$q.platform.is.mobile" style="position:absolute; top:5px; left: 5px; z-index:1" >
       <q-btn color="white" flat round @click="$router.push('/index_app')" icon="arrow_back" />
     </div>
-    <q-img :src="user.perfil ? baseuImgTienda : 'noimg.png'" style="height:300px; width:" >
+    <q-img :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() : 'noimg.png'" style="height:300px; width:" >
       <div class="full-width full-height">
         <div class="row justify-between bg-transparent" style="width: 100%">
           <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="white" @click="$router.go(-1)" />

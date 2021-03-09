@@ -23,6 +23,7 @@ const userData = [
     direccionFisica: '',
     telefono: '78240525',
     delivery: false,
+    perfilEstatico: false,
     regiones: false,
     perfil: false,
     status: 1,
@@ -41,6 +42,7 @@ const userData = [
     delivery: false,
     regiones: false,
     perfil: false,
+    perfilEstatico: true,
     status: 1,
     dias: [],
     roles: [3],
@@ -60,7 +62,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: true
   },
   {
     id: 4,
@@ -76,7 +79,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: false
   },
   {
     id: 5,
@@ -92,7 +96,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: true
   },
   {
     id: 6,
@@ -108,7 +113,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: true
   },
   {
     id: 7,
@@ -124,7 +130,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: false
   },
   {
     id: 8,
@@ -140,7 +147,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: false
   },
   {
     id: 9,
@@ -156,7 +164,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: false
   },
   {
     id: 10,
@@ -172,7 +181,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: true
   },
   {
     id: 11,
@@ -188,7 +198,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: false
   },
   {
     id: 12,
@@ -204,7 +215,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: false
   },
   {
     id: 13,
@@ -220,7 +232,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: true
   },
   {
     id: 14,
@@ -236,7 +249,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: true
   },
   {
     id: 15,
@@ -252,7 +266,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: true
   },
   {
     id: 16,
@@ -268,7 +283,8 @@ const userData = [
     status: 1,
     dias: [],
     roles: [3],
-    images: []
+    images: [],
+    perfilEstatico: false
   }
 ]
 
@@ -290,7 +306,8 @@ class ProveedorSeeder {
         user.telefono = i.telefono
         user.delivery = i.delivery
         user.regiones = i.regiones
-        user.perfil = user.perfil ? user.perfil : i.perfil
+        user.perfil = user.perfil ? user.perfil : i.perfil,
+        user.perfilEstatico = i.perfilEstatico
         user.roles = i.roles
         user.images = i.images
         await user.save()

@@ -102,7 +102,7 @@ class UploadController {
       if (!profilePic.moved()) {
         return profilePic.error()
       } else {
-        user = await User.query().where({_id: id}).update({perfil: true})
+        user = await User.query().where({_id: id}).update({perfil: true, perfilEstatico: false})
         response.send(user)
       }
     }

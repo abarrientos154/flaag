@@ -4,7 +4,7 @@
     <div v-if="data.length > 0" class="row q-mt-lg q-gutter-sm q-mb-md justify-around q-ml-xs">
       <q-card style="width:300px;height:350px;border-radius:12px" class="bordes bg-amber-3" v-for="(item, index) in data" :key="index"
       >
-        <img :src="item.info_tienda.perfil ? baseuImgTienda + item.info_tienda._id : 'noimg.png'" style="height:300px; width: 100%"
+        <img :src="item.info_tienda.perfil ? baseuImgTienda + item.info_tienda._id : item.info_tienda.perfilEstatico ? 'logos/' + item.info_tienda.id.toString() + '.jpeg' : 'noimg.png'" style="height:300px; width: 100%"
         />
         <div class="text-center text-bold text-h5"> {{item.info_tienda.nombreEmpresa}} </div>
         <div style="position:absolute;top:5px;left:5px;z-index:2" class="column">
