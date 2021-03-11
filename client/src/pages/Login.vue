@@ -71,19 +71,7 @@ export default {
       })
       this.$api.post('login', this.form).then(res => {
         if (res) {
-          if (this.$q.platform.is.mobile) {
-            if (res.FLAAG_SESSION_INFO.roles[0] === 3) {
-              this.$router.push('/index_app')
-            } else {
-              console.log('asd')
-              this.$q.notify({
-                message: 'No eres un Emprendedor'
-              })
-            }
-          } else {
-            this.$router.push('/inicio')
-          }
-          console.log(res, 'resss')
+          this.$router.push('/inicio')
           this.login(res)
         } else {
           console.log('hubo un error')
