@@ -43,7 +43,7 @@
               style="border-radius:12px; height: 320px; width: 240px"
               @click="producto = card, verProducto = true">
             </q-img>
-            <div class="q-ma-sm">
+            <div class="q-ma-sm" style="width:240px">
                 <div class="row no-wrap items-center">
                   <div class="col text-h6 text-bold ellipsis">{{card.nombre}}</div>
                 </div>
@@ -69,7 +69,7 @@
                 </div>
               </div>
 
-              <div class="row justify-between">
+              <div class="row justify-around">
                 <q-btn no-caps label="Eliminar" icon="delete" color="negative" @click="confirmEliminar(card._id)" size="sm" class="col-5 q-mr-sm"/>
                 <q-btn no-caps label="Editar" icon="edit" color="primary" @click="$router.push('/producto/' + card._id)" size="sm" class="col-5" />
               </div>

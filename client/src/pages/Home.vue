@@ -16,10 +16,10 @@
 
     <q-scroll-area
         horizontal
-        style="height: 300px;"
+        style="height: 320px;"
       >
-        <div class="row no-wrap q-py-md q-px-xl">
-          <div v-for="(card, index) in arrLogos" :key="index" class="q-mr-xl" >
+        <div class="row no-wrap q-py-md q-px-xl q-gutter-xl">
+          <div v-for="(card, index) in arrLogos" :key="index" >
             <q-img
               :src="card.perfil ? baseuLogos + card._id : 'noimg.png'"
               spinner-color="white"
@@ -91,7 +91,7 @@
               style="border-radius:12px; height: 260px; width: 180px"
               @click="producto = card, !card.caso ? verProducto = true : ''">
             </q-img>
-            <div class="q-ma-sm" @click="producto = card, !card.caso ? verProducto = true : ''">
+            <div class="q-ma-sm" style="width: 180px" @click="producto = card, !card.caso ? verProducto = true : ''">
                 <div class="row no-wrap items-center">
                   <q-icon class="col-1" name="store" size="xs"></q-icon>
                   <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
@@ -147,7 +147,7 @@
               style="border-radius:12px; height: 260px; width: 180px"
               @click="producto = card, !card.caso ? verProducto = true : ''">
             </q-img>
-            <div class="q-ma-sm" @click="producto = card, !card.caso ? verProducto = true : ''">
+            <div class="q-ma-sm" style="width: 180px" @click="producto = card, !card.caso ? verProducto = true : ''">
                 <div class="row no-wrap items-center">
                   <q-icon class="col-1" name="store" size="xs"></q-icon>
                   <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>

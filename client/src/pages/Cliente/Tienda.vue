@@ -37,7 +37,7 @@
               style="border-radius:12px; height: 320px; width: 240px"
               @click="producto = card, verProducto = true">
             </q-img>
-            <div class="q-ma-sm">
+            <div class="q-ma-sm" style="width:240px">
                 <div class="row no-wrap items-center">
                   <div class="col text-h6 text-bold ellipsis">{{card.nombre}}</div>
                 </div>
