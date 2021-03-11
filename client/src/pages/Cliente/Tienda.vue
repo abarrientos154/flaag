@@ -240,7 +240,7 @@ export default {
       await this.getProductosByProveedor(this.response.localData.tienda_id)
       this.proveedor_id = this.response.localData.tienda_id
       console.log(this.response.flow.status)
-      if (!this.response.flow.status !== 1 && this.response.localData.status === 0) {
+      if (this.response.flow.status === 2) {
         await this.aprobado()
       }
       console.log(this.token, this.response)
