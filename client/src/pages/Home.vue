@@ -11,9 +11,9 @@
         @mouseleave="autoplay1 = true"
         >
         <q-carousel-slide :name="index + 1" :img-src="!img.caso ? baseuPublicidad + img.fileName : img.fileName"  v-for="(img, index) in slPrincipal" :key="index" @click="!img.caso ? irRuta(img.ruta) : ''">
-            <div class="absolute-center bg-transparent q-mx-md" style="width: 100%">
+            <!-- <div class="absolute-center bg-transparent q-mx-md" style="width: 100%">
                 <div :class="web ? 'text-h2 text-bold text-black q-mx-md' : 'text-h3 text-bold text-black q-mx-md'">¿Tienes hambre? Estás en el lugar correcto</div>
-            </div>
+            </div> -->
         </q-carousel-slide>
     </q-carousel>
 
@@ -30,9 +30,13 @@
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slLogos" :key="index" class="column justify-center no-wrap">
         <div class="row fit justify-around items-center no-wrap" style="width:100%">
-          <div :class="web ? 'col-2' : 'col-4'" v-for="(img, index2) in value" :key="index2" style="height: 80%">
+          <div :class="web ? 'col-2 column justify-center' : 'col-4 column justify-center'" v-for="(img, index2) in value" :key="index2" style="height: 90%">
             <div style="width: 90%; height: 80%">
-              <q-avatar style="width: 100%; height: 100%"><img :src="img.perfil ? baseuLogos + img._id : 'noimg.png'" @click="rol === 1 ? $router.push('/proveedor/' + img._id) : irTienda(img._id)" ></q-avatar>
+              <q-avatar style="width: 100%; height: 100%">
+                <img
+                  :src="img.perfil ? baseuLogos + img._id : 'noimg.png'"
+                  @click="rol === 1 ? $router.push('/proveedor/' + img._id) : irTienda(img._id)" >
+              </q-avatar>
             </div>
             <div class="text-center text-weight-bold q-mt-sm" style="width: 95%">{{img.nombreEmpresa}}</div>
           </div>
@@ -70,30 +74,27 @@
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slNuevo" :key="index" class="column no-wrap">
         <div class="text-h5 text-bold q-ml-md">Lo nuevo en Flaag</div>
         <div class="row fit justify-around items-center no-wrap" style="width: 100%">
-          <q-card :class="web ? 'col-2 q-mx-sm' : 'col-6 q-mx-sm'" v-for="(card, index2) in value" :key="index2">
-            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, !card.caso ? verProducto = true : ''" >
-              <div class="row no-wrap items-center" style="width: 100%;">
-                <q-icon class="col-1" name="store" size="xs"></q-icon>
-                <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
-              </div>
-            </q-img>
+          <div :class="web ? 'col-2 q-mx-sm' : 'col-6 q-mx-sm'" v-for="(card, index2) in value" :key="index2">
+              <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%; border-radius: 34px" @click="producto = card, !card.caso ? verProducto = true : ''" />
 
-            <q-card-section @click="producto = card, !card.caso ? verProducto = true : ''">
-              <div class="row no-wrap items-center">
-                <div class="col text-subtitle2 text-bold ellipsis">{{card.nombre}}</div>
+              <div class="q-ma-sm" @click="producto = card, !card.caso ? verProducto = true : ''">
+                <div class="row no-wrap items-center">
+                  <q-icon class="col-1" name="store" size="xs"></q-icon>
+                  <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
+                </div>
+                <div class="row no-wrap items-center">
+                  <div class="col text-subtitle2 text-bold ellipsis">{{card.nombre}}</div>
+                </div>
+                <div class="row no-wrap items-center">
+                  <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
+                  <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+                </div>
               </div>
-              <div class="row no-wrap items-center">
-                <div v-if="!card.oferta" class="col text-subtitle2 ellipsis">$ . {{card.valor}}</div>
-                <div v-if="card.oferta" class="col text-subtitle2 ellipsis">$ . <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+
+              <div v-if="rol === 2" class="row justify-center">
+                <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
               </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-actions v-if="rol === 2" align="center">
-              <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
-            </q-card-actions>
-          </q-card>
+          </div>
         </div>
       </q-carousel-slide>
 
@@ -142,30 +143,27 @@
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slTienda" :key="index" class="column no-wrap">
         <div class="text-h5 text-bold text-center q-ml-md">Conoce nuestras tiendas</div>
         <div class="row fit justify-around items-center no-wrap" style="width: 100%">
-          <q-card :class="web ? 'col-2 q-mx-sm' : 'col-6 q-mx-sm'" v-for="(card, index2) in value" :key="index2">
-            <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%" @click="producto = card, !card.caso ? verProducto = true : ''" >
-              <div class="row no-wrap items-center" style="width: 100%;">
-                <q-icon class="col-1" name="store" size="xs"></q-icon>
-                <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
-              </div>
-            </q-img>
+          <div :class="web ? 'col-2 q-mx-sm' : 'col-6 q-mx-sm'" v-for="(card, index2) in value" :key="index2">
+              <q-img :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]" style="height: 240px; width: 100%; border-radius: 34px" @click="producto = card, !card.caso ? verProducto = true : ''" />
 
-            <q-card-section @click="producto = card, !card.caso ? verProducto = true : ''">
-              <div class="row no-wrap items-center">
-                <div class="col text-subtitle2 text-bold ellipsis">{{card.nombre}}</div>
+              <div class="q-ma-sm" @click="producto = card, !card.caso ? verProducto = true : ''">
+                <div class="row no-wrap items-center">
+                  <q-icon class="col-1" name="store" size="xs"></q-icon>
+                  <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
+                </div>
+                <div class="row no-wrap items-center">
+                  <div class="col text-subtitle2 text-bold ellipsis">{{card.nombre}}</div>
+                </div>
+                <div class="row no-wrap items-center">
+                  <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
+                  <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+                </div>
               </div>
-              <div class="row no-wrap items-center">
-                <div v-if="!card.oferta" class="col text-subtitle2 ellipsis">$ . {{card.valor}}</div>
-                <div v-if="card.oferta" class="col text-subtitle2 ellipsis">$ . <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+
+              <div v-if="rol === 2" class="row justify-center">
+                <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
               </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-actions v-if="rol === 2" align="center">
-              <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
-            </q-card-actions>
-          </q-card>
+          </div>
         </div>
       </q-carousel-slide>
     </q-carousel>
