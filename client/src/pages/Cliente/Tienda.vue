@@ -22,7 +22,55 @@
       </q-scroll-area>
     </div>
     <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Productos</div>
-    <div class="row justify-around" v-if="filtrarProCa.length > 0">
+
+    <q-scroll-area
+        v-if="filtrarProCa.length > 0"
+        horizontal
+        class="q-mt-xl q-mb-xl"
+        style="height: 590px;"
+      >
+        <div class="row no-wrap q-py-md q-px-xl">
+          <div v-for="(card, index) in filtrarProCa" :key="index" class="q-mr-xl" >
+            <q-img
+              :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'"
+              spinner-color="white"
+              style="border-radius:12px; height: 320px; width: 240px"
+              @click="producto = card, verProducto = true">
+            </q-img>
+            <div class="q-ma-sm">
+                <div class="row no-wrap items-center">
+                  <div class="col text-h6 text-bold ellipsis">{{card.nombre}}</div>
+                </div>
+                <div class="row no-wrap items-center">
+                  <q-icon class="col-1" name="store" color="black" style="font-size: 1.3rem;"></q-icon>
+                  <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
+                </div>
+                <div class="row" style="width:100%">
+                  <q-icon class="col-1" name="description" color="black" style="font-size: 1.3rem;"/>
+                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.descripcion}}</div>
+                </div>
+                <div class="row" style="width:100%">
+                  <q-icon class="col-1" name="category" color="black" style="font-size: 1.3rem;"/>
+                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.categoria_info.nombre}}</div>
+                </div>
+                <div class="row" style="width:100%">
+                  <q-icon class="col-1" name="zoom_in" color="black" style="font-size: 1.3rem;"/>
+                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.cantidad}}</div>
+                </div>
+                <div class="row no-wrap items-center">
+                  <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
+                  <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+                </div>
+              </div>
+
+              <div v-if="!login || rol === 2" class="row justify-center">
+                <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
+              </div>
+          </div>
+        </div>
+      </q-scroll-area>
+
+    <!-- <div class="row justify-around" v-if="filtrarProCa.length > 0">
       <div class="row justify-around q-mb-lg" v-for="(card, index) in filtrarProCa" :key="index">
         <q-card class="bg-amber-3 shadow-11 bordes" style="width: 330px">
           <q-img :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'" style="width: 322px; height: 200px" @click="producto = card, verProducto = true" />
@@ -57,7 +105,7 @@
         </q-card-actions>
         </q-card>
       </div>
-    </div>
+    </div> -->
     <div v-else class="row justify-center full-width full-height items-center q-pa-xl">
       <div class="text-h5">
         :( Sin Nada Por Aqui
