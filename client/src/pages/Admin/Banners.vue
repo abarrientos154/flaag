@@ -1,17 +1,26 @@
 <template>
   <div>
-      <div class="q-my-xl">
-            <div class="row">
-              <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Carrusel Principal</div>
-              <div class="q-my-xl">
+      <div :class="web ? 'q-my-xl' : 'q-my-sm'">
+            <div v-if="web" class="row">
+              <div class="text-h5 estilo-titulos text-center text-weight-bold q-ml-md q-mr-sm q-my-xl">Carrusel Principal</div>
+              <div class="q-mt-xl">
                 <q-btn round color="primary" text-color="black" icon="add" @click="form = {}, tipo = 'principal', imgPublicidad = '', file = null, edit = false, addPublicidad = true" />
               </div>
             </div>
-            <q-scroll-area v-if="slPrincipal.length" horizontal style="height: 300px" class="q-ma-sm" >
+            <div v-else class="row justify-between">
+              <div class="col-9 text-h5 estilo-titulos text-center text-weight-bold q-ml-md q-mr-xs q-my-md">Carrusel Principal</div>
+              <div class="col-2 q-mt-md">
+                <q-btn round color="primary" text-color="black" icon="add" @click="form = {}, tipo = 'principal', imgPublicidad = '', file = null, edit = false, addPublicidad = true" />
+              </div>
+            </div>
+            <q-scroll-area v-if="slPrincipal.length" horizontal :style="web ? 'height: 310px' : 'height: 200px'" class="q-ma-sm" >
               <div class="row no-wrap">
-                <q-card clickable v-ripple class="q-ml-xl" v-for="(card, index) in slPrincipal" :key="index">
+                <q-card clickable v-ripple :class="web ? 'q-ml-xl' : 'q-ml-sm'" v-for="(card, index) in slPrincipal" :key="index">
                   <q-card-section horizontal>
-                    <q-img :src="baseu + card.fileName" style="height: 290px; width: 390px" @click="form = card, imgPublicidad = baseu + card.fileName, edit = true, addPublicidad = true"></q-img>
+                    <q-img
+                      :src="baseu + card.fileName"
+                      :style="web ? 'height: 290px; width: 390px' : 'height: 180px; width: 280px'"
+                      @click="form = card, imgPublicidad = baseu + card.fileName, edit = true, addPublicidad = true" />
                     <q-card-actions vertical class="justify-around q-px-xs bg-black">
                         <q-toggle
                           @input="disableEnable(card._id, card.enable, card.tipo)"
@@ -35,10 +44,10 @@
           <div class="q-my-xl">
             <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Carrusel Publicitario 1</div>
               <div class="row justify-around">
-              <q-card clickable class="col-5" v-ripple v-for="(card, index) in slPublicidad1" :key="index">
+              <q-card clickable :class="web ? 'col-5 bg-black' : 'col-11 q-mb-md'" v-ripple v-for="(card, index) in slPublicidad1" :key="index">
                 <q-card-section horizontal>
                     <q-img :src="!card.nuevo ? baseu + card.fileName : card.fileName" style="height: 290px; width: 90%" @click="!card.nuevo ? irRuta(card.ruta) : ''"></q-img>
-                    <q-card-actions vertical class="q-px-xs bg-black" style="width: 10%">
+                    <q-card-actions vertical class="q-px-xs bg-black">
                       <q-btn round flat color="white" size="md" icon="edit" @click="form = card, !card.nuevo ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', card.nuevo ? edit = false : edit = true, addPublicidad = true"/>
                     </q-card-actions>
                   </q-card-section>
@@ -49,10 +58,10 @@
           <div class="q-my-xl">
             <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Carrusel Publicitario 2</div>
               <div class="row justify-around">
-              <q-card clickable class="col-5" v-ripple v-for="(card, index) in slPublicidad2" :key="index">
+              <q-card clickable :class="web ? 'col-5 bg-black' : 'col-11 q-mb-md'" v-ripple v-for="(card, index) in slPublicidad2" :key="index">
                 <q-card-section horizontal>
                     <q-img :src="!card.nuevo ? baseu + card.fileName : card.fileName" style="height: 290px; width: 90%" @click="!card.nuevo ? irRuta(card.ruta) : ''"></q-img>
-                    <q-card-actions vertical class="q-px-xs bg-black" style="width: 10%">
+                    <q-card-actions vertical class="q-px-xs bg-black">
                       <q-btn round flat color="white" size="md" icon="edit" @click="form = card, !card.nuevo ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', card.nuevo ? edit = false : edit = true, addPublicidad = true"/>
                     </q-card-actions>
                   </q-card-section>
@@ -113,6 +122,7 @@ export default {
   data () {
     return {
       baseu: '',
+      web: true,
       addPublicidad: false,
       edit: false,
       file: null,
@@ -132,6 +142,7 @@ export default {
     file: { required }
   },
   mounted () {
+    this.web = this.$q.platform.is.desktop
     this.getData()
     this.baseu = env.apiUrl + '/publicidad_img/'
   },
@@ -287,7 +298,6 @@ export default {
 <style>
 .estilo-titulos {
   background-color: #fff599;
-  width: 300px;
   border-radius: 12px
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <q-page>
-    <div v-if="this.$q.platform.is.mobile" style="position:absolute; top:5px; left: 5px; z-index:1" >
+    <!-- <div v-if="this.$q.platform.is.mobile" style="position:absolute; top:5px; left: 5px; z-index:1" >
       <q-btn color="white" flat round @click="$router.push('/index_app')" icon="arrow_back" />
-    </div>
+    </div> -->
     <q-img :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'" style="height:300px; width:" >
       <div class="full-width full-height">
         <div class="row justify-between bg-transparent" style="width: 100%">
@@ -25,18 +25,18 @@
       </q-scroll-area>
     </div>
     <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Productos</div>
-    <list-app v-if="this.$q.platform.is.mobile && filtrarProCa.length > 0" :data="filtrarProCa" :baseu="baseu" class="full-width"
+    <!-- <list-app v-if="this.$q.platform.is.mobile && filtrarProCa.length > 0" :data="filtrarProCa" :baseu="baseu" class="full-width"
       @eliminarPro="confirmEliminar"
-     />
+     /> -->
 
     <q-scroll-area
-        v-else-if="filtrarProCa.length > 0"
+        v-if="filtrarProCa.length > 0"
         horizontal
         class="q-mt-xl q-mb-xl"
         style="height: 590px;"
       >
-        <div class="row no-wrap q-py-md q-px-xl">
-          <div v-for="(card, index) in filtrarProCa" :key="index" class="q-mr-xl" >
+        <div class="row no-wrap q-py-md q-px-xl q-gutter-xl">
+          <div v-for="(card, index) in filtrarProCa" :key="index">
             <q-img
               :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'"
               spinner-color="white"
@@ -69,7 +69,7 @@
                 </div>
               </div>
 
-              <div class="row justify-around">
+              <div class="row justify-around" style="width:240px">
                 <q-btn no-caps label="Eliminar" icon="delete" color="negative" @click="confirmEliminar(card._id)" size="sm" class="col-5 q-mr-sm"/>
                 <q-btn no-caps label="Editar" icon="edit" color="primary" @click="$router.push('/producto/' + card._id)" size="sm" class="col-5" />
               </div>
@@ -131,11 +131,11 @@
 
 <script>
 import env from '../../env'
-import ListApp from '../../components/AppMovil/Productos'
+// import ListApp from '../../components/AppMovil/Productos'
 export default {
-  components: {
+  /* components: {
     ListApp
-  },
+  }, */
   data () {
     return {
       admin: false,

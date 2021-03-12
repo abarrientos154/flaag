@@ -21,7 +21,7 @@
         <div class="row no-wrap q-py-md q-px-xl q-gutter-xl">
           <div v-for="(card, index) in arrLogos" :key="index" >
             <q-img
-              :src="card.perfil ? baseuLogos + card._id : 'noimg.png'"
+              :src="card.perfil ? baseuLogos + card._id : card.perfilEstatico ? 'logos/' + card.id.toString() + '.jpeg' : 'noimg.png'"
               spinner-color="white"
               style="border-radius:100%; height: 200px; width: 200px"
               @click="rol === 1 ? $router.push('/proveedor/' + card._id) : irTienda(card._id)">
@@ -83,8 +83,8 @@
         horizontal
         style="height: 430px;"
       >
-        <div class="row no-wrap q-py-md q-px-xl">
-          <div v-for="(card, index) in arrNuevo" :key="index" class="q-mr-xl" >
+        <div class="row no-wrap q-py-md q-px-xl q-gutter-xl">
+          <div v-for="(card, index) in arrNuevo" :key="index" >
             <q-img
               :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]"
               spinner-color="white"
@@ -139,8 +139,8 @@
         horizontal
         style="height: 430px;"
       >
-        <div class="row no-wrap q-py-md q-px-xl">
-          <div v-for="(card, index) in arrTienda" :key="index" class="q-mr-xl" >
+        <div class="row no-wrap q-py-md q-px-xl q-gutter-xl">
+          <div v-for="(card, index) in arrTienda" :key="index" >
             <q-img
               :src="!card.caso ? baseuProducto + card.images[0] : card.images[0]"
               spinner-color="white"

@@ -29,8 +29,8 @@
         class="q-mt-xl q-mb-xl"
         style="height: 590px;"
       >
-        <div class="row no-wrap q-py-md q-px-xl">
-          <div v-for="(card, index) in filtrarProCa" :key="index" class="q-mr-xl" >
+        <div class="row no-wrap q-py-md q-px-xl q-gutter-xl">
+          <div v-for="(card, index) in filtrarProCa" :key="index" >
             <q-img
               :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'"
               spinner-color="white"

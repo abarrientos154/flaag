@@ -3,9 +3,9 @@
         <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Emprendedores</div>
 
         <div class="row justify-around">
-            <div class="col-4 row justify-center q-mb-xl" v-for="(card, index) in proveedores" :key="index">
-                <q-card :class="card.status !== 1 ? 'bg-amber-3 shadow-11 bordes' : 'shadow-11 bordes'" style="width: 330px">
-                    <q-img :src="card.perfil ? baseu + card._id : 'noimg.png'" style="width: 322px; height: 200px" @click="$router.push('/proveedor/' + card._id)" />
+            <div :class="web ? 'col-4 row justify-center q-mb-xl' : 'col-12 row justify-center q-mb-xl'" v-for="(card, index) in proveedores" :key="index">
+                <q-card :class="card.status !== 1 ? 'bg-amber-3 shadow-11 bordes' : 'shadow-11 bordes'" style="width: 90%">
+                    <q-img :src="card.perfil ? baseu + card._id : card.perfilEstatico ? 'logos/' + card.id.toString() + '.jpeg' : 'noimg.png'" style="width: 100%; height: 300px" @click="$router.push('/proveedor/' + card._id)" />
 
                     <q-card-section>
                         <div class="row no-wrap items-center">
@@ -81,10 +81,12 @@ export default {
   data () {
     return {
       baseu: '',
+      web: true,
       proveedores: []
     }
   },
   mounted () {
+    this.web = this.$q.platform.is.desktop
     this.getData()
     this.baseu = env.apiUrl + '/perfil_img/'
   },
