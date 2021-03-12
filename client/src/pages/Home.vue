@@ -2,7 +2,8 @@
   <div>
     <q-carousel
         v-model="slide1"
-        :height="web ? '850px' : '800px'"
+        class="bg-transparent"
+        :height="web ? '880px' : '300px'"
         width="100%"
         navigation
         infinite
@@ -10,7 +11,12 @@
         @mouseenter="autoplay1 = false"
         @mouseleave="autoplay1 = true"
         >
-        <q-carousel-slide :name="index + 1" :img-src="!img.caso ? baseuPublicidad + img.fileName : img.fileName"  v-for="(img, index) in slPrincipal" :key="index" @click="!img.caso ? irRuta(img.ruta) : ''">
+        <q-carousel-slide class="q-pa-none" :name="index + 1"  v-for="(img, index) in slPrincipal" :key="index">
+          <img
+              :src="!img.caso ? baseuPublicidad + img.fileName : img.fileName"
+              spinner-color="white"
+              style="height: 100%; width: 100%"
+              @click="!img.caso ? irRuta(img.ruta) : ''" />
         </q-carousel-slide>
     </q-carousel>
 
@@ -20,12 +26,11 @@
       >
         <div class="row no-wrap q-py-md q-px-xl q-gutter-xl">
           <div v-for="(card, index) in arrLogos" :key="index" >
-            <q-img
+            <img
               :src="card.perfil ? baseuLogos + card._id : card.perfilEstatico ? 'logos/' + card.id.toString() + '.jpeg' : 'noimg.png'"
               spinner-color="white"
               style="border-radius:100%; height: 200px; width: 200px"
-              @click="rol === 1 ? $router.push('/proveedor/' + card._id) : irTienda(card._id)">
-            </q-img>
+              @click="rol === 1 ? $router.push('/proveedor/' + card._id) : irTienda(card._id)" />
             <div class="text-weight-bold q-mt-sm text-center">{{card.nombreEmpresa}}</div>
           </div>
         </div>
