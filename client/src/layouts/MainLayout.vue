@@ -1,17 +1,16 @@
 <template>
   <q-layout view="hHh Lpr lff">
-    <q-header elevated v-if="!$q.platform.is.mobile">
-      <q-toolbar class="bg-white q-px-xl q-py-md row justify-between">
+    <q-header elevated>
+      <q-toolbar class="bg-white q-px-md q-py-md row justify-between">
         <div>
           <q-btn class="q-mr-md" round dense flat icon="menu" size="1em" color="black" @click="drawer = !drawer"/>
           <q-img src="flaagweb.png" style="width:140px" @click="$router.push('/inicio')" />
         </div>
-        <q-btn v-if="!login" rounded no-caps class="text-black text-subtitle1" color="grey-4" label="Iniciar Sesión" @click="$router.push('/login')" />
+        <q-btn v-if="!login" round class="text-black" color="grey-4" icon="login" @click="$router.push('/login')" />
       </q-toolbar>
     </q-header>
 
     <q-drawer
-        v-if="!$q.platform.is.mobile"
         v-model="drawer"
         :width="350"
         :breakpoint="500"
@@ -48,7 +47,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer v-if="!$q.platform.is.mobile">
+    <q-footer>
         <q-toolbar class="bg-black text-white q-py-xl column">
           <div class="row justify-between" style="width: 100%">
             <div class="col-6 column justify-between">

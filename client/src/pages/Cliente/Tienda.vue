@@ -64,7 +64,7 @@
               </div>
 
               <div v-if="!login || rol === 2" class="row justify-center">
-                <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
+                <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? addCarrito(card) : $router.push('/login')" />
               </div>
           </div>
         </div>
@@ -128,30 +128,33 @@
           <q-btn icon="close" flat round dense v-close-popup />
         </q-card-section>
         <q-card-section>
-          <q-list bordered separator>
-            <q-item v-for="(producto, index) in carrito" :key="index">
-                <q-item-section avatar>
+          <q-list bordered>
+            <div v-for="(producto, index) in carrito" :key="index">
+              <div class="row items-center justify-between q-ma-sm">
+                <div class="col-1 q-mr-sm">
                   <q-icon name="shopping_cart" size="md" />
-                </q-item-section>
-
-                <q-item-section>
-                <q-item-label class="text-subtitle1">{{producto.nombre}}</q-item-label>
-                <div class="q-mt-sm">
-                    <q-badge class="text-subtitle2" :color="producto.oferta ? 'positive' : 'teal'" :label="!producto.oferta ? '$. ' + producto.valor : '$. ' + producto.ofertaVal" />
                 </div>
-                </q-item-section>
 
-                <q-item-section side class="q-mr-md">
-                    <q-item-label class="text-weight-bold text-h6">{{producto.cantidad_compra}}</q-item-label>
-                </q-item-section>
+                <div class="col">
+                  <div class="row no-wrap items-center">
+                    <div class="text-subtitle1 ellipsis">{{producto.nombre}}</div>
+                  </div>
+                  <div class="q-mt-sm">
+                    <q-badge class="text-subtitle2" :color="producto.oferta ? 'positive' : 'teal'" :label="!producto.oferta ? '$. ' + producto.valor : '$. ' + producto.ofertaVal" />
+                  </div>
+                </div>
 
-                <q-item-section side>
-                    <div class="text-grey-8 q-gutter-xs">
-                        <q-btn class="gt-xs" size="12px" flat dense round icon="add" @click="editCantidad(index, true)" />
-                        <q-btn class="gt-xs" size="12px" flat dense round icon="remove" @click="editCantidad(index, false)" />
-                    </div>
-                </q-item-section>
-            </q-item>
+                <div class="col-1 row justify-center">
+                  <div class="text-weight-bold text-h6">{{producto.cantidad_compra}}</div>
+                </div>
+
+                <div class="col-1 q-ml-sm">
+                  <q-btn size="12px" flat dense round icon="add" @click="editCantidad(index, true)" />
+                  <q-btn size="12px" flat dense round icon="remove" @click="editCantidad(index, false)" />
+                </div>
+              </div>
+              <q-separator />
+            </div>
           </q-list>
         </q-card-section>
 
