@@ -60,6 +60,7 @@
     <q-separator />
 
     <q-carousel
+      v-if="web"
       v-model="slide3"
       swipeable
       animated
@@ -75,6 +76,18 @@
         </div>
       </q-carousel-slide>
     </q-carousel>
+
+    <q-scroll-area
+        v-else
+        horizontal
+        style="height: 210px;"
+      >
+        <div class="row no-wrap items-center q-py-md q-px-md q-gutter-md">
+          <q-card clickable v-ripple style="width: 320px" v-for="(card, index) in slPublicidad1" :key="index" @click="!card.nuevo ? irRuta(card.ruta) : ''">
+              <q-img :src="!card.nuevo ? baseuPublicidad + card.fileName : card.fileName" style="height: 160px; width: 100%" />
+          </q-card>
+        </div>
+    </q-scroll-area>
     <q-separator />
 
     <div class="q-my-md">
@@ -116,6 +129,7 @@
     <q-separator />
 
     <q-carousel
+      v-if="web"
       v-model="slide5"
       swipeable
       animated
@@ -131,6 +145,18 @@
         </div>
       </q-carousel-slide>
     </q-carousel>
+
+    <q-scroll-area
+        v-if="!web"
+        horizontal
+        style="height: 210px;"
+      >
+        <div class="row no-wrap items-center q-py-md q-px-md q-gutter-md">
+          <q-card clickable v-ripple style="width: 320px" v-for="(card, index) in slPublicidad2" :key="index" @click="!card.nuevo ? irRuta(card.ruta) : ''">
+              <q-img :src="!card.nuevo ? baseuPublicidad + card.fileName : card.fileName" style="height: 160px; width: 100%" />
+          </q-card>
+        </div>
+    </q-scroll-area>
     <q-separator />
 
     <div class="q-my-md">
@@ -214,6 +240,7 @@ export default {
   },
   mounted () {
     this.web = this.$q.platform.is.desktop
+    console.log(this.web)
     this.baseuPublicidad = env.apiUrl + '/publicidad_img/'
     this.baseuProducto = env.apiUrl + '/producto_files/'
     this.baseuLogos = env.apiUrl + '/perfil_img/'

@@ -46,7 +46,7 @@
               <div class="row justify-around">
               <q-card clickable :class="web ? 'col-5 bg-black' : 'col-11 q-mb-md'" v-ripple v-for="(card, index) in slPublicidad1" :key="index">
                 <q-card-section horizontal>
-                    <q-img :src="!card.nuevo ? baseu + card.fileName : card.fileName" style="height: 290px; width: 90%" @click="!card.nuevo ? irRuta(card.ruta) : ''"></q-img>
+                    <q-img :src="!card.nuevo ? baseu + card.fileName : card.fileName" :style="web ? 'height: 290px; width: 90%' : 'height: 180px; width: 90%'" @click="!card.nuevo ? irRuta(card.ruta) : ''" />
                     <q-card-actions vertical class="q-px-xs bg-black">
                       <q-btn round flat color="white" size="md" icon="edit" @click="form = card, !card.nuevo ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', card.nuevo ? edit = false : edit = true, addPublicidad = true"/>
                     </q-card-actions>
@@ -60,7 +60,7 @@
               <div class="row justify-around">
               <q-card clickable :class="web ? 'col-5 bg-black' : 'col-11 q-mb-md'" v-ripple v-for="(card, index) in slPublicidad2" :key="index">
                 <q-card-section horizontal>
-                    <q-img :src="!card.nuevo ? baseu + card.fileName : card.fileName" style="height: 290px; width: 90%" @click="!card.nuevo ? irRuta(card.ruta) : ''"></q-img>
+                    <q-img :src="!card.nuevo ? baseu + card.fileName : card.fileName" :style="web ? 'height: 290px; width: 90%' : 'height: 180px; width: 90%'" @click="!card.nuevo ? irRuta(card.ruta) : ''" />
                     <q-card-actions vertical class="q-px-xs bg-black">
                       <q-btn round flat color="white" size="md" icon="edit" @click="form = card, !card.nuevo ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', card.nuevo ? edit = false : edit = true, addPublicidad = true"/>
                     </q-card-actions>
