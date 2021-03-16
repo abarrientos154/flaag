@@ -107,6 +107,35 @@ class UploadController {
       }
     }
   }
+  async subirPortada ({ request, response, params, auth }) {
+    let user = await auth.getUser()
+    let id = params.id
+    var status
+    var profilePic = request.file('portada', {
+    })
+    if (profilePic) {
+      if (Helpers.appRoot('storage/uploads/perfil')) {
+        if (user.roles[0] !== 1) {
+          status = await User.query().where({_id: id}).update({status: 2})
+        } else {
+          status = await User.query().where({_id: id}).update({status: 1})
+        }
+        await profilePic.move(Helpers.appRoot('storage/uploads/perfil'), {
+          name: 'portada' + id,
+          overwrite: true
+        })
+      } else {
+        mkdirp.sync(`${__dirname}/storage/Excel`)
+      }
+
+      if (!profilePic.moved()) {
+        return profilePic.error()
+      } else {
+        user = await User.query().where({_id: id}).update({portada: true})
+        response.send(user)
+      }
+    }
+  }
   async subirImgTienda ({ request, response, params }) {
     let codeFile = randomize('Aa0', 30)
     let user = params.id

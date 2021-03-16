@@ -49,7 +49,7 @@ addPrefixToGroup(
     Route.get("productos/:proveedor_id", "ProductoController.productosByProveedorId")
 
     Route.post("categorias_no_logueado/:proveedor_id", "CategoriaController.indexNoLogueado")
-   
+
     Route.get('publicidad_img/:file', 'UploadController.getFilePublicidad')
     Route.get("publicidad", "PublicidadController.index")
     Route.get("proveedores", "UserController.proveedores")
@@ -65,6 +65,7 @@ addPrefixToGroup(
     Route.get("user_info", "UserController.userInfo") // metodo para obtener informacion del usuario que esta logueado
     Route.put("editar_proveedor", "UserController.editarP")
     Route.post("subir_foto_perfil/:id", "UploadController.subirPerfil")
+    Route.post("subir_foto_portada/:id", "UploadController.subirPortada")
     Route.post("subir_archivo_proveedor/:id", "UploadController.subirImgTienda")
     Route.delete("eliminar_archivo_proveedor/:file", "UploadController.eliminarImgTienda")
 

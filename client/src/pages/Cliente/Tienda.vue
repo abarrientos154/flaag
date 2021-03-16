@@ -1,6 +1,45 @@
 <template>
   <q-page>
-    <q-btn v-if="login" :color="favorito ? 'red': 'white' " flat :icon="favorito ? 'favorite' :'favorite_border'" round style="position:absolute;top:5px;right:5px;z-index:1" @click="addFavorito()" />
+    <q-img :src="user.portada ? baseuImgTiendaPortada : 'noimg.png'" style="position:absolute;top:0px;height:220px" />
+    <q-btn v-if="login" :color="favorito ? 'red': 'primary' " flat :icon="favorito ? 'favorite' :'favorite_border'" round style="position:absolute;top:5px;right:5px;z-index:1" @click="addFavorito()" />
+    <div class="row bg-transparent" style="width: 100%">
+      <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="primary" @click="$router.go(-1)" />
+    </div>
+    <div class="column full-width">
+      <div class="row justify-center items-center">
+        <div style="width:350px">
+          <q-item style="width:350px">
+            <q-item-section avatar>
+              <img style="width:150px;height:150px" :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'">
+            </q-item-section>
+            <q-item-section>
+              <div class="row items-center">
+                <q-icon name="store" size="sm" />
+                <q-item-label class="text-bold text-subtitle2 q-ml-xs"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </q-item-label>
+              </div>
+              <div class="row items-center">
+                <q-icon name="perm_identity" size="sm" />
+                <q-item-label caption class="q-ml-xs"> {{user.rut}} </q-item-label>
+              </div>
+              <div class="row items-center">
+                <q-icon name="room" size="sm" />
+                <q-item-label caption lines="2" class="q-ml-xs"> {{user.direccionFisica}} </q-item-label>
+              </div>
+            </q-item-section>
+          </q-item>
+        </div>
+        <div class="row q-mt-xl" style="width:330px">
+          <q-scroll-area horizontal style="height: 95px; width: 100%;" class="rounded-borders" >
+            <div class="row no-wrap">
+              <q-avatar rounded v-for="(img, index) in user.images" :key="index" style="width:90px;height:90px" class="q-ml-sm">
+                <q-img :src="rutaCargarImgs + img" style="border-radius:12px" />
+              </q-avatar>
+            </div>
+          </q-scroll-area>
+        </div>
+      </div>
+    </div>
+    <!-- <q-btn v-if="login" :color="favorito ? 'red': 'white' " flat :icon="favorito ? 'favorite' :'favorite_border'" round style="position:absolute;top:5px;right:5px;z-index:1" @click="addFavorito()" />
     <q-img :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'" style="height:300px; width: 100%" >
       <div class="full-width full-height">
         <div class="row bg-transparent" style="width: 100%">
@@ -10,10 +49,10 @@
           <h1 class="text-h4 text-primary text-bold"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </h1>
         </div>
       </div>
-    </q-img>
+    </q-img> -->
+    <q-separator inset />
     <div>
-      <q-scroll-area horizontal style="height: 100px; width: 100%;" class="bg-grey-3"
-      >
+      <q-scroll-area horizontal style="height: 100px; width: 100%;">
         <div class="row no-wrap q-mx-md">
             <div class="q-ml-sm column justify-center" style="height: 100px" v-for="(item, index) in categorias" :key="index">
                 <q-btn :label="item.nombre" :color="item.active ? 'primary':'white'" :text-color="item.active ? 'white':'primary'" rounded style="height: 60px; width:200px" @click="activarB(index)" />
@@ -30,7 +69,7 @@
         style="height: 590px;"
       >
         <div class="row no-wrap q-py-md q-px-xl q-gutter-xl">
-          <div v-for="(card, index) in filtrarProCa" :key="index" >
+          <div v-for="(card, index) in dataLimit" :key="index" >
             <q-img
               :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'"
               spinner-color="white"
@@ -69,7 +108,6 @@
           </div>
         </div>
       </q-scroll-area>
-
     <!-- <div class="row justify-around" v-if="filtrarProCa.length > 0">
       <div class="row justify-around q-mb-lg" v-for="(card, index) in filtrarProCa" :key="index">
         <q-card class="bg-amber-3 shadow-11 bordes" style="width: 330px">
@@ -111,6 +149,46 @@
         :( Sin Nada Por Aqui
       </div>
     </div>
+
+    <div class="row justify-around q-gutter-xl q-pa-md">
+          <div v-for="(card, index) in filtrarProCa" :key="index" class="col-xs-5 col-sm-4 col-md-2 col-lg-1 col-xl-1 q-ml-xl" >
+            <q-img
+              :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'"
+              spinner-color="white"
+              style="border-radius:12px; height: 320px; width: 240px"
+              @click="producto = card, verProducto = true">
+            </q-img>
+            <div class="q-ma-sm" style="width:240px">
+                <div class="row no-wrap items-center">
+                  <div class="col text-h6 text-bold ellipsis">{{card.nombre}}</div>
+                </div>
+                <div class="row no-wrap items-center">
+                  <q-icon class="col-1" name="store" color="black" style="font-size: 1.3rem;"></q-icon>
+                  <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
+                </div>
+                <div class="row" style="width:100%">
+                  <q-icon class="col-1" name="description" color="black" style="font-size: 1.3rem;"/>
+                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.descripcion}}</div>
+                </div>
+                <div class="row" style="width:100%">
+                  <q-icon class="col-1" name="category" color="black" style="font-size: 1.3rem;"/>
+                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.categoria_info.nombre}}</div>
+                </div>
+                <div class="row" style="width:100%">
+                  <q-icon class="col-1" name="zoom_in" color="black" style="font-size: 1.3rem;"/>
+                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.cantidad}}</div>
+                </div>
+                <div class="row no-wrap items-center">
+                  <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
+                  <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+                </div>
+              </div>
+
+              <div v-if="!login || rol === 2" class="row justify-center">
+                <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? addCarrito(card) : $router.push('/login')" />
+              </div>
+          </div>
+        </div>
 
     <q-dialog v-model="verProducto">
       <q-card style="width: 100%;">
@@ -187,6 +265,10 @@ export default {
   components: { DetalleProducto },
   data () {
     return {
+      limit: 10,
+      dataLimit: [],
+      rutaCargarImgs: '',
+      baseuImgTiendaPortada: '',
       favorito: false,
       verProducto: false,
       verCarrito: false,
@@ -231,6 +313,7 @@ export default {
     }
   },
   async mounted () {
+    this.rutaCargarImgs = env.apiUrl + '/tienda_files/'
     this.$q.loading.show({
       message: 'Cargando Datos'
     })
@@ -400,6 +483,7 @@ export default {
       this.$api.post('user_by_id/' + id).then(res => {
         this.user = res
         this.baseuImgTienda = env.apiUrl + '/perfil_img/' + res._id
+        this.baseuImgTiendaPortada = env.apiUrl + '/perfil_img/portada' + res._id
         this.getCategorias(this.user.id)
       })
     },
@@ -427,6 +511,13 @@ export default {
     getProductosByProveedor (id) {
       this.$api.get('productos/' + id).then(res => {
         if (res) {
+          var j = this.limit
+          var i = res.length - 1
+          while (j !== 0) {
+            this.dataLimit.push(res[i])
+            j -= 1
+            i -= 1
+          }
           this.data = res
         }
       })
