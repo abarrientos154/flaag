@@ -116,8 +116,8 @@ export default {
               color: 'positive'
             })
             this.$router.push('login')
-            this.$q.loading.hide()
           }
+          this.$q.loading.hide()
         })
       }
     },

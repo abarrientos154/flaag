@@ -28,7 +28,7 @@
             </q-item-section>
           </q-item>
         </div>
-        <div class="row q-mt-xl" style="width:330px">
+        <div class="row q-mt-xl" style="width:330px" v-if="user.images">
           <q-scroll-area horizontal style="height: 95px; width: 100%;" class="rounded-borders" >
             <div class="row no-wrap">
               <q-avatar rounded v-for="(img, index) in user.images" :key="index" style="width:90px;height:90px" class="q-ml-sm">
