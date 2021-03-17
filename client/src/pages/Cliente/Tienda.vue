@@ -508,16 +508,20 @@ export default {
         }
       })
     },
-    getProductosByProveedor (id) {
-      this.$api.get('productos/' + id).then(res => {
+    async getProductosByProveedor (id) {
+      await this.$api.get('productos/' + id).then(res => {
         if (res) {
           var j = this.limit
           var i = res.length - 1
+          console.log(i, 'lenghtttttttttttttttttt', res, 'resssss')
           while (j !== 0) {
-            this.dataLimit.push(res[i])
+            if (res[i]) {
+              this.dataLimit.push(res[i])
+            }
             j -= 1
             i -= 1
           }
+          console.log(this.dataLimit, 'limitdatataaaaaaaa')
           this.data = res
         }
       })
