@@ -1,6 +1,6 @@
 <template>
   <div style="height:100%;">
-      <q-img :src="baseu + perfile" spinner-color="white" style="height: 390px; width: 100%;">
+      <q-img :src="baseu + perfile" spinner-color="white" style="height: 400px; width: 100%;">
           <div class="row no-wrap justify-between" style="width:100%">
               <div class="col text-h6 text-white text-weight-bolder ellipsis">{{data.datos_proveedor.nombreEmpresa}}</div>
               <q-btn no-caps flat icon="store" label="Ir" color="white" @click="rol !== 1 ? irTienda() : $router.push('/proveedor/' + data.datos_proveedor._id)" />
@@ -26,18 +26,16 @@
                   Comprar
                 </q-tooltip>
               </q-btn>
-              <div v-if="!data.oferta" class="col text-subtitle2 ellipsis q-mt-md">$ . {{data.valor}}</div>
-              <div v-if="data.oferta" class="col text-subtitle2 ellipsis q-mt-md">$ . <strike>{{data.valor}}</strike> - {{data.ofertaVal}}</div>
+              <div v-if="!data.oferta" class="col text-subtitle2 ellipsis q-mt-md">$ {{data.valor}}</div>
+              <div v-if="data.oferta" class="col text-subtitle2 ellipsis q-mt-md">$ <strike>{{data.valor}}</strike> - {{data.ofertaVal}}</div>
             </div>
           </div>
         </q-img>
 
         <div class="q-pa-sm q-my-sm">
-            <q-item>
-              <q-item-section>
-                <q-item-label class="text-h6 text-weight-bolder">{{data.nombre}}</q-item-label>
-              </q-item-section>
-            </q-item>
+          <div style="width: 100%">
+            <div class="text-h5 text-weight-bolder">{{data.nombre}}</div>
+          </div>
             <q-scroll-area
             horizontal
             style="height: 110px;"
