@@ -123,8 +123,8 @@
                 </div>
               </div>
 
-              <div v-if="rol === 2" class="row justify-center">
-                <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
+              <div v-if="rol === 2 || !login" class="row justify-center">
+                <q-btn glossy no-caps :icon="login ? 'add_shopping_cart' : 'store'" :label="login ? 'Comprar' : 'Ver Tienda'" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/tienda/' + card.proveedor_id)" />
               </div>
           </div>
         </div>
@@ -192,8 +192,8 @@
                 </div>
               </div>
 
-              <div v-if="rol === 2" class="row justify-center">
-                <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/login')" />
+              <div v-if="rol === 2 || !login" class="row justify-center">
+                <q-btn glossy no-caps :icon="login ? 'add_shopping_cart' : 'store'" :label="login ? 'Comprar' : 'Ver Tienda'" color="primary" text-color="black" @click="login ? $router.push('/tienda/' + card.proveedor_id + '/' + card._id) : $router.push('/tienda/' + card.proveedor_id)" />
               </div>
           </div>
         </div>
@@ -201,7 +201,7 @@
     </div>
 
     <q-dialog v-model="verProducto">
-      <q-card style="width: 100%;">
+      <q-card style="width: 400px">
         <q-card-section class="q-pa-none" style="width: 100%">
           <DetalleProducto :data="producto" lugar="inicio" />
         </q-card-section>
@@ -245,7 +245,6 @@ export default {
   },
   mounted () {
     this.web = this.$q.platform.is.desktop
-    console.log(this.web)
     this.baseuPublicidad = env.apiUrl + '/publicidad_img/'
     this.baseuProducto = env.apiUrl + '/producto_files/'
     this.baseuLogos = env.apiUrl + '/perfil_img/'
@@ -257,6 +256,7 @@ export default {
       this.getInfo()
     } else {
       this.login = false
+      console.log(this.login)
     }
   },
   methods: {
