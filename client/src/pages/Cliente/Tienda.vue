@@ -6,7 +6,7 @@
       <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="primary" @click="$router.go(-1)" />
     </div>
     <div class="column full-width">
-      <div class="row justify-center items-center">
+      <div class="row justify-between items-center q-mx-xl">
         <div style="width:350px">
           <q-item style="width:350px">
             <q-item-section avatar>
