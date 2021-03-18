@@ -103,5 +103,14 @@ addPrefixToGroup(
     Route.delete("favorito/:proveedor_id", "FavoriteController.destroy")
     ///////////////////////FAVORITOS/////////////////////////////////////////
 
+   ///////////////////////Reportes///////////////////////////////////////// 
+    Route.get("reportes/:type", "ProductoController.reportes")
+    /* Route.get("favorito/:proveedor_id", "ProductoController.reporte")
+    Route.post("favorito/:proveedor_id", "FavoriteController.store")
+    Route.delete("favorito/:proveedor_id", "FavoriteController.destroy") */
+    ///////////////////////Reportes/////////////////////////////////////////
+
+
+
   }).middleware("auth")
 );

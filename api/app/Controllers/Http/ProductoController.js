@@ -150,6 +150,23 @@ class ProductoController {
     await Flow.query().where({token: request.all().token}).update({status: 1})
     response.send(true)
   }
+  async reportes ({ params, response, auth }) {
+    const user = (await auth.getUser()).toJSON()
+    var type = params.type
+    var data
+    if (type == 1){
+      data = (await Compras.query().where({comprador: user._id}).with('productos').fetch()).toJSON()
+    } else {
+      data = (await Compras.query().where({tienda: user._id}).with('productos').fetch()).toJSON()
+    }
+    response.send(data.map(v => {
+      return {
+        ...v.productos,
+        cantidad: v.cantidad,
+        created_at: v.created_at
+      }
+    }))
+  }
 
   /**
    * Display a single producto.

@@ -5,13 +5,14 @@
       <div class="row justify-center q-mt-sm">
         <q-chip @click="select(item)" clickable v-for="(item, index) in reportes" :key="index" :color="item === reporte ? 'primary':''"> {{item}} </q-chip>
       </div>
-      <list-pro :data="filtrado" :baseu="baseu" class="full-width"/>
+      <list-pro :data="filtrado" :baseu="baseu" class="full-width q-mt-lg"/>
     </div>
   </q-page>
 </template>
 
 <script>
 import env from '../../env'
+import moment from 'moment'
 import ListPro from '../../components/ReporteProductos'
 export default {
   components: {
@@ -21,14 +22,15 @@ export default {
     return {
       baseu: '',
       data: [],
+      filtrado: [],
       reporte: 'Todos',
-      reportes: ['Todos', 'Diario', 'Semanal', 'Mensual', 'Anual']
+      reportes: ['Todos', 'Semanal', 'Mensual', 'Semestral', 'Anual']
     }
   },
   computed: {
-    filtrado () {
+    /* filtrado () {
       return this.data
-    }
+    } */
   },
   async mounted () {
     this.baseu = env.apiUrl + '/producto_files/'
@@ -36,13 +38,26 @@ export default {
   },
   methods: {
     async traerDatos () {
-      await this.$api.get('todo').then(res => {
+      await this.$api.get('reportes/2').then(res => {
         this.data = res
+        this.filtrado = res
         console.log(this.filtrado, 'asd')
       })
     },
-    select (item) {
-      this.reporte = item
+    select (val) {
+      if (val === 'Semanal') {
+        this.filtrado = this.data.filter(v => moment(v.created_at).year() === moment().year() && moment(v.created_at).week() === moment().week())
+      } else if (val === 'Mensual') {
+        this.filtrado = this.data.filter(v => moment(v.created_at).year() === moment().year() && moment(v.created_at).month() === moment().month())
+      } else if (val === 'Anual') {
+        this.filtrado = this.data.filter(v => moment(v.created_at).year() === moment().year())
+      } else if (val === 'Semestral') {
+        var monthToday = moment().subtract(6, 'month')
+        this.filtrado = this.data.filter(v => moment(v.created_at) >= monthToday)
+      } else if (val === 'Todos') {
+        this.filtrado = this.data
+      }
+      this.reporte = val
     }
   }
 }
