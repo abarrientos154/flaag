@@ -330,12 +330,12 @@ export default {
       this.token = this.$route.params.token
       this.response = await this.$api.get('get_info_flow/' + this.token)
       await this.getInfoById(this.response.localData.tienda_id)
-      await this.getProductosByProveedor(this.response.localData.tienda_id)
       this.proveedor_id = this.response.localData.tienda_id
       console.log(this.response.flow.status, this.response.localData.status)
       if (this.response.flow.status === 2 && this.response.localData.status === 0) {
         await this.aprobado()
       } else {
+        await this.getProductosByProveedor(this.response.localData.tienda_id)
         this.$q.notify({
           message: 'Error al procesar la compra',
           color: 'negative'

@@ -114,7 +114,7 @@ const userData = [
     dias: [],
     roles: [3],
     images: [],
-    perfilEstatico: true
+    perfilEstatico: false
   },
   {
     id: 7,
