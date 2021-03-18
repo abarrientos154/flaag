@@ -332,9 +332,14 @@ export default {
       await this.getInfoById(this.response.localData.tienda_id)
       await this.getProductosByProveedor(this.response.localData.tienda_id)
       this.proveedor_id = this.response.localData.tienda_id
-      console.log(this.response.flow.status)
-      if (this.response.flow.status === 2) {
+      console.log(this.response.flow.status, this.response.localData.status)
+      if (this.response.flow.status === 2 && this.response.localData.status === 0) {
         await this.aprobado()
+      } else {
+        this.$q.notify({
+          message: 'Error al procesar la compra',
+          color: 'negative'
+        })
       }
       console.log(this.token, this.response)
     }
@@ -399,7 +404,7 @@ export default {
       })
       const params = {
         commerceOrder: Math.floor(Math.random() * (2000 - 1100 + 1)) + 1100,
-        subject: 'Pago de prueba',
+        subject: 'Compra en Flaag',
         currency: 'CLP',
         amount: this.totalCarrito,
         email: this.userLog.email
@@ -410,8 +415,19 @@ export default {
           await this.$api.post('store_flow', { token: v.token, tienda_id: this.proveedor_id, user: this.userLog._id, carrito: this.carrito, status: 0 })
           this.$q.loading.hide()
           location.href = v.redirect
+        } else {
+          /* this.$q.notify({
+            message: 'Error al procesar la compra',
+            color: 'negative'
+          }) */
         }
         this.$q.loading.hide()
+      }).catch(v => {
+        this.$q.loading.hide()
+        this.$q.notify({
+          message: 'Error al procesar la compra ' + v.data,
+          color: 'negative'
+        })
       })
     },
     getInfo () {
