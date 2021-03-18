@@ -12,7 +12,7 @@
             </div>
             <div class="row no-wrap items-center">
               <q-btn
-                v-if="rol === 2"
+                v-if="rol === 2 || !login"
                 @click="login ? addCarrito() : $router.push('/login')"
                 fab
                 glossy

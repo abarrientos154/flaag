@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <q-dialog v-model="mostrarImg.dialog">
+    <q-dialog v-if="mostrarImg.dialog" v-model="mostrarImg.dialog">
       <q-img style="width:50%;height:50%" :src="rutaCargarImgs + user.images[mostrarImg.imagen]" />
     </q-dialog>
     <!-- <q-btn v-if="login" :color="favorito ? 'red': 'white' " flat :icon="favorito ? 'favorite' :'favorite_border'" round style="position:absolute;top:5px;right:5px;z-index:1" @click="addFavorito()" />
@@ -194,7 +194,7 @@
         </div>
 
     <q-dialog v-model="verProducto">
-      <q-card style="width: 100%;">
+      <q-card style="width: 400px">
         <q-card-section class="q-pa-none" style="width: 100%;">
           <DetalleProducto :data="producto" lugar="tienda" @compra="addCarrito" />
         </q-card-section>
@@ -221,7 +221,7 @@
                     <div class="text-subtitle1 ellipsis">{{producto.nombre}}</div>
                   </div>
                   <div class="q-mt-sm">
-                    <q-badge class="text-subtitle2" :color="producto.oferta ? 'positive' : 'teal'" :label="!producto.oferta ? '$. ' + producto.valor : '$. ' + producto.ofertaVal" />
+                    <q-badge class="text-subtitle2" :color="producto.oferta ? 'positive' : 'teal'" :label="!producto.oferta ? '$ ' + producto.valor : '$ ' + producto.ofertaVal" />
                   </div>
                 </div>
 
