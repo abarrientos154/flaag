@@ -31,7 +31,7 @@
         <div class="row q-mt-xl" style="width:330px" v-if="user.images">
           <q-scroll-area horizontal style="height: 95px; width: 100%;" class="rounded-borders" >
             <div class="row no-wrap">
-              <q-avatar rounded v-for="(img, index) in user.images" :key="index" style="width:90px;height:90px" class="q-ml-sm">
+              <q-avatar @click="mostrarImg.dialog = true, mostrarImg.imagen = index" rounded v-for="(img, index) in user.images" :key="index" style="width:90px;height:90px" class="q-ml-sm">
                 <q-img :src="rutaCargarImgs + img" style="border-radius:12px" />
               </q-avatar>
             </div>
@@ -39,6 +39,9 @@
         </div>
       </div>
     </div>
+    <q-dialog v-model="mostrarImg.dialog">
+      <q-img style="width:50%;height:50%" :src="rutaCargarImgs + user.images[mostrarImg.imagen]" />
+    </q-dialog>
     <!-- <q-btn v-if="login" :color="favorito ? 'red': 'white' " flat :icon="favorito ? 'favorite' :'favorite_border'" round style="position:absolute;top:5px;right:5px;z-index:1" @click="addFavorito()" />
     <q-img :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'" style="height:300px; width: 100%" >
       <div class="full-width full-height">
@@ -265,6 +268,10 @@ export default {
   components: { DetalleProducto },
   data () {
     return {
+      mostrarImg: {
+        dialog: false,
+        imagen: 0
+      },
       limit: 10,
       dataLimit: [],
       rutaCargarImgs: '',
