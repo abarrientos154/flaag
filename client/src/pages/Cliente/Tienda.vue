@@ -1,6 +1,44 @@
 <template>
   <q-page>
-    <q-img :src="user.portada ? baseuImgTiendaPortada : 'noimg.png'" style="position:absolute;top:0px;height:220px" />
+    <q-img :src="user.portada ? baseuImgTiendaPortada : 'noimg.png'" style="height:300px; width:" >
+      <div class="full-width full-height">
+        <div class="row justify-between bg-transparent" style="width: 100%">
+          <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="white" @click="$router.go(-1)" />
+          <q-btn v-if="login" :color="favorito ? 'red': 'primary' " flat :icon="favorito ? 'favorite' :'favorite_border'" round @click="addFavorito()" />
+        </div>
+        <div v-if="user.images" class="row absolute-bottom justify-end" style="width:100%">
+          <q-scroll-area horizontal style="height: 95px; width: 330px;" class="rounded-borders" >
+            <div class="row no-wrap">
+              <q-avatar @click="mostrarImg.dialog = true, mostrarImg.imagen = index" rounded v-for="(img, index) in user.images" :key="index" style="width:90px;height:90px" class="q-ml-sm">
+                <q-img :src="rutaCargarImgs + img" style="border-radius:12px" />
+              </q-avatar>
+            </div>
+          </q-scroll-area>
+        </div>
+      </div>
+    </q-img>
+
+    <q-item>
+      <q-item-section avatar>
+        <q-img style="width:150px;height:150px; border-radius: 100%" :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'" />
+      </q-item-section>
+      <q-item-section>
+        <div class="row items-center">
+          <q-icon class="col-1" name="store" size="sm" />
+          <q-item-label class="col text-bold text-h6 q-ml-xs ellipsis"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </q-item-label>
+        </div>
+        <div class="row items-center">
+          <q-icon class="col-1" name="perm_identity" size="sm" />
+          <q-item-label caption class="col q-ml-xs ellipsis"> {{user.rut}} </q-item-label>
+        </div>
+        <div class="row items-center">
+          <q-icon class="col-1" name="room" size="sm" />
+          <q-item-label caption lines="2" class="col q-ml-xs ellipsis"> {{user.direccionFisica}} </q-item-label>
+        </div>
+      </q-item-section>
+    </q-item>
+
+    <!-- <q-img :src="user.portada ? baseuImgTiendaPortada : 'noimg.png'" style="position:absolute;top:0px;height:220px" />
     <q-btn v-if="login" :color="favorito ? 'red': 'primary' " flat :icon="favorito ? 'favorite' :'favorite_border'" round style="position:absolute;top:5px;right:5px;z-index:1" @click="addFavorito()" />
     <div class="row bg-transparent" style="width: 100%">
       <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="primary" @click="$router.go(-1)" />
@@ -38,10 +76,12 @@
           </q-scroll-area>
         </div>
       </div>
-    </div>
+    </div> -->
+
     <q-dialog v-if="mostrarImg.dialog" v-model="mostrarImg.dialog">
       <q-img style="width:50%;height:50%" :src="rutaCargarImgs + user.images[mostrarImg.imagen]" />
     </q-dialog>
+
     <!-- <q-btn v-if="login" :color="favorito ? 'red': 'white' " flat :icon="favorito ? 'favorite' :'favorite_border'" round style="position:absolute;top:5px;right:5px;z-index:1" @click="addFavorito()" />
     <q-img :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'" style="height:300px; width: 100%" >
       <div class="full-width full-height">
@@ -53,22 +93,22 @@
         </div>
       </div>
     </q-img> -->
-    <q-separator inset />
+
     <div>
       <q-scroll-area horizontal style="height: 100px; width: 100%;">
         <div class="row no-wrap q-mx-md">
-            <div class="q-ml-sm column justify-center" style="height: 100px" v-for="(item, index) in categorias" :key="index">
-                <q-btn :label="item.nombre" :color="item.active ? 'primary':'white'" :text-color="item.active ? 'white':'primary'" rounded style="height: 60px; width:200px" @click="activarB(index)" />
-            </div>
+          <div class="q-ml-sm column justify-center" style="height: 100px" v-for="(item, index) in categorias" :key="index">
+            <q-btn :label="item.nombre" :color="item.active ? 'primary':'white'" :text-color="item.active ? 'white':'primary'" rounded style="height: 60px; width:200px" @click="activarB(index)" />
+          </div>
         </div>
       </q-scroll-area>
     </div>
-    <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Productos</div>
 
+    <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Más recientes</div>
     <q-scroll-area
         v-if="filtrarProCa.length > 0"
         horizontal
-        class="q-mt-xl q-mb-xl"
+        class="q-my-md"
         style="height: 590px;"
       >
         <div class="row no-wrap q-py-md q-px-xl q-gutter-xl">
@@ -87,17 +127,17 @@
                   <q-icon class="col-1" name="store" color="black" style="font-size: 1.3rem;"></q-icon>
                   <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
                 </div>
-                <div class="row" style="width:100%">
+                <div class="row no-wrap items-center" style="width:100%">
                   <q-icon class="col-1" name="description" color="black" style="font-size: 1.3rem;"/>
-                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.descripcion}}</div>
+                  <div class="col q-pl-xs text-grey-9 text-subtitle2 ellipsis">{{card.descripcion}}</div>
                 </div>
-                <div class="row" style="width:100%">
+                <div class="row no-wrap items-center" style="width:100%">
                   <q-icon class="col-1" name="category" color="black" style="font-size: 1.3rem;"/>
-                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.categoria_info.nombre}}</div>
+                  <div class="col q-pl-xs text-grey-9 text-subtitle2 ellipsis">{{card.categoria_info.nombre}}</div>
                 </div>
-                <div class="row" style="width:100%">
+                <div class="row no-wrap items-center" style="width:100%">
                   <q-icon class="col-1" name="zoom_in" color="black" style="font-size: 1.3rem;"/>
-                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.cantidad}}</div>
+                  <div class="col q-pl-xs text-grey-9 text-subtitle2 ellipsis">{{card.cantidad}}</div>
                 </div>
                 <div class="row no-wrap items-center">
                   <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
@@ -111,6 +151,15 @@
           </div>
         </div>
       </q-scroll-area>
+
+      <div v-else class="row justify-center full-width full-height items-center q-pa-xl">
+        <div class="text-h5">
+          :( Sin Nada Por Aqui
+        </div>
+      </div>
+
+      <q-separator color="black" />
+
     <!-- <div class="row justify-around" v-if="filtrarProCa.length > 0">
       <div class="row justify-around q-mb-lg" v-for="(card, index) in filtrarProCa" :key="index">
         <q-card class="bg-amber-3 shadow-11 bordes" style="width: 330px">
@@ -147,51 +196,47 @@
         </q-card>
       </div>
     </div> -->
-    <div v-else class="row justify-center full-width full-height items-center q-pa-xl">
-      <div class="text-h5">
-        :( Sin Nada Por Aqui
-      </div>
-    </div>
 
-    <div class="row justify-around q-gutter-xl q-pa-md">
-          <div v-for="(card, index) in filtrarProCa" :key="index" class="col-xs-5 col-sm-4 col-md-2 col-lg-1 col-xl-1 q-ml-xl" >
-            <q-img
-              :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'"
-              spinner-color="white"
-              style="border-radius:12px; height: 320px; width: 240px"
-              @click="producto = card, verProducto = true">
-            </q-img>
-            <div class="q-ma-sm" style="width:240px">
-                <div class="row no-wrap items-center">
-                  <div class="col text-h6 text-bold ellipsis">{{card.nombre}}</div>
-                </div>
-                <div class="row no-wrap items-center">
-                  <q-icon class="col-1" name="store" color="black" style="font-size: 1.3rem;"></q-icon>
-                  <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
-                </div>
-                <div class="row" style="width:100%">
-                  <q-icon class="col-1" name="description" color="black" style="font-size: 1.3rem;"/>
-                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.descripcion}}</div>
-                </div>
-                <div class="row" style="width:100%">
-                  <q-icon class="col-1" name="category" color="black" style="font-size: 1.3rem;"/>
-                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.categoria_info.nombre}}</div>
-                </div>
-                <div class="row" style="width:100%">
-                  <q-icon class="col-1" name="zoom_in" color="black" style="font-size: 1.3rem;"/>
-                  <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.cantidad}}</div>
-                </div>
-                <div class="row no-wrap items-center">
-                  <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
-                  <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
-                </div>
-              </div>
-
-              <div v-if="!login || rol === 2" class="row justify-center">
-                <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? addCarrito(card) : $router.push('/login')" />
-              </div>
+    <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Productos</div>
+    <div class="row justify-around q-px-md">
+      <div v-for="(card, index) in filtrarProCa" :key="index" :class="web ? 'col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 q-my-md column items-center' : 'col-5 q-my-md'" >
+        <q-img
+          :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'"
+          spinner-color="white"
+          :style="web ? 'border-radius:12px; height: 320px; width: 240px' : 'border-radius:12px; height: 320px; width: 100%'"
+          @click="producto = card, verProducto = true">
+        </q-img>
+        <div class="q-ma-sm" :style="web ? 'width: 240px' : 'width: 100%'">
+          <div class="row no-wrap items-center">
+            <div class="col text-h6 text-bold ellipsis">{{card.nombre}}</div>
+          </div>
+          <div class="row no-wrap items-center">
+            <q-icon class="col-1" name="store" color="black" style="font-size: 1.3rem;"></q-icon>
+            <div v-if="!card.caso" class="col q-ml-sm text-subtitle2 ellipsis">{{card.datos_proveedor.nombreEmpresa}}</div>
+          </div>
+          <div class="row no-wrap items-center" style="width:100%">
+            <q-icon class="col-1" name="description" color="black" style="font-size: 1.3rem;"/>
+            <div class="col q-pl-xs text-grey-9 text-subtitle2 ellipsis">{{card.descripcion}}</div>
+          </div>
+          <div class="row no-wrap items-center" style="width:100%">
+            <q-icon class="col-1" name="category" color="black" style="font-size: 1.3rem;"/>
+            <div class="col q-pl-xs text-grey-9 text-subtitle2 ellipsis">{{card.categoria_info.nombre}}</div>
+          </div>
+          <div class="row no-wrap items-center" style="width:100%">
+            <q-icon class="col-1" name="zoom_in" color="black" style="font-size: 1.3rem;"/>
+            <div class="col q-pl-xs text-grey-9 text-subtitle2 ellipsis">{{card.cantidad}}</div>
+          </div>
+          <div class="row no-wrap items-center">
+            <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
+            <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
           </div>
         </div>
+
+        <div v-if="!login || rol === 2" class="row justify-center" :style="web ? 'width: 240px' : 'width: 100%'">
+          <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? addCarrito(card) : $router.push('/login')" />
+        </div>
+      </div>
+    </div>
 
     <q-dialog v-model="verProducto">
       <q-card style="width: 400px">
@@ -268,23 +313,21 @@ export default {
   components: { DetalleProducto },
   data () {
     return {
-      mostrarImg: {
-        dialog: false,
-        imagen: 0
-      },
-      limit: 10,
-      dataLimit: [],
+      token: '',
       rutaCargarImgs: '',
       baseuImgTiendaPortada: '',
+      baseu: '',
+      baseuImgTienda: '',
+      proveedor_id: '',
       favorito: false,
       verProducto: false,
       verCarrito: false,
       login: true,
-      baseu: '',
-      baseuImgTienda: '',
-      proveedor_id: '',
+      web: true,
       buscar: 0,
       rol: 0,
+      limit: 10,
+      dataLimit: [],
       data: [],
       carrito: [],
       categorias: [],
@@ -294,7 +337,10 @@ export default {
       user: {},
       userLog: {},
       producto: {},
-      token: ''
+      mostrarImg: {
+        dialog: false,
+        imagen: 0
+      }
     }
   },
   computed: {
@@ -320,6 +366,7 @@ export default {
     }
   },
   async mounted () {
+    this.web = this.$q.platform.is.desktop
     this.rutaCargarImgs = env.apiUrl + '/tienda_files/'
     this.$q.loading.show({
       message: 'Cargando Datos'
