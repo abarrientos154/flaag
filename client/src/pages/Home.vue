@@ -20,7 +20,7 @@
         </q-carousel-slide>
     </q-carousel>
 
-    <q-scroll-area
+    <!-- <q-scroll-area
         horizontal
         style="height: 320px;"
       >
@@ -34,9 +34,9 @@
             <div class="text-weight-bold q-mt-sm text-center">{{card.nombreEmpresa}}</div>
           </div>
         </div>
-      </q-scroll-area>
+      </q-scroll-area> -->
 
-    <!-- <q-carousel
+    <q-carousel
       v-model="slide2"
       :autoplay="autoplay2"
       @mouseenter="autoplay2 = false"
@@ -44,25 +44,25 @@
       swipeable
       animated
       infinite
-      :height="web ? '300px' : '250px'"
+      :height="web ? '300px' : '200px'"
       class="bg-transparent q-my-md"
     >
       <q-carousel-slide :name="index + 1" v-for="(value, name, index) in slLogos" :key="index" class="column justify-center no-wrap">
         <div class="row fit justify-around items-center no-wrap" style="width:100%">
-          <div :class="web ? 'col-2 column justify-center' : 'col-4 column justify-center'" v-for="(img, index2) in value" :key="index2" style="height: 90%">
-            <div style="width: 90%; height: 80%">
-              <q-avatar style="width: 100%; height: 100%">
+          <div :class="web ? 'col-2 column items-center' : 'col-4 column items-center'" v-for="(img, index2) in value" :key="index2" style="height: 100%">
+            <div :style="web ? 'width: 90%; height: 70%' : 'width: 90%; height: 70%'">
                 <img
-                  :src="img.perfil ? baseuLogos + img._id : 'noimg.png'"
+                  :src="img.perfil ? baseuLogos + img._id : img.perfilEstatico ? 'logos/' + img.id.toString() + '.jpeg' : 'noimg.png'"
+                  spinner-color="white"
+                  style="border-radius:100%; height: 100%; width: 100%"
                   @click="rol === 1 ? $router.push('/proveedor/' + img._id) : irTienda(img._id)" >
-              </q-avatar>
             </div>
-            <div class="text-center text-weight-bold q-mt-sm" style="width: 95%">{{img.nombreEmpresa}}</div>
+            <div v-if="web" class="text-center text-weight-bold q-mt-sm" style="width: 90%">{{img.nombreEmpresa}}</div>
+            <div v-else class="text-center text-subtitle2 text-weight-bold q-mt-sm ellipsis" style="width: 90%">{{img.nombreEmpresa}}</div>
           </div>
         </div>
       </q-carousel-slide>
-    </q-carousel> -->
-    <q-separator />
+    </q-carousel>
 
     <q-carousel
       v-if="web"
@@ -93,7 +93,6 @@
           </q-card>
         </div>
     </q-scroll-area>
-    <q-separator />
 
     <div class="q-my-md">
       <div class="text-h5 text-bold q-ml-md">Lo nuevo en Flaag</div>
@@ -118,8 +117,8 @@
                   <div class="col text-subtitle2 text-bold ellipsis">{{card.nombre}}</div>
                 </div>
                 <div class="row no-wrap items-center">
-                  <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
-                  <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+                  <div v-if="!card.oferta" class="col text-h6 ellipsis">${{formatPrice(card.valor)}}</div>
+                  <div v-if="card.oferta" class="col text-h6 ellipsis">$<strike>{{formatPrice(card.valor)}}</strike> - {{formatPrice(card.ofertaVal)}}</div>
                 </div>
               </div>
 
@@ -130,8 +129,6 @@
         </div>
       </q-scroll-area>
     </div>
-
-    <q-separator />
 
     <q-carousel
       v-if="web"
@@ -162,7 +159,6 @@
           </q-card>
         </div>
     </q-scroll-area>
-    <q-separator />
 
     <div class="q-my-md">
       <div class="text-h5 text-bold q-ml-md text-center">Conoce nuestras tiendas</div>
@@ -187,8 +183,8 @@
                   <div class="col text-subtitle2 text-bold ellipsis">{{card.nombre}}</div>
                 </div>
                 <div class="row no-wrap items-center">
-                  <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
-                  <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+                  <div v-if="!card.oferta" class="col text-h6 ellipsis">${{formatPrice(card.valor)}}</div>
+                  <div v-if="card.oferta" class="col text-h6 ellipsis">$<strike>{{formatPrice(card.valor)}}</strike> - {{formatPrice(card.ofertaVal)}}</div>
                 </div>
               </div>
 
@@ -256,10 +252,13 @@ export default {
       this.getInfo()
     } else {
       this.login = false
-      console.log(this.login)
     }
   },
   methods: {
+    formatPrice (value) {
+      const val = (value / 1).toFixed(2).replace('.', ',')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
     irRuta (ruta) {
       openURL(ruta)
     },
@@ -319,6 +318,7 @@ export default {
       this.$api.get('proveedores').then(res => {
         if (res) {
           this.arrLogos = res.filter(v => v.status === 1)
+          this.arrLogos.sort(() => Math.random() - 0.5)
           // arreglar el slide
           var arr = []
           var cc = 1

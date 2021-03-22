@@ -88,8 +88,8 @@
                   <div class="col q-pl-xs text-grey-9 text-subtitle2 ellipsis">{{card.cantidad}}</div>
                 </div>
                 <div class="row no-wrap items-center">
-                  <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
-                  <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+                  <div v-if="!card.oferta" class="col text-h6 ellipsis">${{formatPrice(card.valor)}}</div>
+                  <div v-if="card.oferta" class="col text-h6 ellipsis">$<strike>{{formatPrice(card.valor)}}</strike> - {{formatPrice(card.ofertaVal)}}</div>
                 </div>
               </div>
 
@@ -176,8 +176,8 @@
             <div class="col q-pl-xs text-grey-9 text-subtitle2 ellipsis">{{card.cantidad}}</div>
           </div>
           <div class="row no-wrap items-center">
-            <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
-            <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+            <div v-if="!card.oferta" class="col text-h6 ellipsis">${{formatPrice(card.valor)}}</div>
+            <div v-if="card.oferta" class="col text-h6 ellipsis">$<strike>{{formatPrice(card.valor)}}</strike> - {{formatPrice(card.ofertaVal)}}</div>
           </div>
         </div>
 
@@ -252,6 +252,10 @@ export default {
     this.ejecutarMounted()
   },
   methods: {
+    formatPrice (value) {
+      const val = (value / 1).toFixed(2).replace('.', ',')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
     ejecutarMounted () {
       this.baseu = env.apiUrl + '/producto_files/'
       if (this.$route.params.proveedor_id) {

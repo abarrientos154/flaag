@@ -64,7 +64,19 @@ class ProductoController {
   async allProductos ({ response, auth }) {
     let filter = (await Producto.query().where({}).with('datos_proveedor').fetch()).toJSON()
     let productos = filter.filter(v => !v.disable && v.datos_proveedor.status === 1)
-    response.send(productos)
+    let enviar = productos.map(v => {
+      let entro = false
+      if (v.oferta) {
+        var diferencia =  moment().diff(v.ofertaDate, 'days')
+        entro = true
+      }
+      return {
+        ...v,
+        oferta: entro ? (diferencia < 0 ? false : true) : null
+        //categoria: categoria.nombre
+      }
+    })
+    response.send(enviar)
   }
 
   async todo ({ response, auth }) {

@@ -26,8 +26,8 @@
                   Comprar
                 </q-tooltip>
               </q-btn>
-              <div v-if="!data.oferta" class="col text-subtitle2 ellipsis q-mt-md">$ {{data.valor}}</div>
-              <div v-if="data.oferta" class="col text-subtitle2 ellipsis q-mt-md">$ <strike>{{data.valor}}</strike> - {{data.ofertaVal}}</div>
+              <div v-if="!data.oferta" class="col text-subtitle2 ellipsis q-mt-md">${{formatPrice(data.valor)}}</div>
+              <div v-if="data.oferta" class="col text-subtitle2 ellipsis q-mt-md">$<strike>{{formatPrice(data.valor)}}</strike> - {{formatPrice(data.ofertaVal)}}</div>
             </div>
           </div>
         </q-img>
@@ -76,6 +76,10 @@ export default {
     }
   },
   methods: {
+    formatPrice (value) {
+      const val = (value / 1).toFixed(2).replace('.', ',')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
     irTienda () {
       if (this.login) {
         this.$api.get('user_info').then(res => {

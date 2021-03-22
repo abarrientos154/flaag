@@ -4,7 +4,7 @@
             <div v-if="web" class="row">
               <div class="text-h5 estilo-titulos text-center text-weight-bold q-ml-md q-mr-sm q-my-xl">Carrusel Principal</div>
               <div class="q-mt-xl">
-                <q-btn round color="primary" text-color="black" icon="add" @click="form = {}, tipo = 'principal', imgPublicidad = '', file = null, edit = false, addPublicidad = true" />
+                <q-btn round color="primary" text-color="black" icon="add" @click="form = {}, $v.form.$reset(), tipo = 'principal', imgPublicidad = '', file = null, $v.file.$reset(), edit = false, addPublicidad = true" />
               </div>
             </div>
             <div v-else class="row justify-between">
@@ -48,7 +48,7 @@
                 <q-card-section horizontal>
                     <q-img :src="!card.nuevo ? baseu + card.fileName : card.fileName" :style="web ? 'height: 290px; width: 90%' : 'height: 180px; width: 90%'" @click="!card.nuevo ? irRuta(card.ruta) : ''" />
                     <q-card-actions vertical class="q-px-xs bg-black">
-                      <q-btn round flat color="white" size="md" icon="edit" @click="form = card, !card.nuevo ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', card.nuevo ? edit = false : edit = true, addPublicidad = true"/>
+                      <q-btn round flat color="white" size="md" icon="edit" @click="form = card, !card.nuevo ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', card.nuevo ? edit = false : edit = true, $v.form.$reset(), $v.file.$reset(), addPublicidad = true"/>
                     </q-card-actions>
                   </q-card-section>
               </q-card>
@@ -62,7 +62,7 @@
                 <q-card-section horizontal>
                     <q-img :src="!card.nuevo ? baseu + card.fileName : card.fileName" :style="web ? 'height: 290px; width: 90%' : 'height: 180px; width: 90%'" @click="!card.nuevo ? irRuta(card.ruta) : ''" />
                     <q-card-actions vertical class="q-px-xs bg-black">
-                      <q-btn round flat color="white" size="md" icon="edit" @click="form = card, !card.nuevo ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', card.nuevo ? edit = false : edit = true, addPublicidad = true"/>
+                      <q-btn round flat color="white" size="md" icon="edit" @click="form = card, !card.nuevo ? imgPublicidad = baseu + card.fileName : imgPublicidad = '', card.nuevo ? edit = false : edit = true, $v.form.$reset(), $v.file.$reset(), addPublicidad = true"/>
                     </q-card-actions>
                   </q-card-section>
               </q-card>

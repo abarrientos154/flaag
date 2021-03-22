@@ -140,8 +140,8 @@
                   <div class="col q-pl-xs text-grey-9 text-subtitle2 ellipsis">{{card.cantidad}}</div>
                 </div>
                 <div class="row no-wrap items-center">
-                  <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
-                  <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+                  <div v-if="!card.oferta" class="col text-h6 ellipsis">${{formatPrice(card.valor)}}</div>
+                  <div v-if="card.oferta" class="col text-h6 ellipsis">$<strike>{{formatPrice(card.valor)}}</strike> - {{formatPrice(card.ofertaVal)}}</div>
                 </div>
               </div>
 
@@ -227,8 +227,8 @@
             <div class="col q-pl-xs text-grey-9 text-subtitle2 ellipsis">{{card.cantidad}}</div>
           </div>
           <div class="row no-wrap items-center">
-            <div v-if="!card.oferta" class="col text-h6 ellipsis">$ {{card.valor}}</div>
-            <div v-if="card.oferta" class="col text-h6 ellipsis">$ <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
+            <div v-if="!card.oferta" class="col text-h6 ellipsis">${{formatPrice(card.valor)}}</div>
+            <div v-if="card.oferta" class="col text-h6 ellipsis">$<strike>{{formatPrice(card.valor)}}</strike> - {{formatPrice(card.ofertaVal)}}</div>
           </div>
         </div>
 
@@ -266,7 +266,7 @@
                     <div class="text-subtitle1 ellipsis">{{producto.nombre}}</div>
                   </div>
                   <div class="q-mt-sm">
-                    <q-badge class="text-subtitle2" :color="producto.oferta ? 'positive' : 'teal'" :label="!producto.oferta ? '$ ' + producto.valor : '$ ' + producto.ofertaVal" />
+                    <q-badge class="text-subtitle2" :color="producto.oferta ? 'positive' : 'teal'" :label="!producto.oferta ? '$' + formatPrice(producto.valor) : '$' + formatPrice(producto.ofertaVal)" />
                   </div>
                 </div>
 
@@ -288,7 +288,7 @@
             <q-card class="bordes bg-grey-3 q-pa-sm q-my-md q-mx-md shadow-11" style="width: 100%">
                 <div class="row justify-around">
                     <div class="text-h4 text-bold text-primary">Total</div>
-                    <div class="text-h4 text-bold text-primary">$ {{totalCarrito}}</div>
+                    <div class="text-h4 text-bold text-primary">${{formatPrice(totalCarrito)}}</div>
                 </div>
             </q-card>
             <q-btn :disable="carrito.length ? false : true" @click="test()" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
@@ -411,6 +411,10 @@ export default {
     this.$q.loading.hide()
   },
   methods: {
+    formatPrice (value) {
+      const val = (value / 1).toFixed(2).replace('.', ',')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
     addFavorito () {
       if (this.login) {
         if (this.favorito) {
