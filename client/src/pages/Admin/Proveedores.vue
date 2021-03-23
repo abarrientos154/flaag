@@ -3,7 +3,7 @@
         <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Emprendedores</div>
 
         <div class="row justify-around">
-            <div :class="web ? 'col-4 row justify-center q-mb-xl' : 'col-12 row justify-center q-mb-xl'" v-for="(card, index) in proveedores" :key="index">
+            <div class="col-xs-11 col-sm-6 col-md-4 col-lg-4 col-xl-4 q-mt-md row justify-center q-mb-xl" v-for="(card, index) in proveedores" :key="index">
                 <q-card :class="card.status !== 1 ? 'bg-amber-3 shadow-11 bordes' : 'shadow-11 bordes'" style="width: 90%">
                     <q-img :src="card.perfil ? baseu + card._id : card.perfilEstatico ? 'logos/' + card.id.toString() + '.jpeg' : 'noimg.png'" style="width: 100%; height: 300px" @click="$router.push('/proveedor/' + card._id)" />
 
@@ -25,6 +25,10 @@
                         <div class="row" style="width:100%">
                             <q-icon class="col-1" name="phone" color="blak" style="font-size: 1.3rem;"/>
                             <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.telefono}}</div>
+                        </div>
+                        <div class="row" style="width:100%">
+                            <q-icon class="col-1" name="payment" color="blak" style="font-size: 1.3rem;"/>
+                            <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.metodoPago === '1' ? 'Efectivo' : card.metodoPago === '2' ? 'Transferencia Bancaria' : 'Método de pago'}}</div>
                         </div>
                     </q-card-section>
 
@@ -81,12 +85,10 @@ export default {
   data () {
     return {
       baseu: '',
-      web: true,
       proveedores: []
     }
   },
   mounted () {
-    this.web = this.$q.platform.is.desktop
     this.getData()
     this.baseu = env.apiUrl + '/perfil_img/'
   },

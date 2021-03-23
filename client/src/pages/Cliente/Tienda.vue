@@ -23,17 +23,21 @@
         <q-img style="width:150px;height:150px; border-radius: 100%" :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'" />
       </q-item-section>
       <q-item-section>
-        <div class="row items-center">
+        <div class="row items-center" style="width: 100%">
           <q-icon class="col-1" name="store" size="sm" />
           <q-item-label class="col text-bold text-h6 q-ml-xs ellipsis"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </q-item-label>
         </div>
-        <div class="row items-center">
+        <div class="row items-center" style="width: 100%">
           <q-icon class="col-1" name="perm_identity" size="sm" />
-          <q-item-label caption class="col q-ml-xs ellipsis"> {{user.rut}} </q-item-label>
+          <q-item-label class="col q-ml-xs ellipsis text-subtitle2"> {{user.rut}} </q-item-label>
         </div>
-        <div class="row items-center">
+        <div class="row items-center" style="width: 100%">
           <q-icon class="col-1" name="room" size="sm" />
-          <q-item-label caption lines="2" class="col q-ml-xs ellipsis"> {{user.direccionFisica}} </q-item-label>
+          <q-item-label class="col q-ml-xs ellipsis text-subtitle2"> {{user.direccionFisica}} dkfjghñdl kfjhnñd xfjhnñdxklfjhd hjfjhxf jhxdghkjfd</q-item-label>
+        </div>
+        <div class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="payment" size="sm" />
+          <q-item-label class="col q-ml-xs ellipsis text-subtitle2"> {{user.metodoPago === '1' ? 'Efectivo' : user.metodoPago === '2' ? 'Transferencia Bancaria' : ''}} </q-item-label>
         </div>
       </q-item-section>
     </q-item>
@@ -198,7 +202,7 @@
     </div> -->
 
     <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Productos</div>
-    <div class="row justify-around q-px-md">
+    <div v-if="filtrarProCa.length > 0" class="row justify-around q-px-md">
       <div v-for="(card, index) in filtrarProCa" :key="index" :class="web ? 'col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 q-my-md column items-center' : 'col-5 q-my-md'" >
         <q-img
           :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'"
@@ -235,6 +239,12 @@
         <div v-if="!login || rol === 2" class="row justify-center" :style="web ? 'width: 240px' : 'width: 100%'">
           <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? addCarrito(card) : $router.push('/login')" />
         </div>
+      </div>
+    </div>
+
+    <div v-else class="row justify-center full-width full-height items-center q-pa-xl">
+      <div class="text-h5">
+        :( Sin Nada Por Aqui
       </div>
     </div>
 

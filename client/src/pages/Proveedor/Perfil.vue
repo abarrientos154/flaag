@@ -6,23 +6,6 @@
       </div>
       <div class="column items-center justify-center q-mt-lg">
         <div class="q-mb-md row justify-center">
-          <q-img :src="form.perfil ? baseu : form.perfilEstatico ? 'logos/' + form.id.toString() + '.jpeg' : 'noimg.png'" style="width:150px;height:150px;border-radius:100%" >
-            <div class="absolute-center bg-transparent text-center" style="width: 100%">
-              <div class="absolute-center" style="z-index:1">
-                <q-file borderless v-model="perfil" class="button-subir" @input="changePerfil()" accept=".jpg, image/*"
-                >
-                  <q-avatar class="absolute-center cursor-pointer">
-                    <q-icon name="cloud_upload" color="white" class="absolute-center" />
-                  </q-avatar>
-                </q-file>
-              </div>
-            </div>
-          </q-img>
-        </div>
-        <div class="text-bold text-grey-7"> SUBE UNA FOTO DE PERFIL </div>
-      </div>
-      <div class="column items-center justify-center q-mt-lg">
-        <div class="q-mb-md row justify-center">
           <q-img :src="form.portada ? baseuPortada : 'noimg.png'" style="width:250px;height:150px" >
             <div class="absolute-center bg-transparent text-center" style="width: 100%">
               <div class="absolute-center" style="z-index:1">
@@ -37,6 +20,23 @@
           </q-img>
         </div>
         <div class="text-bold text-grey-7"> SUBE UNA FOTO DE PORTADA </div>
+      </div>
+      <div class="column items-center justify-center q-mt-lg">
+        <div class="q-mb-md row justify-center">
+          <q-img :src="form.perfil ? baseu : form.perfilEstatico ? 'logos/' + form.id.toString() + '.jpeg' : 'noimg.png'" style="width:150px;height:150px;border-radius:100%" >
+            <div class="absolute-center bg-transparent text-center" style="width: 100%">
+              <div class="absolute-center" style="z-index:1">
+                <q-file borderless v-model="perfil" class="button-subir" @input="changePerfil()" accept=".jpg, image/*"
+                >
+                  <q-avatar class="absolute-center cursor-pointer">
+                    <q-icon name="cloud_upload" color="white" class="absolute-center" />
+                  </q-avatar>
+                </q-file>
+              </div>
+            </div>
+          </q-img>
+        </div>
+        <div class="text-bold text-grey-7"> SUBE UNA FOTO DE PERFIL </div>
       </div>
       <div class="row q-pa-xs q-gutter-xs justify-center">
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md">
@@ -106,6 +106,13 @@
           <q-input v-model="form.telefono" label="Telefono" outlined
           />
         </div>
+        <q-card class="row col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md q-pa-md shadow-5">
+          <div class="text-subtitle2 text-weight-bolder q-mr-md q-mb-md">Método de pago</div>
+          <div class="column justify-around q-gutter-sm">
+            <q-radio dense v-model="form.metodoPago" val="1" label="Efectivo" />
+            <q-radio dense v-model="form.metodoPago" val="2" label="Transferencia Bancaria" />
+          </div>
+        </q-card>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md">
           <div class="row full-width justify-around">
             <q-checkbox v-model="form.delivery" label="Delivery" />
@@ -274,6 +281,7 @@ export default {
       this.$api.post('user_by_id/' + id).then(res => {
         this.form = res
         this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
+        this.baseuPortada = env.apiUrl + '/perfil_img/portada' + this.form._id
         this.$q.loading.hide()
       })
     },
