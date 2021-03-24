@@ -1,8 +1,8 @@
 {
-  "name": "trillos",
-  "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "name": "Flaag",
+  "version": "1.0.0",
+  "description": "La Feria de Flaag",
+  "productName": "Flaag",
   "author": "example <example@example.com>",
   "private": true,
   "scripts": {
