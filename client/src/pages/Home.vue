@@ -3,13 +3,11 @@
     <q-carousel
         v-model="slide1"
         class="bg-transparent"
-        :height="web ? '880px' : '300px'"
+        :height="web ? '500px' : '150px'"
         width="100%"
         navigation
         infinite
         :autoplay="autoplay1"
-        @mouseenter="autoplay1 = false"
-        @mouseleave="autoplay1 = true"
         >
         <q-carousel-slide class="q-pa-none" :name="index + 1"  v-for="(img, index) in slPrincipal" :key="index">
           <img
@@ -39,8 +37,6 @@
     <q-carousel
       v-model="slide2"
       :autoplay="autoplay2"
-      @mouseenter="autoplay2 = false"
-      @mouseleave="autoplay2 = true"
       swipeable
       animated
       infinite
