@@ -48,7 +48,7 @@
           />
         </div>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md">
-          <q-select outlined v-model="form.dias" :options="options" label="Dias" multiple emit-value map-options >
+          <q-select outlined v-model="form.dias" :options="optionsDias" label="Dias" multiple emit-value map-options >
             <template v-slot:option="{ itemProps, itemEvents, opt, selected, toggleOption }">
               <q-item
                 v-bind="itemProps"
@@ -106,13 +106,6 @@
           <q-input v-model="form.telefono" label="Telefono" outlined
           />
         </div>
-        <q-card class="row col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md q-pa-md shadow-5">
-          <div class="text-subtitle2 text-weight-bolder q-mr-md q-mb-md">Método de pago</div>
-          <div class="column justify-around q-gutter-sm">
-            <q-radio dense v-model="form.metodoPago" val="1" label="Efectivo" />
-            <q-radio dense v-model="form.metodoPago" val="2" label="Transferencia Bancaria" />
-          </div>
-        </q-card>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md">
           <div class="row full-width justify-around">
             <q-checkbox v-model="form.delivery" label="Delivery" />
@@ -122,6 +115,42 @@
               />
             </div>
           </div>
+        </div>
+        <q-card class="row col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md q-pa-md shadow-5">
+          <div class="text-subtitle2 text-weight-bolder q-mr-md q-mb-md">Método de pago</div>
+          <div class="column justify-around q-gutter-sm">
+            <q-radio dense v-model="form.metodoPago" val="1" label="Efectivo" />
+            <q-radio dense v-model="form.metodoPago" val="2" label="Transferencia Bancaria" />
+            <q-radio dense v-model="form.metodoPago" val="3" label="Flow" />
+          </div>
+        </q-card>
+        <div v-if="form.metodoPago === '2'" class="col-xs-11 col-sm-6 col-md-6 col-lg-6">
+          <q-select class="q-mt-md" outlined v-model="form.banco" :options="optionsBancos" label="Banco" >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-italic text-grey">
+                  No existen bancos registrados
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+          <q-select class="q-mt-md" outlined v-model="form.tipoCuenta" :options="optionsCuentas" label="Tipo de cuenta" >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-italic text-grey">
+                  No existen tipos de cuentas registrados
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+          <q-input class="q-mt-md" v-model.number="form.cuenta" type="number" label="Número de cuenta" outlined/>
+          <q-input class="q-mt-md" v-model="form.rutTitular" label="RUT del titular" outlined/>
+          <q-input class="q-mt-md" v-model="form.titular" label="Nombre del titular" outlined/>
+          <q-input class="q-mt-md" v-model="form.correoDestino" type="email" label="Correo destino del comprobante" outlined/>
+        </div>
+        <div v-if="form.metodoPago === '3'" class="col-xs-11 col-sm-6 col-md-6 col-lg-6">
+          <q-input class="q-mt-md" v-model="form.apiKey" label="ApiKey" outlined/>
+          <q-input class="q-mt-md" v-model="form.secretKey" label="SecretKey" outlined/>
         </div>
       </div>
       <div class="column shadow-3 q-mt-md">
@@ -170,35 +199,16 @@ export default {
       baseuPortada: '',
       baseu: '',
       model: [],
-      options: [
-        {
-          label: 'Lunes',
-          value: 0
-        },
-        {
-          label: 'Martes',
-          value: 1
-        },
-        {
-          label: 'Miercoles',
-          value: 2
-        },
-        {
-          label: 'Jueves',
-          value: 3
-        },
-        {
-          label: 'Viernes',
-          value: 4
-        },
-        {
-          label: 'Sabado',
-          value: 5
-        },
-        {
-          label: 'Domingo',
-          value: 6
-        }
+      optionsBancos: ['Banco Santander', 'Banco Consorcio', 'Banco Corpbanca', 'Banco Credito e inversiones', 'Banco Estado', 'Banco Falabella', 'Banco Internacional', 'Banco Paris', 'Banco Ripley', 'Banco Security', 'Banco de Chile / Edwards-Citi'],
+      optionsCuentas: ['Cuenta corriente', 'Cuenta vista', 'Cuenta de ahorro'],
+      optionsDias: [
+        { label: 'Lunes', value: 0 },
+        { label: 'Martes', value: 1 },
+        { label: 'Miercoles', value: 2 },
+        { label: 'Jueves', value: 3 },
+        { label: 'Viernes', value: 4 },
+        { label: 'Sabado', value: 5 },
+        { label: 'Domingo', value: 6 }
       ]
     }
   },

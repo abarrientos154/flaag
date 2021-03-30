@@ -100,10 +100,10 @@
 
             <q-card-section class="row justify-around">
                 <div v-if="imgPublicidad === ''" class="text-subtitle2 text-grey text-center">Carga una imagen para la publicidad</div>
-                <div v-else>
+                <div v-else style="width:100%">
                     <q-img
                         :src="imgPublicidad"
-                        style="width:400px"
+                        style="width:100%"
                     />
                 </div>
             </q-card-section>

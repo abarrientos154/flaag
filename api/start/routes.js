@@ -94,6 +94,7 @@ addPrefixToGroup(
     Route.delete("eliminar_archivo_producto/:file/:producto_id", "UploadController.eliminarImgProducto")
 
     Route.post("comprar_productos", "ProductoController.comprarProductos")
+    Route.post("comprar_productos_comprobante", "ProductoController.comprarTransferencia")
     //////////////////////////////////////////////////////////////////////////
 
     ///////////////////////FAVORITOS/////////////////////////////////////////
