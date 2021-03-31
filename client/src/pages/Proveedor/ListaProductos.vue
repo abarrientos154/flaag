@@ -18,29 +18,49 @@
       </div>
     </q-img>
 
-    <q-item>
-      <q-item-section avatar>
+    <div class="row q-pa-md" style="width: 100%">
+      <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 col-xl-2 row justify-center">
         <q-img style="width:150px;height:150px; border-radius: 100%" :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'" />
-      </q-item-section>
-      <q-item-section>
+      </div>
+      <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 col-xl-10">
         <div class="row items-center" style="width: 100%">
           <q-icon class="col-1" name="store" size="sm" />
-          <q-item-label class="col text-bold text-h6 q-ml-xs ellipsis"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </q-item-label>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="perm_identity" size="sm" />
-          <q-item-label caption class="col q-ml-xs ellipsis"> {{user.rut}} </q-item-label>
+          <div class="col text-bold text-h6 q-ml-xs ellipsis"> {{user.nombreEmpresa}} </div>
         </div>
         <div class="row items-center" style="width: 100%">
           <q-icon class="col-1" name="room" size="sm" />
-          <q-item-label caption lines="2" class="col q-ml-xs ellipsis"> {{user.direccionFisica}} </q-item-label>
+          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.direccionFisica}} </div>
+        </div>
+        <div class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="email" size="sm" />
+          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.email}} </div>
+        </div>
+        <div class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="phone" size="sm" />
+          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.telefono}} </div>
+        </div>
+        <div class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="home_work" size="sm" />
+          <div class="col q-ml-xs text-subtitle2"> Días de atención: {{user.dias.length ? dias() : ''}} </div>
+        </div>
+        <div class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="alarm" size="sm" />
+          <div class="col q-ml-xs ellipsis text-subtitle2"> Horario: {{user.hapertura && user.hcierre ? user.hapertura + ' - ' + user.hcierre : ''}} </div>
         </div>
         <div class="row items-center" style="width: 100%">
           <q-icon class="col-1" name="payment" size="sm" />
-          <q-item-label class="col q-ml-xs ellipsis text-subtitle2"> {{user.metodoPago === '1' ? 'Efectivo' : user.metodoPago === '2' ? 'Transferencia Bancaria' : ''}} </q-item-label>
+          <div class="col q-ml-xs ellipsis text-subtitle2"> Recibe pagos: {{user.metodoPago === '1' ? 'Efectivo' : user.metodoPago === '2' ? 'Transferencia Bancaria' : user.metodoPago === '3' ? 'Transferencia Electrónica' : ''}} </div>
         </div>
-      </q-item-section>
-    </q-item>
+        <div v-if="user.delivery" class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="delivery_dining" size="sm" />
+          <div class="col q-ml-xs ellipsis text-subtitle2"> Delivery: ${{user.deliveryPrice}} </div>
+        </div>
+        <div v-if="user.regiones" class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="local_shipping" size="sm" />
+          <div class="col q-ml-xs ellipsis text-subtitle2"> Despacho a regiones </div>
+        </div>
+      </div>
+    </div>
 
     <q-dialog v-if="mostrarImg.dialog" v-model="mostrarImg.dialog">
       <q-img style="width:50%;height:50%" :src="rutaCargarImgs + user.images[mostrarImg.imagen]" />
@@ -256,6 +276,28 @@ export default {
     this.ejecutarMounted()
   },
   methods: {
+    dias () {
+      var dias = ''
+      for (let i = 0; i < this.user.dias.length; i++) {
+        if (this.user.dias[i] === 0) {
+          dias = dias + 'Lunes, '
+        } else if (this.user.dias[i] === 1) {
+          dias = dias + 'Martes, '
+        } else if (this.user.dias[i] === 2) {
+          dias = dias + 'Miercoles, '
+        } else if (this.user.dias[i] === 3) {
+          dias = dias + 'Jueves, '
+        } else if (this.user.dias[i] === 4) {
+          dias = dias + 'Viernes, '
+        } else if (this.user.dias[i] === 5) {
+          dias = dias + 'Sabado, '
+        } else if (this.user.dias[i] === 6) {
+          dias = dias + 'Domingo, '
+        }
+      }
+      console.log(dias)
+      return dias
+    },
     formatPrice (value) {
       const val = (value / 1).toFixed(2).replace('.', ',')
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')

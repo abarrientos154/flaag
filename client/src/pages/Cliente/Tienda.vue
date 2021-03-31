@@ -18,29 +18,49 @@
       </div>
     </q-img>
 
-    <q-item>
-      <q-item-section avatar>
+    <div class="row q-pa-md" style="width: 100%">
+      <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 col-xl-2 row justify-center">
         <q-img style="width:150px;height:150px; border-radius: 100%" :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'" />
-      </q-item-section>
-      <q-item-section>
+      </div>
+      <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 col-xl-10">
         <div class="row items-center" style="width: 100%">
           <q-icon class="col-1" name="store" size="sm" />
-          <q-item-label class="col text-bold text-h6 q-ml-xs ellipsis"> {{user.nombreEmpresa ? user.nombreEmpresa : 'Nombre Empresa'}} </q-item-label>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="perm_identity" size="sm" />
-          <q-item-label class="col q-ml-xs ellipsis text-subtitle2"> {{user.rut}} </q-item-label>
+          <div class="col text-bold text-h6 q-ml-xs ellipsis"> {{user.nombreEmpresa}} </div>
         </div>
         <div class="row items-center" style="width: 100%">
           <q-icon class="col-1" name="room" size="sm" />
-          <q-item-label class="col q-ml-xs ellipsis text-subtitle2"> {{user.direccionFisica}} dkfjghñdl kfjhnñd xfjhnñdxklfjhd hjfjhxf jhxdghkjfd</q-item-label>
+          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.direccionFisica}} </div>
+        </div>
+        <div class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="email" size="sm" />
+          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.email}} </div>
+        </div>
+        <div class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="phone" size="sm" />
+          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.telefono}} </div>
+        </div>
+        <div class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="home_work" size="sm" />
+          <div class="col q-ml-xs text-subtitle2"> Días de atención: {{user.dias.length ? dias() : ''}} </div>
+        </div>
+        <div class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="alarm" size="sm" />
+          <div class="col q-ml-xs ellipsis text-subtitle2"> Horario: {{user.hapertura && user.hcierre ? user.hapertura + ' - ' + user.hcierre : ''}} </div>
         </div>
         <div class="row items-center" style="width: 100%">
           <q-icon class="col-1" name="payment" size="sm" />
-          <q-item-label class="col q-ml-xs ellipsis text-subtitle2"> {{user.metodoPago === '1' ? 'Efectivo' : user.metodoPago === '2' ? 'Transferencia Bancaria' : ''}} </q-item-label>
+          <div class="col q-ml-xs ellipsis text-subtitle2"> Recibe pagos: {{user.metodoPago === '1' ? 'Efectivo' : user.metodoPago === '2' ? 'Transferencia Bancaria' : user.metodoPago === '3' ? 'Transferencia Electrónica' : ''}} </div>
         </div>
-      </q-item-section>
-    </q-item>
+        <div v-if="user.delivery" class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="delivery_dining" size="sm" />
+          <div class="col q-ml-xs ellipsis text-subtitle2"> Delivery: ${{user.deliveryPrice}} </div>
+        </div>
+        <div v-if="user.regiones" class="row items-center" style="width: 100%">
+          <q-icon class="col-1" name="local_shipping" size="sm" />
+          <div class="col q-ml-xs ellipsis text-subtitle2"> Despacho a regiones </div>
+        </div>
+      </div>
+    </div>
 
     <!-- <q-img :src="user.portada ? baseuImgTiendaPortada : 'noimg.png'" style="position:absolute;top:0px;height:220px" />
     <q-btn v-if="login" :color="favorito ? 'red': 'primary' " flat :icon="favorito ? 'favorite' :'favorite_border'" round style="position:absolute;top:5px;right:5px;z-index:1" @click="addFavorito()" />
@@ -295,7 +315,78 @@
                     <div class="text-h4 text-bold text-primary">${{formatPrice(totalCarrito)}}</div>
                 </div>
             </q-card>
-            <q-btn :disable="carrito.length ? false : true" @click="test()" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
+            <q-btn :disable="carrito.length ? false : true" @click="iniciarCompra()" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="transferencia">
+      <q-card style="width: 100%">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h5 text-bold">Datos de la cuenta</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+        <q-card-section>
+          <q-field outlined class="q-mb-sm" label="Banco" stack-label>
+            <template v-slot:control>
+              <div class="self-center full-width no-outline" tabindex="0">{{user.banco ? user.banco : ''}}</div>
+            </template>
+          </q-field>
+          <q-field outlined class="q-mb-sm" label="Tipo de cuenta" stack-label>
+            <template v-slot:control>
+              <div class="self-center full-width no-outline" tabindex="0">{{user.tipoCuenta ? user.tipoCuenta : ''}}</div>
+            </template>
+          </q-field>
+          <q-field outlined class="q-mb-sm" label="Número de cuenta" stack-label>
+            <template v-slot:control>
+              <div class="self-center full-width no-outline" tabindex="0">{{user.cuenta ? user.cuenta : ''}}</div>
+            </template>
+          </q-field>
+          <q-field outlined class="q-mb-sm" label="RUT" stack-label>
+            <template v-slot:control>
+              <div class="self-center full-width no-outline" tabindex="0">{{user.rutTitular ? user.rutTitular : ''}}</div>
+            </template>
+          </q-field>
+          <q-field outlined class="q-mb-sm" label="Titular" stack-label>
+            <template v-slot:control>
+              <div class="self-center full-width no-outline" tabindex="0">{{user.titular ? user.titular : ''}}</div>
+            </template>
+          </q-field>
+          <q-field outlined class="q-mb-sm" label="Correo electrónico" stack-label>
+            <template v-slot:control>
+              <div class="self-center full-width no-outline" tabindex="0">{{user.correoDestino ? user.correoDestino : ''}}</div>
+            </template>
+          </q-field>
+        </q-card-section>
+
+        <q-card-section>
+          <div class="text-weight-bold q-mb-md text-h6 text-primary">Comprobante de transferencia</div>
+            <div class="row justify-between">
+              <div class="col-10">
+                <q-file style="width: 100%" @input="fileCompra" accept=".jpg, image/*" v-model="compraFile" outlined label="CLICK AQUÍ" hint="Ingresa la foto del comprobante" :error="$v.compraFile.$error" error-message="Este campo es requerido" @blur="$v.compraFile.$touch()">
+                  </q-file>
+              </div>
+              <div class="col-2 row justify-center">
+                <q-icon size="md" name="close" color="negative" @click="compraFile = null, imgCompra = ''" class="cursor-pointer" />
+              </div>
+            </div>
+        </q-card-section>
+
+        <q-separator />
+
+        <q-card-section class="row justify-around">
+          <div v-if="imgCompra === ''" class="text-subtitle2 text-grey text-center">Carga una imagen del comprobante</div>
+            <div v-else style="width:100%">
+              <q-img
+                :src="imgCompra"
+                style="width:100%"
+              />
+            </div>
+        </q-card-section>
+
+        <q-card-actions class="q-my-md" align="center">
+            <q-btn glossy no-caps label="Enviar" @click="compraTransferencia()" color="primary" text-color="black" size="xl" style="width: 90%" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -313,6 +404,7 @@
 <script>
 import DetalleProducto from '../DetalleProducto'
 import env from '../../env'
+import { required } from 'vuelidate/lib/validators'
 export default {
   components: { DetalleProducto },
   data () {
@@ -323,11 +415,14 @@ export default {
       baseu: '',
       baseuImgTienda: '',
       proveedor_id: '',
+      imgCompra: '',
       favorito: false,
       verProducto: false,
       verCarrito: false,
+      transferencia: false,
       login: true,
       web: true,
+      compraFile: null,
       buscar: 0,
       rol: 0,
       limit: 10,
@@ -346,6 +441,9 @@ export default {
         imagen: 0
       }
     }
+  },
+  validations: {
+    compraFile: { required }
   },
   computed: {
     filtrarProCa () {
@@ -402,7 +500,6 @@ export default {
     if (this.$route.params.producto_id) {
       this.getProducto(this.$route.params.producto_id)
     }
-    console.log(this.proveedor_id)
     const value = localStorage.getItem('FLAAG_SESSION_INFO')
     if (!value) {
       this.login = false
@@ -415,6 +512,60 @@ export default {
     this.$q.loading.hide()
   },
   methods: {
+    dias () {
+      var dias = ''
+      for (let i = 0; i < this.user.dias.length; i++) {
+        if (this.user.dias[i] === 0) {
+          dias = dias + 'Lunes, '
+        } else if (this.user.dias[i] === 1) {
+          dias = dias + 'Martes, '
+        } else if (this.user.dias[i] === 2) {
+          dias = dias + 'Miercoles, '
+        } else if (this.user.dias[i] === 3) {
+          dias = dias + 'Jueves, '
+        } else if (this.user.dias[i] === 4) {
+          dias = dias + 'Viernes, '
+        } else if (this.user.dias[i] === 5) {
+          dias = dias + 'Sabado, '
+        } else if (this.user.dias[i] === 6) {
+          dias = dias + 'Domingo, '
+        }
+      }
+      console.log(dias)
+      return dias
+    },
+    iniciarCompra () {
+      if (this.user.metodoPago === '1') {
+        this.efectivo()
+      } else if (this.user.metodoPago === '2') {
+        this.imgCompra = ''
+        this.compraFile = null
+        this.$v.compraFile.$reset()
+        this.verCarrito = false
+        this.transferencia = true
+      } else if (this.user.metodoPago === '3') {
+        if (this.user.apiKey && this.user.secretKey) {
+          this.test()
+        } else {
+          this.$q.notify({
+            message: 'Método de pago fuera de servicio',
+            negative: 'negative'
+          })
+        }
+      } else {
+        this.$q.notify({
+          message: 'Método de pago fuera de servicio',
+          negative: 'negative'
+        })
+      }
+    },
+    fileCompra () {
+      var img = ''
+      var cc = {}
+      cc = this.compraFile
+      img = URL.createObjectURL(cc)
+      this.imgCompra = img
+    },
     formatPrice (value) {
       const val = (value / 1).toFixed(2).replace('.', ',')
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -435,11 +586,58 @@ export default {
     obtenerFavorito () {
       this.$api.get('favorito/' + this.proveedor_id).then(res => {
         this.favorito = res
-        console.log('FAVORITOOOO', this.favorito)
       })
     },
+    efectivo () {
+      this.$api.post('comprar_productos', { carrito: this.carrito, token: true, pago: '1' }).then(res => {
+        if (res) {
+          this.carrito = []
+          this.getProductosByProveedor(this.proveedor_id)
+          this.verCarrito = false
+          this.$q.notify({
+            message: 'Compra realizada con exito',
+            color: 'positive',
+            positive: 'positive'
+          })
+        }
+      })
+    },
+    compraTransferencia () {
+      this.$v.$touch()
+      if (!this.$v.compraFile.$error) {
+        this.$q.loading.show({
+          message: 'Enviando Comprobante, Por Favor Espere...'
+        })
+        var compra = {
+          carrito: this.carrito,
+          pago: '2'
+        }
+        var formData = new FormData()
+        formData.append('files', this.compraFile)
+        formData.append('dat', JSON.stringify(compra))
+        this.$api.post('comprar_productos_comprobante', formData, {
+          headers: {
+            'Content-Type': undefined
+          }
+        }).then(res => {
+          if (res) {
+            this.carrito = []
+            this.getProductosByProveedor(this.proveedor_id)
+            this.$q.loading.hide()
+            this.transferencia = false
+            this.$q.notify({
+              message: 'Compra realizada con exito',
+              color: 'positive',
+              positive: 'positive'
+            })
+          } else {
+            this.$q.loading.hide()
+          }
+        })
+      }
+    },
     aprobado () {
-      this.$api.post('comprar_productos', { carrito: this.response.localData.carrito, token: this.token }).then(res => {
+      this.$api.post('comprar_productos', { carrito: this.response.localData.carrito, token: this.token, pago: '3' }).then(res => {
         if (res) {
           console.log('carro', this.carrito)
           this.carrito = []
@@ -464,7 +662,6 @@ export default {
         amount: this.totalCarrito,
         email: this.userLog.email
       }
-      console.log(this.proveedor_id)
       this.$api.post('flow', params).then(async v => {
         if (v) {
           await this.$api.post('store_flow', { token: v.token, tienda_id: this.proveedor_id, user: this.userLog._id, carrito: this.carrito, status: 0 })
@@ -587,11 +784,11 @@ export default {
       })
     },
     async getProductosByProveedor (id) {
+      this.dataLimit = []
       await this.$api.get('productos/' + id).then(res => {
         if (res) {
           var j = this.limit
           var i = res.length - 1
-          console.log(i, 'lenghtttttttttttttttttt', res, 'resssss')
           while (j !== 0) {
             if (res[i]) {
               this.dataLimit.push(res[i])
@@ -599,7 +796,6 @@ export default {
             j -= 1
             i -= 1
           }
-          console.log(this.dataLimit, 'limitdatataaaaaaaa')
           this.data = res
         }
       })

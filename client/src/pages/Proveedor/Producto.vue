@@ -26,15 +26,18 @@
       <div class="row q-pa-sm justify-around">
         <div class="full-width q-pa-sm">
           <q-input v-model="form.nombre" label="Nombre" outlined
+          error-message="Requerido" :error="$v.form.nombre.$error" @blur="$v.form.nombre.$touch()"
           />
         </div>
         <div class="full-width q-pa-sm">
           <q-input v-model="form.descripcion" label="Descripcion" outlined type="textarea"
+          error-message="Requerido" :error="$v.form.descripcion.$error" @blur="$v.form.descripcion.$touch()"
           />
         </div>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-pa-sm">
           <q-select v-model.number="form.categoria_id" label="Categoria" outlined :options="categorias" map-options emit-value @input="reiniciarCat(1)"
           option-value="id" option-label="nombre"
+          error-message="Requerido" :error="$v.form.categoria_id.$error" @blur="$v.form.categoria_id.$touch()"
           />
         </div>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-pa-sm" v-if="optionNivelUno.length > 0">
@@ -54,10 +57,12 @@
         </div>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-pa-sm">
           <q-input v-model.number="form.cantidad" label="Cantidad" outlined type="number"
+          error-message="Requerido" :error="$v.form.cantidad.$error" @blur="$v.form.cantidad.$touch()"
           />
         </div>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-pa-sm">
           <q-input v-model.number="form.valor" label="Valor" outlined type="number"
+          error-message="Requerido" :error="$v.form.valor.$error" @blur="$v.form.valor.$touch()"
           />
         </div>
       </div>
@@ -70,6 +75,7 @@
 </template>
 
 <script>
+import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 export default {
   data () {
     return {
@@ -97,6 +103,16 @@ export default {
       imagesSubir: [],
       img: null
     }
+  },
+  validations: {
+    form: {
+      nombre: { required },
+      descripcion: { required },
+      categoria_id: { required },
+      cantidad: { required },
+      valor: { required }
+    },
+    images: { required, maxLength: maxLength(5), minLength: minLength(1) }
   },
   computed: {
     optionNivelUno () {
@@ -126,30 +142,35 @@ export default {
       }
     },
     async guardar () {
-      this.$q.loading.show()
-      var formData = new FormData()
-      var files = this.images
-      if (files.length > 0) {
-        for (let i = 0; i < this.images.length; i++) {
-          formData.append('files' + i, files[i])
-        }
-        this.form.cantidadFiles = files.length
-      } else { this.form.cantidadFiles = 0 }
-      formData.append('dat', JSON.stringify(this.form))
-      await this.$api.post('producto', formData, {
-        headers: {
-          'Content-Type': undefined
-        }
-      }).then(res => {
-        if (res) {
-          this.$q.notify({
-            message: 'Producto agregado Correctamente',
-            color: 'positive'
-          })
-          this.$router.go(-1)
-          this.$q.loading.hide()
-        }
-      })
+      this.$v.$touch()
+      if (!this.$v.form.$error && !this.$v.images.$error) {
+        this.$q.loading.show()
+        var formData = new FormData()
+        var files = this.images
+        if (files.length > 0) {
+          for (let i = 0; i < this.images.length; i++) {
+            formData.append('files' + i, files[i])
+          }
+          this.form.cantidadFiles = files.length
+        } else { this.form.cantidadFiles = 0 }
+        formData.append('dat', JSON.stringify(this.form))
+        await this.$api.post('producto', formData, {
+          headers: {
+            'Content-Type': undefined
+          }
+        }).then(res => {
+          if (res) {
+            this.$q.notify({
+              message: 'Producto agregado Correctamente',
+              color: 'positive'
+            })
+            this.$router.go(-1)
+            this.$q.loading.hide()
+          } else {
+            this.$q.loading.hide()
+          }
+        })
+      }
     },
     insertarImagen () {
       this.images.push(this.img)

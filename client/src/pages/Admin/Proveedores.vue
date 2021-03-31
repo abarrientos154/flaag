@@ -28,7 +28,7 @@
                         </div>
                         <div class="row" style="width:100%">
                             <q-icon class="col-1" name="payment" color="blak" style="font-size: 1.3rem;"/>
-                            <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.metodoPago === '1' ? 'Efectivo' : card.metodoPago === '2' ? 'Transferencia Bancaria' : 'Método de pago'}}</div>
+                            <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.metodoPago === '1' ? 'Efectivo' : card.metodoPago === '2' ? 'Transferencia Bancaria' : card.metodoPago === '3' ? 'Transferencia Electrónica' : 'Método de pago'}}</div>
                         </div>
                     </q-card-section>
 
