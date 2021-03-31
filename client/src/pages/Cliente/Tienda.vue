@@ -128,9 +128,9 @@
       </q-scroll-area>
     </div>
 
-    <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Más recientes</div>
+    <div  v-if="buscar === 0" class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Más recientes</div>
     <q-scroll-area
-        v-if="filtrarProCa.length > 0"
+        v-if="buscar === 0"
         horizontal
         class="q-my-md"
         style="height: 590px;"
@@ -176,13 +176,7 @@
         </div>
       </q-scroll-area>
 
-      <div v-else class="row justify-center full-width full-height items-center q-pa-xl">
-        <div class="text-h5">
-          :( Sin Nada Por Aqui
-        </div>
-      </div>
-
-      <q-separator color="black" />
+      <q-separator  v-if="buscar === 0" color="black" />
 
     <!-- <div class="row justify-around" v-if="filtrarProCa.length > 0">
       <div class="row justify-around q-mb-lg" v-for="(card, index) in filtrarProCa" :key="index">
