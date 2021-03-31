@@ -44,7 +44,7 @@
           />
         </div>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md">
-          <q-input v-model="form.email" label="Email" outlined
+          <q-input disable readonly v-model="form.email" label="Email" outlined
           />
         </div>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md">
@@ -149,8 +149,9 @@
           <q-input class="q-mt-md" v-model="form.correoDestino" type="email" label="Correo destino del comprobante" outlined/>
         </div>
         <div v-if="form.metodoPago === '3'" class="col-xs-11 col-sm-6 col-md-6 col-lg-6">
-          <q-input class="q-mt-md" v-model="form.apiKey" label="ApiKey" outlined/>
-          <q-input class="q-mt-md" v-model="form.secretKey" label="SecretKey" outlined/>
+          <div v-if="confiFlowData" class="text-positive text-bold">Flow ya se encuentra configurado</div>
+          <div v-else class="text-red text-bold">Debes configurar Flow</div>
+          <q-btn style="width:200px" color="positive" label="Configurar Flow" push no-caps @click="flow = {}, $v.flow.$reset(), dialogFlow = true" />
         </div>
       </div>
       <div class="column shadow-3 q-mt-md">
@@ -177,27 +178,59 @@
         <q-btn style="width:200px;height:50px" color="primary" label="Guardar" push @click="guardar()" />
       </q-card-actions>
     </q-card>
+
+    <q-dialog v-model="dialogFlow">
+      <q-card style="width:100%">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">Configuración de Flow</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section>
+          <div class="row items-center" style="width: 100%">
+            <q-icon class="col-1" name="warning" size="sm" />
+            <div class="col q-ml-xs text-caption">Estos datos están protegidos</div>
+          </div>
+
+          <q-input class="q-mt-md" v-model="flow.apiKey" label="ApiKey" outlined :error="$v.flow.apiKey.$error" error-message="Este campo es requerido" @blur="$v.flow.apiKey.$touch()">
+            <template v-if="confiFlowData" v-slot:append>
+              <q-icon name="check" color="positive" />
+            </template>
+          </q-input>
+          <q-input class="q-mt-md" v-model="flow.secretKey" label="SecretKey" outlined :error="$v.flow.secretKey.$error" error-message="Este campo es requerido" @blur="$v.flow.secretKey.$touch()">
+            <template v-if="confiFlowData" v-slot:append>
+              <q-icon name="check" color="positive" />
+            </template>
+          </q-input>
+
+          <div class="row justify-center q-mt-md">
+            <q-btn style="width:200px" color="positive" label="Guardar" push no-caps @click="dataFlow()" />
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
 import env from '../../env'
 export default {
   data () {
     return {
       rutaCargarImgs: '',
+      apiKey: '',
+      secretKey: '',
+      baseuPortada: '',
+      baseu: '',
+      dialogFlow: false,
+      confiFlowData: false,
       img: null,
-      form: {
-        dias: [],
-        delivery: false,
-        regiones: false
-      },
       perfil: null,
       perfilImg: null,
       portada: null,
       portadaImg: null,
-      baseuPortada: '',
-      baseu: '',
       model: [],
       optionsBancos: ['Banco Santander', 'Banco Consorcio', 'Banco Corpbanca', 'Banco Credito e inversiones', 'Banco Estado', 'Banco Falabella', 'Banco Internacional', 'Banco Paris', 'Banco Ripley', 'Banco Security', 'Banco de Chile / Edwards-Citi'],
       optionsCuentas: ['Cuenta corriente', 'Cuenta vista', 'Cuenta de ahorro'],
@@ -209,7 +242,19 @@ export default {
         { label: 'Viernes', value: 4 },
         { label: 'Sabado', value: 5 },
         { label: 'Domingo', value: 6 }
-      ]
+      ],
+      flow: {},
+      form: {
+        dias: [],
+        delivery: false,
+        regiones: false
+      }
+    }
+  },
+  validations: {
+    flow: {
+      apiKey: { required },
+      secretKey: { required }
     }
   },
   async mounted () {
@@ -221,10 +266,38 @@ export default {
     }
   },
   methods: {
+    getDataFlow (id) {
+      this.$api.post('flow_by_id/' + id).then(res => {
+        if (res) {
+          this.confiFlowData = true
+        }
+      })
+    },
+    dataFlow () {
+      this.$v.$touch()
+      if (!this.$v.flow.$error) {
+        this.$q.loading.show()
+        this.flow.tienda_id = this.form._id
+        this.$api.put('configuracion_flow', this.flow).then(res => {
+          if (res) {
+            this.flow = {}
+            this.dialogFlow = false
+            this.$v.flow.$reset()
+            this.getDataFlow(this.form._id)
+            this.$q.loading.hide()
+            this.$q.notify({
+              message: 'Guardado Correctamente',
+              positive: 'positive'
+            })
+          }
+        })
+      }
+    },
     guardar () {
       this.$q.loading.show()
       this.$api.put('editar_proveedor', this.form).then(res => {
         if (res) {
+          this.getProvEdit(this.form._id)
           this.$q.notify({
             message: 'Guardado Correctamente',
             positive: 'positive'
@@ -281,6 +354,9 @@ export default {
       this.$q.loading.show()
       await this.$api.get('user_info').then(res => {
         this.form = res
+        if (this.form.metodoPago === '3') {
+          this.getDataFlow(this.form._id)
+        }
         this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
         this.baseuPortada = env.apiUrl + '/perfil_img/portada' + this.form._id
         this.$q.loading.hide()
@@ -290,6 +366,9 @@ export default {
       this.$q.loading.show()
       this.$api.post('user_by_id/' + id).then(res => {
         this.form = res
+        if (this.form.metodoPago === '3') {
+          this.getDataFlow(this.form._id)
+        }
         this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
         this.baseuPortada = env.apiUrl + '/perfil_img/portada' + this.form._id
         this.$q.loading.hide()

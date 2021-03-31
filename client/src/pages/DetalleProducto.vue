@@ -1,34 +1,9 @@
 <template>
   <div style="height:100%;">
       <q-img :src="baseu + perfile" spinner-color="white" style="height: 400px; width: 100%;">
-          <div class="row no-wrap justify-between" style="width:100%">
+          <div class="row no-wrap justify-between bg-transparent" style="width:100%">
               <div class="col text-h6 text-white text-weight-bolder ellipsis">{{data.datos_proveedor.nombreEmpresa}}</div>
               <q-btn no-caps flat icon="store" label="Ir" color="white" @click="rol !== 1 ? irTienda() : $router.push('/proveedor/' + data.datos_proveedor._id)" />
-          </div>
-          <div class="row justify-between absolute-bottom" style="width:100%">
-            <div class="row no-wrap items-center q-mt-md">
-              <q-icon class="col-1" name="room" color="blak" style="font-size: 1.5rem;"/>
-              <div class="q-pl-md q-pt-xs text-caption">{{data.datos_proveedor.direccionFisica}}</div>
-            </div>
-            <div class="row no-wrap items-center">
-              <q-btn
-                v-if="rol === 2 || !login"
-                @click="login ? addCarrito() : $router.push('/login')"
-                fab
-                glossy
-                text-color="black"
-                color="primary"
-                icon="add_shopping_cart"
-                class="absolute"
-                style="top: 0; right: 12px; transform: translateY(-50%);"
-              >
-                <q-tooltip anchor="top middle">
-                  Comprar
-                </q-tooltip>
-              </q-btn>
-              <div v-if="!data.oferta" class="col text-subtitle2 ellipsis q-mt-md">${{formatPrice(data.valor)}}</div>
-              <div v-if="data.oferta" class="col text-subtitle2 ellipsis q-mt-md">$<strike>{{formatPrice(data.valor)}}</strike> - {{formatPrice(data.ofertaVal)}}</div>
-            </div>
           </div>
         </q-img>
 
@@ -48,7 +23,30 @@
           </q-scroll-area>
         </div>
 
-        <div class="q-mx-md q-mt-sm q-mb-lg q-pb-lg">{{data.descripcion}}</div>
+        <div class="q-mx-md q-mt-sm q-mb-lg q-pb-lg text-h5">{{data.descripcion}}</div>
+
+        <div class="row justify-between q-px-md">
+          <div>
+            <div v-if="!data.oferta" class="text-h6 text-bold text-center ellipsis q-ma-md">${{formatPrice(data.valor)}}</div>
+            <div v-if="data.oferta" class="text-h6 text-bold text-center ellipsis q-ma-md">$<strike>{{formatPrice(data.valor)}}</strike> - {{formatPrice(data.ofertaVal)}}</div>
+          </div>
+          <div class="row q-mb-md no-wrap items-center">
+              <q-btn
+                v-if="rol === 2 || !login"
+                @click="login ? addCarrito() : $router.push('/login')"
+                glossy
+                round
+                size="1.3em"
+                text-color="black"
+                color="primary"
+                icon="add_shopping_cart"
+              >
+                <q-tooltip anchor="top middle">
+                  Comprar
+                </q-tooltip>
+              </q-btn>
+            </div>
+        </div>
   </div>
 </template>
 
@@ -77,7 +75,7 @@ export default {
   },
   methods: {
     formatPrice (value) {
-      const val = (value / 1).toFixed(2).replace('.', ',')
+      const val = (value / 1).toFixed(0).replace('.', ',')
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     },
     irTienda () {

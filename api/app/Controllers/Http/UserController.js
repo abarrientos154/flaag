@@ -6,6 +6,7 @@ const fs = require('fs')
 var randomize = require('randomatic');
 const Flow = require('flowcl-node-api-client')
 const User = use("App/Models/User")
+const flowData = use("App/Models/FlowDatum")
 const Role = use("App/Models/Role")
 const Floww = use("App/Models/Flow")
 const { validate } = use("Validator")
@@ -97,6 +98,22 @@ class UserController {
     let dat = request.all()
     let enable = await User.query().where({_id: params.id}).update({status: dat.status})
     response.send(enable)
+  }
+  async flowConfigData({ request, response, params }) {
+    let flowDat = await flowData.query().where({tienda_id: params.id}).first()
+    response.send(flowDat)
+  }
+  async flowConfig({ params, request, response }) {
+    let dat = request.all()
+    let id = dat.tienda_id
+    let exist = await flowData.findBy('tienda_id', id)
+    if (exist) {
+      let update = await flowData.query().where({tienda_id: id}).update(dat)
+    } else {
+      const crear = await flowData.create(dat)
+    }
+    let user = await User.query().where({_id: id}).update({metodoPago: '3'})
+    response.send(true)
   }
   async flow({ request, response }) {
     let dat = request.all()

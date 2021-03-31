@@ -69,6 +69,9 @@ addPrefixToGroup(
     Route.post("subir_archivo_proveedor/:id", "UploadController.subirImgTienda")
     Route.delete("eliminar_archivo_proveedor/:file", "UploadController.eliminarImgTienda")
 
+    Route.put("configuracion_flow", "UserController.flowConfig")
+    Route.post("flow_by_id/:id", "UserController.flowConfigData")
+
     Route.post("proveedor_status/:id", "UserController.proveedorStatus")
 
     Route.post("flow", "UserController.flow")

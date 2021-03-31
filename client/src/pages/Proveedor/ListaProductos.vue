@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <q-img :src="user.portada ? baseuImgTiendaPortada : 'noimg.png'" style="height:300px; width:" >
-      <div class="full-width full-height">
+      <div class="full-width full-height bg-transparent">
         <div class="row justify-between bg-transparent" style="width: 100%">
           <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="white" @click="$router.go(-1)" />
           <q-btn no-caps rounded class="q-mr-md q-mt-md" label="Editar perfil" icon="edit" color="white" text-color="black" @click="ver()" />
@@ -301,11 +301,10 @@ export default {
           dias = dias + 'Domingo, '
         }
       }
-      console.log(dias)
       return dias
     },
     formatPrice (value) {
-      const val = (value / 1).toFixed(2).replace('.', ',')
+      const val = (value / 1).toFixed(0).replace('.', ',')
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     },
     ejecutarMounted () {

@@ -34,36 +34,7 @@
 
                     <q-separator />
 
-                    <q-card-actions align="between">
-                        <q-btn-dropdown
-                          class="glossy"
-                          color="amber"
-                          icon="event"
-                          text-color="black"
-                        >
-                          <div class="q-pa-md bg-primary" style="width: 310px">
-                            <div class="row justify-around q-gutter-md">
-                              <div class="row">
-                                <q-icon class="col-1" name="room" color="blak" style="font-size: 1.3rem;"/>
-                                <div class="q-pl-sm text-grey-9 text-subtitle2">{{card.hapertura ? card.hapertura : 'Apertura'}}</div>
-                              </div>
-                              <div class="row">
-                                <q-icon class="col-1" name="room" color="blak" style="font-size: 1.3rem;"/>
-                                <div class="q-pl-sm text-grey-9 text-subtitle2">{{card.hcierre ? card.hcierre : 'Cierre'}}</div>
-                              </div>
-                            </div>
-
-                            <q-separator color="black" class="q-my-md" />
-
-                            <q-list>
-                              <q-item clickable v-for="(dia, indexD) in card.dias" :key="indexD">
-                                <q-item-section>
-                                  <q-item-label>{{dia === 0 ? 'Lunes' : dia === 1 ? 'Martes' : dia === 2 ? 'Miércoles' : dia === 3 ? 'Jueves' : dia === 4 ? 'Viernes' : dia === 5 ? 'Sábado' : 'Domingo'}}</q-item-label>
-                                </q-item-section>
-                              </q-item>
-                            </q-list>
-                          </div>
-                        </q-btn-dropdown>
+                    <q-card-actions align="right">
                         <div v-if="card.status === 2" class="row q-gutter-md">
                             <q-btn round icon="clear" color="negative" @click="statusProv(card._id, 3)">
                                 <q-tooltip content-class="bg-negative text-white" :offset="[10, 10]">Rechazar</q-tooltip>

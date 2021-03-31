@@ -66,7 +66,6 @@ class FavoriteController {
     let favorito = await Favorite.query().where({
       proveedor_id: params.proveedor_id, cliente_id: userL._id.toString()
     }).first()
-    console.log(favorito ? true : false, 'favorito')
     response.send(favorito ? true : false)
 
   }
