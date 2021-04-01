@@ -75,7 +75,7 @@ addPrefixToGroup(
     Route.post("proveedor_status/:id", "UserController.proveedorStatus")
 
     Route.post("flow", "UserController.flow")
-    Route.get("get_info_flow/:token", "UserController.flowResponse")
+    Route.get("get_info_flow/:token/:id", "UserController.flowResponse")
     Route.post("store_flow", "UserController.store_flow")
 
     Route.post("publicidad", "PublicidadController.create")
