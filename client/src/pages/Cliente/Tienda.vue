@@ -170,7 +170,7 @@
               </div>
 
               <div v-if="!login || rol === 2" class="row justify-center">
-                <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? addCarrito(card) : $router.push('/login')" />
+                <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? addCarrito(card) : noLogin = true" />
               </div>
           </div>
         </div>
@@ -251,7 +251,7 @@
         </div>
 
         <div v-if="!login || rol === 2" class="row justify-center" :style="web ? 'width: 240px' : 'width: 100%'">
-          <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? addCarrito(card) : $router.push('/login')" />
+          <q-btn glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" @click="login ? addCarrito(card) : noLogin = true" />
         </div>
       </div>
     </div>
@@ -266,6 +266,20 @@
       <q-card style="width: 400px">
         <q-card-section class="q-pa-none" style="width: 100%;">
           <DetalleProducto :data="producto" lugar="tienda" @compra="addCarrito" />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="noLogin">
+      <q-card class="q-pa-md">
+        <q-card-section>
+          <div class="q-ml-sm text-center text-subtitle2">Para poder comprar debes tener una cuenta.</div>
+          <div class="q-ml-sm text-center text-h6 text-bold">¿Deseas registrarte o iniciar sesión?</div>
+        </q-card-section>
+
+        <q-card-section class="column items-center">
+          <q-btn label="Iniciar Sesión" color="primary" @click="$router.push('/login')" />
+          <q-btn flat label="Registrarme" color="primary" @click="$router.push('/registro')" />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -420,6 +434,7 @@ export default {
       verProducto: false,
       verCarrito: false,
       transferencia: false,
+      noLogin: false,
       login: true,
       web: true,
       compraFile: null,

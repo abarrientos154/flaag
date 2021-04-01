@@ -33,7 +33,7 @@
           <div class="row q-mb-md no-wrap items-center">
               <q-btn
                 v-if="rol === 2 || !login"
-                @click="login ? addCarrito() : $router.push('/login')"
+                @click="login ? addCarrito() : noLogin = true"
                 glossy
                 round
                 size="1.3em"
@@ -47,6 +47,20 @@
               </q-btn>
             </div>
         </div>
+
+        <q-dialog v-model="noLogin">
+          <q-card class="q-pa-md">
+            <q-card-section>
+              <div class="q-ml-sm text-center text-subtitle2">Para poder comprar debes tener una cuenta.</div>
+              <div class="q-ml-sm text-center text-h6 text-bold">¿Deseas registrarte o iniciar sesión?</div>
+            </q-card-section>
+
+            <q-card-section class="column items-center">
+              <q-btn label="Iniciar Sesión" color="primary" @click="$router.push('/login')" />
+              <q-btn flat label="Registrarme" color="primary" @click="$router.push('/registro')" />
+            </q-card-section>
+          </q-card>
+        </q-dialog>
   </div>
 </template>
 
@@ -60,7 +74,8 @@ export default {
       perfile: '',
       rol: 0,
       miTienda: false,
-      login: true
+      login: true,
+      noLogin: false
     }
   },
   mounted () {

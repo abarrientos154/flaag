@@ -50,6 +50,8 @@ addPrefixToGroup(
 
     Route.post("categorias_no_logueado/:proveedor_id", "CategoriaController.indexNoLogueado")
 
+    Route.post("flow_by_id/:id", "UserController.flowConfigData")
+
     Route.get('publicidad_img/:file', 'UploadController.getFilePublicidad')
     Route.get("publicidad", "PublicidadController.index")
     Route.get("proveedores", "UserController.proveedores")
@@ -70,7 +72,6 @@ addPrefixToGroup(
     Route.delete("eliminar_archivo_proveedor/:file", "UploadController.eliminarImgTienda")
 
     Route.put("configuracion_flow", "UserController.flowConfig")
-    Route.post("flow_by_id/:id", "UserController.flowConfigData")
 
     Route.post("proveedor_status/:id", "UserController.proveedorStatus")
 

@@ -32,8 +32,6 @@
                         </div>
                     </q-card-section>
 
-                    <q-separator />
-
                     <q-card-actions align="right">
                         <div v-if="card.status === 2" class="row q-gutter-md">
                             <q-btn round icon="clear" color="negative" @click="statusProv(card._id, 3)">
