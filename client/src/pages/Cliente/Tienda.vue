@@ -677,7 +677,8 @@ export default {
         subject: 'Compra en Flaag',
         currency: 'CLP',
         amount: this.totalCarrito,
-        email: this.userLog.email
+        email: this.userLog.email,
+        tienda_id: this.proveedor_id
       }
       this.$api.post('flow', params).then(async v => {
         if (v) {

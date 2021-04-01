@@ -9,6 +9,7 @@ const User = use("App/Models/User")
 const flowData = use("App/Models/FlowDatum")
 const Role = use("App/Models/Role")
 const Floww = use("App/Models/Flow")
+const Data = use("App/Models/FlowDatum")
 const { validate } = use("Validator")
 const Env = use('Env')
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
@@ -117,9 +118,10 @@ class UserController {
   }
   async flow({ request, response }) {
     let dat = request.all()
+    var tienda = await Data.findBy('tienda_id', dat.tienda_id) 
     var config = {
-       apiKey: Env.get('FLOW_APIKEY'),
-       secretKey: Env.get('FLOW_SECRETKEY'),
+       apiKey: tienda.apiKey,
+       secretKey: tienda.secretKey,
        apiURL: Env.get('FLOW_APIURL'),
        baseURL: Env.get('FLOW_BASEURL')
     }
@@ -155,16 +157,19 @@ class UserController {
     Floww.create(dat)
   }
   async flowResponse ({params, response}) {
+    
     let dat = params.token
-    var config = {
-       apiKey: Env.get('FLOW_APIKEY'),
-       secretKey: Env.get('FLOW_SECRETKEY'),
-       apiURL: Env.get('FLOW_APIURL'),
-       baseURL: Env.get('FLOW_BASEURL')
-    }
     const paramss = {
        token: dat
       }
+    const infoLocal = (await Floww.query().where({token: dat}).fetch()).toJSON()
+    var tienda = await Data.findBy('tienda_id', infoLocal[0].tienda_id)
+    var config = {
+        apiKey: tienda.apiKey,
+       secretKey: tienda.secretKey,
+       apiURL: Env.get('FLOW_APIURL'),
+       baseURL: Env.get('FLOW_BASEURL')
+    }
     const serviceName = 'payment/getStatus'
     console.log(dat,'floww')
     try {
