@@ -113,7 +113,11 @@ class UserController {
     } else {
       const crear = await flowData.create(dat)
     }
-    let user = await User.query().where({_id: id}).update({metodoPago: '3'})
+    let tienda = await User.find(id)
+    if (!tienda.metodoPago.find(v => v === '3')) {
+      tienda.metodoPago.push('3')
+    }
+    let user = await User.query().where({_id: id}).update({metodoPago: tienda.metodoPago})
     response.send(true)
   }
   async flow({ request, response }) {

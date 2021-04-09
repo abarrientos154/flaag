@@ -32,7 +32,6 @@ export default {
     clearInterval(this.timer)
   },
   created () {
-    console.log('corriendo2')
     this.timer = setInterval(this.ejecutar, 5000)
   },
   cancelAutoUpdate () { clearInterval(this.timer) }

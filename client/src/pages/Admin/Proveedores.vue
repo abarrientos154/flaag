@@ -26,9 +26,23 @@
                             <q-icon class="col-1" name="phone" color="blak" style="font-size: 1.3rem;"/>
                             <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.telefono}}</div>
                         </div>
-                        <div class="row" style="width:100%">
+                        <!-- <div class="row" style="width:100%">
                             <q-icon class="col-1" name="payment" color="blak" style="font-size: 1.3rem;"/>
                             <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.metodoPago === '1' ? 'Efectivo' : card.metodoPago === '2' ? 'Transferencia Bancaria' : card.metodoPago === '3' ? 'Transferencia Electrónica' : 'Método de pago'}}</div>
+                        </div> -->
+                        <div class="column items-start" style="width: 100%">
+                          <div class="row items-center" style="width: 100%">
+                            <q-icon class="col-1" name="payment" size="sm" />
+                            <div class="col q-ml-xs text-subtitle2"> Recibe pagos:</div>
+                          </div>
+                          <div style="width: 100%">
+                            <div class="q-ml-md" v-for="(item, index) in card.metodoPago" :key="index" style="width: 100%">
+                              <div class="row items-center" style="width: 100%">
+                                <q-icon class="col-1" name="stop_circle" size="1em" />
+                                <div class="col q-ml-xs text-subtitle2">{{item === '1' ? 'Efectivo' : item === '2' ? 'Transferencia Bancaria' : item === '3' ? 'Transferencia Electrónica' : ''}}</div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                     </q-card-section>
 

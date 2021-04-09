@@ -23,41 +23,55 @@
         <q-img style="width:150px;height:150px; border-radius: 100%" :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'" />
       </div>
       <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 col-xl-10">
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="store" size="sm" />
-          <div class="col text-bold text-h6 q-ml-xs ellipsis"> {{user.nombreEmpresa}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="room" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.direccionFisica}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="email" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.email}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="phone" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.telefono}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="home_work" size="sm" />
-          <div class="col q-ml-xs text-subtitle2"> Días de atención: {{user.dias.length ? dias() : ''}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="alarm" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> Horario: {{user.hapertura && user.hcierre ? user.hapertura + ' - ' + user.hcierre : ''}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="payment" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> Recibe pagos: {{user.metodoPago === '1' ? 'Efectivo' : user.metodoPago === '2' ? 'Transferencia Bancaria' : user.metodoPago === '3' ? 'Transferencia Electrónica' : ''}} </div>
-        </div>
-        <div v-if="user.delivery" class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="delivery_dining" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> Delivery: ${{user.deliveryPrice}} </div>
-        </div>
-        <div v-if="user.regiones" class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="local_shipping" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> Despacho a regiones </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="store" size="sm" />
+              <div class="col text-bold text-h6 q-ml-xs ellipsis"> {{user.nombreEmpresa}} </div>
+            </div>
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="room" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.direccionFisica}} </div>
+            </div>
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="email" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.email}} </div>
+            </div>
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="phone" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.telefono}} </div>
+            </div>
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="home_work" size="sm" />
+              <div class="col q-ml-xs text-subtitle2"> Días de atención: {{user.dias.length ? dias() : ''}} </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="alarm" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> Horario: {{user.hapertura && user.hcierre ? user.hapertura + ' - ' + user.hcierre : ''}} </div>
+            </div>
+            <div v-if="user.delivery" class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="delivery_dining" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> Delivery: ${{user.deliveryPrice}} </div>
+            </div>
+            <div v-if="user.regiones" class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="local_shipping" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> Despacho a regiones </div>
+            </div>
+            <div class="column items-start" style="width: 100%">
+              <div class="row items-center" style="width: 100%">
+                <q-icon class="col-1" name="payment" size="sm" />
+                <div class="col q-ml-xs text-subtitle2"> Recibe pagos:</div>
+              </div>
+              <div class="q-ml-md" v-for="(item, index) in user.metodoPago" :key="index" style="width: 100%">
+                <div class="row items-center" style="width: 100%">
+                  <q-icon class="col-1" name="stop_circle" size="1em" />
+                  <div class="col q-ml-xs text-subtitle2">{{item === '1' ? 'Efectivo' : item === '2' ? 'Transferencia Bancaria' : item === '3' ? 'Transferencia Electrónica' : ''}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -413,6 +427,7 @@ export default {
       }
     },
     getProductos () {
+      this.dataLimit = []
       this.$api.get('productos').then(res => {
         if (res) {
           var j = this.limit
@@ -429,6 +444,7 @@ export default {
       })
     },
     getProductosByProveedor (id) {
+      this.dataLimit = []
       this.$api.get('productos/' + id).then(res => {
         if (res) {
           var j = this.limit

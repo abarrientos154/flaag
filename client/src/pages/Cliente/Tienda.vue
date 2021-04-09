@@ -23,41 +23,57 @@
         <q-img style="width:150px;height:150px; border-radius: 100%" :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'" />
       </div>
       <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10 col-xl-10">
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="store" size="sm" />
-          <div class="col text-bold text-h6 q-ml-xs ellipsis"> {{user.nombreEmpresa}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="room" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.direccionFisica}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="email" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.email}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="phone" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.telefono}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="home_work" size="sm" />
-          <div class="col q-ml-xs text-subtitle2"> Días de atención: {{user.dias.length ? dias() : ''}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="alarm" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> Horario: {{user.hapertura && user.hcierre ? user.hapertura + ' - ' + user.hcierre : ''}} </div>
-        </div>
-        <div class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="payment" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> Recibe pagos: {{user.metodoPago === '1' ? 'Efectivo' : user.metodoPago === '2' ? 'Transferencia Bancaria' : user.metodoPago === '3' ? 'Transferencia Electrónica' : ''}} </div>
-        </div>
-        <div v-if="user.delivery" class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="delivery_dining" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> Delivery: ${{user.deliveryPrice}} </div>
-        </div>
-        <div v-if="user.regiones" class="row items-center" style="width: 100%">
-          <q-icon class="col-1" name="local_shipping" size="sm" />
-          <div class="col q-ml-xs ellipsis text-subtitle2"> Despacho a regiones </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="store" size="sm" />
+              <div class="col text-bold text-h6 q-ml-xs ellipsis"> {{user.nombreEmpresa}} </div>
+            </div>
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="room" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.direccionFisica}} </div>
+            </div>
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="email" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.email}} </div>
+            </div>
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="phone" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.telefono}} </div>
+            </div>
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="home_work" size="sm" />
+              <div class="col q-ml-xs text-subtitle2"> Días de atención: {{user.dias.length ? dias() : ''}} </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <div class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="alarm" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> Horario: {{user.hapertura && user.hcierre ? user.hapertura + ' - ' + user.hcierre : ''}} </div>
+            </div>
+            <div v-if="user.delivery" class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="delivery_dining" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> Delivery: ${{user.deliveryPrice}} </div>
+            </div>
+            <div v-if="user.regiones" class="row items-center" style="width: 100%">
+              <q-icon class="col-1" name="local_shipping" size="sm" />
+              <div class="col q-ml-xs ellipsis text-subtitle2"> Despacho a regiones </div>
+            </div>
+            <div class="column items-start" style="width: 100%">
+              <div class="row items-center" style="width: 100%">
+                <q-icon class="col-1" name="payment" size="sm" />
+                <div class="col q-ml-xs text-subtitle2"> Recibe pagos:</div>
+              </div>
+              <div style="width: 100%">
+                <div class="q-ml-md" v-for="(item, index) in user.metodoPago" :key="index" style="width: 100%">
+                  <div class="row items-center" style="width: 100%">
+                    <q-icon class="col-1" name="stop_circle" size="1em" />
+                    <div class="col q-ml-xs text-subtitle2">{{item === '1' ? 'Efectivo' : item === '2' ? 'Transferencia Bancaria' : item === '3' ? 'Transferencia Electrónica' : ''}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -329,8 +345,43 @@
                     <div class="text-h4 text-bold text-primary">${{formatPrice(totalCarrito)}}</div>
                 </div>
             </q-card>
-            <q-btn :disable="carrito.length ? false : true" @click="iniciarCompra()" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
+            <q-btn :disable="carrito.length ? false : true" @click="options_pago = user.metodoPago, verCarrito = false, selecMetodoPago = true" glossy icon="add_shopping_cart" label="Comprar" color="primary" text-color="black" size="xl" style="width: 90%" />
         </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="selecMetodoPago">
+      <q-card style="width: 100%">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h5 text-bold">Método de pago</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+        <q-card-section v-if="options_pago.length">
+          <q-card
+            v-ripple
+            clickable
+            style="border-radius:10px;width:100%"
+            class="q-pa-sm q-my-md shadow-11 bg-primary"
+            v-for="(item, index) in options_pago"
+            :key="index"
+            @click="iniciarCompra(item)">
+            <q-item>
+              <q-item-section avatar>
+                <q-avatar icon="home" class="text-black" />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label class="text-black text-h6">{{item === '1' ? 'Efectivo' : item === '2' ? 'Transferencia Bancaria' : item === '3' ? 'Transferencia Electrónica' : ''}}</q-item-label>
+              </q-item-section>
+              <q-item-section side>
+                <q-icon name="arrow_right" color="black" />
+              </q-item-section>
+            </q-item>
+          </q-card>
+        </q-card-section>
+        <q-card-section v-else>
+          <div class="text-center text-weight-bolder text-subtitle1 q-ma-md shadow-11 q-pa-md bg-primary" style="border-radius:10px;">La tienda no ha configurado un método de pago</div>
+        </q-card-section>
       </q-card>
     </q-dialog>
 
@@ -435,12 +486,14 @@ export default {
       verCarrito: false,
       transferencia: false,
       noLogin: false,
+      selecMetodoPago: false,
       login: true,
       web: true,
       compraFile: null,
       buscar: 0,
       rol: 0,
       limit: 10,
+      options_pago: [],
       dataLimit: [],
       data: [],
       carrito: [],
@@ -489,13 +542,11 @@ export default {
       message: 'Cargando Datos'
     })
     this.baseu = env.apiUrl + '/producto_files/'
-    console.log(this.$route.params)
     if (this.$route.params.token) {
       this.token = this.$route.params.token
       this.response = await this.$api.get('get_info_flow/' + this.token)
       await this.getInfoById(this.response.localData.tienda_id)
       this.proveedor_id = this.response.localData.tienda_id
-      console.log(this.response.flow.status, this.response.localData.status)
       if (this.response.flow.status === 2 && this.response.localData.status === 0) {
         await this.aprobado()
       } else {
@@ -505,7 +556,6 @@ export default {
           color: 'negative'
         })
       }
-      console.log(this.token, this.response)
     }
     if (this.$route.params.proveedor_id) {
       this.proveedor_id = this.$route.params.proveedor_id
@@ -546,19 +596,18 @@ export default {
           dias = dias + 'Domingo, '
         }
       }
-      console.log(dias)
       return dias
     },
-    iniciarCompra () {
-      if (this.user.metodoPago === '1') {
+    iniciarCompra (val) {
+      if (val === '1') {
         this.efectivo()
-      } else if (this.user.metodoPago === '2') {
+      } else if (val === '2') {
         this.imgCompra = ''
         this.compraFile = null
         this.$v.compraFile.$reset()
-        this.verCarrito = false
+        this.selecMetodoPago = false
         this.transferencia = true
-      } else if (this.user.metodoPago === '3') {
+      } else if (val === '3') {
         this.$api.post('flow_by_id/' + this.user._id).then(res => {
           if (res) {
             this.test()
@@ -568,11 +617,6 @@ export default {
               negative: 'negative'
             })
           }
-        })
-      } else {
-        this.$q.notify({
-          message: 'Método de pago fuera de servicio',
-          negative: 'negative'
         })
       }
     },
@@ -610,7 +654,7 @@ export default {
         if (res) {
           this.carrito = []
           this.getProductosByProveedor(this.proveedor_id)
-          this.verCarrito = false
+          this.selecMetodoPago = false
           this.$q.notify({
             message: 'Compra realizada con exito',
             color: 'positive',
@@ -656,7 +700,6 @@ export default {
     aprobado () {
       this.$api.post('comprar_productos', { carrito: this.response.localData.carrito, token: this.token, pago: '3' }).then(res => {
         if (res) {
-          console.log('carro', this.carrito)
           this.carrito = []
           this.getProductosByProveedor(this.proveedor_id)
           this.verCarrito = false

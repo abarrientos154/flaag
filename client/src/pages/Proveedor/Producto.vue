@@ -13,7 +13,8 @@
           </div>
         </q-avatar>
       </div>
-      <div class="text-grey-6">Imagenes del producto (hasta 5 imagenes)</div>
+      <div v-if="$v.images.$error" class="text-negative text-center">Sube alguna imagen para tu producto</div>
+      <div class="text-grey-7">Imagenes del producto (hasta 5 imagenes)</div>
       <q-scroll-area v-if="images && images.length > 0" horizontal style="height:85px; width: 100%;" class="bg-grey-1"
         :thumb-style="thumbStyle" :bar-style="barStyle"
       >

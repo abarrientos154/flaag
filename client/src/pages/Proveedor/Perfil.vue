@@ -119,13 +119,19 @@
         <q-card class="row col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md q-pa-md shadow-5">
           <div class="text-subtitle2 text-weight-bolder q-mr-md q-mb-md">Método de pago</div>
           <div class="column justify-around q-gutter-sm">
-            <q-radio dense v-model="form.metodoPago" val="1" label="Efectivo" />
-            <q-radio dense v-model="form.metodoPago" val="2" label="Transferencia Bancaria" />
-            <q-radio dense v-model="form.metodoPago" val="3" label="Flow" />
+            <q-checkbox @input="selecMetodo()" v-model="form.metodoPago" val="1" label="Efectivo" color="primary" />
+            <q-checkbox @input="selecMetodo()" v-model="form.metodoPago" val="2" label="Transferencia Bancaria" color="primary" />
+            <q-checkbox @input="selecMetodo(), getDataFlow(form._id)" v-model="form.metodoPago" val="3" label="Transferencia Electrónica" color="primary" />
           </div>
         </q-card>
-        <div v-if="form.metodoPago === '2'" class="col-xs-11 col-sm-6 col-md-6 col-lg-6">
-          <q-select class="q-mt-md" outlined v-model="form.banco" :options="optionsBancos" label="Banco" >
+        <div v-if="metodo3" class="col-xs-11 col-sm-6 col-md-6 col-lg-6">
+          <div v-if="confiFlowData" class="text-positive text-bold">Flow ya se encuentra configurado</div>
+          <div v-else class="text-red text-bold">Debes configurar Flow</div>
+          <q-btn style="width:200px" color="positive" label="Configurar Flow" push no-caps @click="flow = {}, $v.flow.$reset(), dialogFlow = true" />
+        </div>
+        <div v-if="metodo2" class="col-xs-11 col-sm-6 col-md-6 col-lg-6">
+          <div class="text-weight-bolder q-mt-md text-subtitle1">Datos para transferencia bancaria</div>
+          <q-select class="q-mt-md" outlined v-model="form.banco" :options="optionsBancos" label="Banco" :error="$v.form.banco.$error" error-message="Este campo es requerido" @blur="$v.form.banco.$touch()">
             <template v-slot:no-option>
               <q-item>
                 <q-item-section class="text-italic text-grey">
@@ -134,7 +140,7 @@
               </q-item>
             </template>
           </q-select>
-          <q-select class="q-mt-md" outlined v-model="form.tipoCuenta" :options="optionsCuentas" label="Tipo de cuenta" >
+          <q-select class="q-mt-md" outlined v-model="form.tipoCuenta" :options="optionsCuentas" label="Tipo de cuenta" :error="$v.form.tipoCuenta.$error" error-message="Este campo es requerido" @blur="$v.form.tipoCuenta.$touch()">
             <template v-slot:no-option>
               <q-item>
                 <q-item-section class="text-italic text-grey">
@@ -143,15 +149,10 @@
               </q-item>
             </template>
           </q-select>
-          <q-input class="q-mt-md" v-model.number="form.cuenta" type="number" label="Número de cuenta" outlined/>
-          <q-input class="q-mt-md" v-model="form.rutTitular" label="RUT del titular" outlined/>
-          <q-input class="q-mt-md" v-model="form.titular" label="Nombre del titular" outlined/>
-          <q-input class="q-mt-md" v-model="form.correoDestino" type="email" label="Correo destino del comprobante" outlined/>
-        </div>
-        <div v-if="form.metodoPago === '3'" class="col-xs-11 col-sm-6 col-md-6 col-lg-6">
-          <div v-if="confiFlowData" class="text-positive text-bold">Flow ya se encuentra configurado</div>
-          <div v-else class="text-red text-bold">Debes configurar Flow</div>
-          <q-btn style="width:200px" color="positive" label="Configurar Flow" push no-caps @click="flow = {}, $v.flow.$reset(), dialogFlow = true" />
+          <q-input class="q-mt-md" v-model.number="form.cuenta" type="number" label="Número de cuenta" outlined :error="$v.form.cuenta.$error" error-message="Este campo es requerido" @blur="$v.form.cuenta.$touch()"/>
+          <q-input class="q-mt-md" v-model="form.rutTitular" label="RUT del titular" outlined :error="$v.form.rutTitular.$error" error-message="Este campo es requerido" @blur="$v.form.rutTitular.$touch()"/>
+          <q-input class="q-mt-md" v-model="form.titular" label="Nombre del titular" outlined :error="$v.form.titular.$error" error-message="Este campo es requerido" @blur="$v.form.titular.$touch()"/>
+          <q-input class="q-mt-md" v-model="form.correoDestino" type="email" label="Correo destino del comprobante" outlined :error="$v.form.correoDestino.$error" error-message="Este campo es requerido" @blur="$v.form.correoDestino.$touch()"/>
         </div>
       </div>
       <div class="column shadow-3 q-mt-md">
@@ -214,7 +215,7 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
+import { required, requiredIf } from 'vuelidate/lib/validators'
 import env from '../../env'
 export default {
   data () {
@@ -226,6 +227,8 @@ export default {
       baseu: '',
       dialogFlow: false,
       confiFlowData: false,
+      metodo2: false,
+      metodo3: false,
       img: null,
       perfil: null,
       perfilImg: null,
@@ -252,6 +255,38 @@ export default {
     }
   },
   validations: {
+    form: {
+      banco: {
+        required: requiredIf(function (nestedModel) {
+          return this.metodo2
+        })
+      },
+      tipoCuenta: {
+        required: requiredIf(function (nestedModel) {
+          return this.metodo2
+        })
+      },
+      cuenta: {
+        required: requiredIf(function (nestedModel) {
+          return this.metodo2
+        })
+      },
+      rutTitular: {
+        required: requiredIf(function (nestedModel) {
+          return this.metodo2
+        })
+      },
+      titular: {
+        required: requiredIf(function (nestedModel) {
+          return this.metodo2
+        })
+      },
+      correoDestino: {
+        required: requiredIf(function (nestedModel) {
+          return this.metodo2
+        })
+      }
+    },
     flow: {
       apiKey: { required },
       secretKey: { required }
@@ -262,10 +297,24 @@ export default {
     if (this.$route.params.id) {
       this.getProvEdit(this.$route.params.id)
     } else {
-      await this.getInfo()
+      this.getInfo()
     }
   },
   methods: {
+    selecMetodo () {
+      if (this.form.metodoPago) {
+        if (this.form.metodoPago.find(v => v === '3')) {
+          this.metodo3 = true
+        } else {
+          this.metodo3 = false
+        }
+        if (this.form.metodoPago.find(v => v === '2')) {
+          this.metodo2 = true
+        } else {
+          this.metodo2 = false
+        }
+      }
+    },
     getDataFlow (id) {
       this.$api.post('flow_by_id/' + id).then(res => {
         if (res) {
@@ -274,7 +323,7 @@ export default {
       })
     },
     dataFlow () {
-      this.$v.$touch()
+      this.$v.flow.$touch()
       if (!this.$v.flow.$error) {
         this.$q.loading.show()
         this.flow.tienda_id = this.form._id
@@ -294,17 +343,30 @@ export default {
       }
     },
     guardar () {
-      this.$q.loading.show()
-      this.$api.put('editar_proveedor', this.form).then(res => {
-        if (res) {
-          this.getProvEdit(this.form._id)
-          this.$q.notify({
-            message: 'Guardado Correctamente',
-            positive: 'positive'
-          })
+      var paso = false
+      this.$v.form.$touch()
+      if (this.form.metodoPago.find(v => v === '3')) {
+        if (this.confiFlowData) {
+          paso = true
+        } else {
+          paso = false
         }
-      })
-      this.$q.loading.hide()
+      } else {
+        paso = true
+      }
+      if (!this.$v.form.$error && paso) {
+        this.$q.loading.show()
+        this.$api.put('editar_proveedor', this.form).then(res => {
+          if (res) {
+            this.getProvEdit(this.form._id)
+            this.$q.notify({
+              message: 'Guardado Correctamente',
+              positive: 'positive'
+            })
+          }
+        })
+        this.$q.loading.hide()
+      }
     },
     async changePerfil () {
       this.$q.loading.show()
@@ -353,25 +415,49 @@ export default {
     async getInfo () {
       this.$q.loading.show()
       await this.$api.get('user_info').then(res => {
-        this.form = res
-        if (this.form.metodoPago === '3') {
-          this.getDataFlow(this.form._id)
+        if (res) {
+          this.form = res
+          if (this.form.metodoPago.length) {
+            if (this.form.metodoPago.find(v => v === '3')) {
+              this.metodo3 = true
+              this.getDataFlow(this.form._id)
+            } else {
+              this.metodo3 = false
+            }
+            if (this.form.metodoPago.find(v => v === '2')) {
+              this.metodo2 = true
+            } else {
+              this.metodo2 = false
+            }
+          }
+          this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
+          this.baseuPortada = env.apiUrl + '/perfil_img/portada' + this.form._id
+          this.$q.loading.hide()
         }
-        this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
-        this.baseuPortada = env.apiUrl + '/perfil_img/portada' + this.form._id
-        this.$q.loading.hide()
       })
     },
-    getProvEdit (id) {
+    async getProvEdit (id) {
       this.$q.loading.show()
-      this.$api.post('user_by_id/' + id).then(res => {
-        this.form = res
-        if (this.form.metodoPago === '3') {
-          this.getDataFlow(this.form._id)
+      await this.$api.post('user_by_id/' + id).then(res => {
+        if (res) {
+          this.form = res
+          if (this.form.metodoPago.length) {
+            if (this.form.metodoPago.find(v => v === '3')) {
+              this.metodo3 = true
+              this.getDataFlow(this.form._id)
+            } else {
+              this.metodo3 = false
+            }
+            if (this.form.metodoPago.find(v => v === '2')) {
+              this.metodo2 = true
+            } else {
+              this.metodo2 = false
+            }
+          }
+          this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
+          this.baseuPortada = env.apiUrl + '/perfil_img/portada' + this.form._id
+          this.$q.loading.hide()
         }
-        this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
-        this.baseuPortada = env.apiUrl + '/perfil_img/portada' + this.form._id
-        this.$q.loading.hide()
       })
     },
     async addImg () {

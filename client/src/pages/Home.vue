@@ -5,7 +5,6 @@
         class="bg-transparent"
         :height="web ? '500px' : '150px'"
         width="100%"
-        navigation
         infinite
         :autoplay="autoplay1"
         >

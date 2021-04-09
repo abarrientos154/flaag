@@ -41,7 +41,6 @@ export default {
       await this.$api.get('reportes/2').then(res => {
         this.data = res
         this.filtrado = res
-        console.log(this.filtrado, 'asd')
       })
     },
     select (val) {

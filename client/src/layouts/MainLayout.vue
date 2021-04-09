@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh Lpr lff">
+  <q-layout view="hHh Lpr lff"><!-- lhh lpR fFf -->
     <q-header elevated>
       <q-toolbar class="bg-white q-px-md q-py-md row justify-between">
         <div>
@@ -47,75 +47,33 @@
       <router-view />
     </q-page-container>
 
-    <q-footer>
+      <q-footer>
         <q-toolbar class="bg-black text-white q-py-xl column">
           <div class="row justify-between" style="width: 100%">
-            <div class="col-6 column justify-between">
+            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2 column justify-around">
               <q-img class="q-ml-md" src="flaagfooter.png" style="width:100px" />
-              <div class="row q-gutter-md q-mb-md q-mt-xl">
-                <q-btn outline no-caps color="white" style="width: 160px">
-                  <div class="row q-gutter-md items-center no-wrap">
-                    <q-avatar size="30px"> <img src="apple.png"> </q-avatar>
-                    <div>
-                      <div class="text-caption">App Store</div>
-                      <div>App Store</div>
-                    </div>
-                  </div>
-                </q-btn>
-                <q-btn outline no-caps color="white" style="width: 160px">
-                  <div class="row q-gutter-md items-center no-wrap">
-                    <q-avatar size="30px"> <img src="google-play.png"> </q-avatar>
-                    <div>
-                      <div class="text-caption">Google Play</div>
-                      <div>Google Play</div>
-                    </div>
-                  </div>
-                </q-btn>
+              <q-img class="q-ml-md q-mt-md" src="Logo-Sercotec.png" style="width:100px" />
+              <div class="q-mt-md">
+                Conoce <a target="_blank" class="text-white" href="https://www.lodelaferia.cl/#/inicio">www.lodelaferia.cl</a> un portal de emprendedores de la región de Aysén. Podrás encontrar en nuestra feria digital diferentes productos característicos de la región. Este es un proyecto patrocinado por Sercotec Chile.
               </div>
             </div>
-            <div class="col-6 row justify-around">
-              <div class="column q-gutter-sm">
-                <div class="text-bold">Acerca de Flaag</div>
-                <a class="text-white">Lee nuestro Blog</a>
-                <a class="text-white">Quieres ser parte</a>
-                <a class="text-white">Regístrate para entregas</a>
-              </div>
-              <div class="column q-gutter-sm">
-                <div class="text-bold">Obtén ayuda</div>
-                <a class="text-white">Preguntas frecuentes</a>
-                <a class="text-white">Donde estamos ubicados</a>
-                <a class="text-white">Contáctanos</a>
-                <div class="row">
-                  <q-icon name="g_translate" />
-                  <div class="q-pl-md">Español</div>
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 q-mt-md column justify-start">
+              <div class="text-bold q-mb-sm">Conoce nuestras tiendas</div>
+              <div class="row justify-between" style="height: 85%; width: 100%">
+                <div class="col-6" v-for="(item, index) in tiendas" :key="index">
+                  <a class="text-white" :href="'#/tienda/'+item._id">{{item.nombreEmpresa}}</a>
                 </div>
               </div>
             </div>
-          </div>
-          <q-separator dark inset class="q-my-md"/>
-          <div class="row justify-between" style="width: 100%">
-            <div class="col-4 row q-gutter-md q-ml-sm">
-              <q-btn round flat><q-avatar size="42px"> <img src="facebook.png"> </q-avatar></q-btn>
-              <q-btn round flat><q-avatar size="42px"> <img src="instagram.png"> </q-avatar></q-btn>
-              <q-btn round flat><q-avatar size="42px"> <img src="twitter.png"> </q-avatar></q-btn>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 q-mt-md column justify-start q-gutter-sm">
+              <div class="text-bold">Contacte con nosotros</div>
+              <a class="text-white">Correo de contacto: contacto@lodelaferia.cl</a>
+              <a class="text-white">Dirección: Teniente Merino #630</a>
+              <a class="text-white">Aysén, Chile</a>
             </div>
-            <div class="col-7 q-mr-md">
-              <div class="row q-gutter-md justify-end">
-                <a class="text-white">Políticas de privacidad</a>
-                <a class="text-white">Términos</a>
-              </div>
-            </div>
-          </div>
-          <div class="row justify-end q-gutter-md q-mt-md" style="width: 100%">
-            <div>reCAPTCHA y Google protegen este sitio. Se aplican la Política de privacidad y los Térmios del servicio</div>
-            <div>@ 2021 Flaag</div>
           </div>
         </q-toolbar>
       </q-footer>
-      <!--<q-dialog v-model="dialogo" persistent :maximized="true" transition-show="slide-up" transition-hide="slide-down">
-        <div class="loader" style="width:200px;height:200px">
-        </div>
-      </q-dialog> -->
   </q-layout>
 </template>
 
@@ -129,6 +87,7 @@ export default {
       rol: 0,
       login: false,
       drawer: false,
+      tiendas: [],
       menu: [
         {
           icon: 'home',
@@ -191,6 +150,7 @@ export default {
     ...mapGetters('generals', ['can'])
   },
   mounted () {
+    this.getTiendas()
     const value = localStorage.getItem('FLAAG_SESSION_INFO')
     if (value) {
       this.login = true
@@ -200,7 +160,15 @@ export default {
     ...mapMutations('generals', ['logout']),
     cerrarSesion () {
       this.logout()
-      this.$router.push('/login')
+      this.$router.push('/inicio')
+      location.reload()
+    },
+    getTiendas () {
+      this.$api.get('proveedores').then(res => {
+        if (res) {
+          this.tiendas = res.filter(v => v.status === 1)
+        }
+      })
     }
   }
 }
