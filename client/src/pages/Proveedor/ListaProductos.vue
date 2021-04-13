@@ -92,7 +92,7 @@
 
     <div  v-if="buscar === 0" class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Más recientes</div>
     <q-scroll-area
-         v-if="buscar === 0"
+         v-if="buscar === 0 && dataLimit.length > 0"
         horizontal
         class="q-my-md"
         style="height: 590px;"
@@ -139,43 +139,12 @@
         </div>
       </q-scroll-area>
 
-    <!-- <div class="row justify-around" v-else-if="filtrarProCa.length > 0">
-      <div class="row justify-around q-mb-lg" v-for="(card, index) in filtrarProCa" :key="index">
-        <q-card class="bg-amber-3 shadow-11 bordes" style="width: 330px">
-          <q-img :src="card.images.length > 0 ? baseu + card.images[0] : 'noimgproducto.png'" style="width: 322px; height: 200px" />
-          <q-card-section>
-            <div class="row no-wrap items-center">
-              <div class="col text-h6 ellipsis">{{card.nombre}}</div>
-            </div>
-          </q-card-section>
-          <q-card-section class="q-pt-none">
-            <div class="row" style="width:100%">
-              <q-icon class="col-1" name="description" color="black" style="font-size: 1.3rem;"/>
-              <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.descripcion}}</div>
-            </div>
-            <div class="row" style="width:100%">
-              <q-icon class="col-1" name="category" color="black" style="font-size: 1.3rem;"/>
-              <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.categoria_info.nombre}}</div>
-            </div>
-            <div class="row" style="width:100%">
-              <q-icon class="col-1" name="zoom_in" color="black" style="font-size: 1.3rem;"/>
-              <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.cantidad}}</div>
-            </div>
-            <div class="row no-wrap items-center">
-                <div v-if="!card.oferta" class="col text-subtitle2 ellipsis q-mx-sm">$ . {{card.valor}}</div>
-                <div v-if="card.oferta" class="col text-subtitle2 ellipsis q-mx-sm">$ . <strike>{{card.valor}}</strike> - {{card.ofertaVal}}</div>
-            </div>
-          </q-card-section>
-
-          <q-separator />
-
-          <q-card-actions align="between">
-            <q-btn label="eliminar" icon="delete" color="negative" @click="confirmEliminar(card._id)" />
-            <q-btn label="editar" icon="edit" color="primary" @click="$router.push('/producto/' + card._id)" />
-          </q-card-actions>
-        </q-card>
+      <div v-else class="row justify-center full-width full-height items-center q-pa-xl">
+        <div class="text-h5">
+          :( Sin Nada Por Aqui
+        </div>
       </div>
-    </div> -->
+
     <q-separator  v-if="buscar === 0" color="black" />
 
     <div class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Productos</div>

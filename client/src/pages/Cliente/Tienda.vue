@@ -94,7 +94,7 @@
 
     <div  v-if="buscar === 0" class="text-h5 estilo-titulos text-center text-weight-bold q-mx-md q-my-xl">Más recientes</div>
     <q-scroll-area
-        v-if="buscar === 0 && filtrarProCa.length > 0"
+        v-if="buscar === 0 && dataLimit.length > 0"
         horizontal
         class="q-my-md"
         style="height: 590px;"
