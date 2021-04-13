@@ -6,7 +6,7 @@
           <q-btn class="q-mr-md" round dense flat icon="menu" size="1em" color="black" @click="drawer = !drawer"/>
           <q-img src="flaagweb.png" style="width:140px" @click="$router.push('/inicio')" />
         </div>
-        <q-btn v-if="!login" round class="text-black" color="grey-4" icon="login" @click="$router.push('/login')" />
+        <q-btn v-if="!login" round flat color="black" icon="login" @click="$router.push('/login')" />
       </q-toolbar>
     </q-header>
 
@@ -52,12 +52,12 @@
           <div class="row justify-between" style="width: 100%">
             <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2 column justify-around">
               <q-img class="q-ml-md" src="flaagfooter.png" style="width:100px" />
-              <q-img class="q-ml-md q-mt-md" src="Logo-Sercotec.png" style="width:100px" />
+              <!-- <q-img class="q-ml-md q-mt-md" src="Logo-Sercotec.png" style="width:100px" />
               <div class="q-mt-md">
                 Conoce <a target="_blank" class="text-white" href="https://www.lodelaferia.cl/#/inicio">www.lodelaferia.cl</a> un portal de emprendedores de la región de Aysén. Podrás encontrar en nuestra feria digital diferentes productos característicos de la región. Este es un proyecto patrocinado por Sercotec Chile.
-              </div>
+              </div> -->
             </div>
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 q-mt-md column justify-start">
+            <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 q-mt-md column justify-start">
               <div class="text-bold q-mb-sm">Conoce nuestras tiendas</div>
               <div class="row justify-between" style="height: 85%; width: 100%">
                 <div class="col-6" v-for="(item, index) in tiendas" :key="index">

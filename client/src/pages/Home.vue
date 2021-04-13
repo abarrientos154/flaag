@@ -17,7 +17,7 @@
         </q-carousel-slide>
     </q-carousel>
 
-    <!-- <q-scroll-area
+    <q-scroll-area
         horizontal
         style="height: 320px;"
       >
@@ -31,9 +31,9 @@
             <div class="text-weight-bold q-mt-sm text-center">{{card.nombreEmpresa}}</div>
           </div>
         </div>
-      </q-scroll-area> -->
+      </q-scroll-area>
 
-    <q-carousel
+    <!-- <q-carousel
       v-model="slide2"
       :autoplay="autoplay2"
       swipeable
@@ -57,7 +57,7 @@
           </div>
         </div>
       </q-carousel-slide>
-    </q-carousel>
+    </q-carousel> -->
 
     <q-carousel
       v-if="web"
