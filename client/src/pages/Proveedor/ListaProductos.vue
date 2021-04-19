@@ -84,7 +84,7 @@
       <q-scroll-area horizontal style="height: 100px; width: 100%;">
         <div class="row no-wrap q-mx-md">
           <div class="q-ml-sm column justify-center" style="height: 100px" v-for="(item, index) in categorias" :key="index">
-            <q-btn :label="item.nombre" :color="item.active ? 'primary':'white'" :text-color="item.active ? 'white':'primary'" rounded style="height: 60px; width:200px" @click="activarB(index)" />
+            <q-btn :label="item.nombre" :color="item.active ? 'primary':'white'" :text-color="item.active ? 'white':'primary'" rounded style="height: 60px; width:200px" @click="activarB(index, item.id)" />
           </div>
         </div>
       </q-scroll-area>
@@ -246,6 +246,7 @@ export default {
   },
   computed: {
     filtrarProCa () {
+      console.log(this.buscar)
       if (this.buscar === 0) {
         return this.data
       } else {
@@ -297,11 +298,12 @@ export default {
         this.getInfo()
       }
     },
-    activarB (ind) {
+    activarB (ind, cat) {
+      console.log(ind, cat)
       const indexActual = this.categorias.findIndex(v => v.active)
       this.categorias[indexActual].active = false
       this.categorias[ind].active = true
-      this.buscar = ind
+      this.buscar = cat
     },
     async getInfo () {
       await this.$api.get('user_info').then(res => {

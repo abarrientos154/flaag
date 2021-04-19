@@ -86,7 +86,7 @@
       <q-scroll-area horizontal style="height: 100px; width: 100%;">
         <div class="row no-wrap q-mx-md">
           <div class="q-ml-sm column justify-center" style="height: 100px" v-for="(item, index) in categorias" :key="index">
-            <q-btn :label="item.nombre" :color="item.active ? 'primary':'white'" :text-color="item.active ? 'white':'primary'" rounded style="height: 60px; width:200px" @click="activarB(index)" />
+            <q-btn :label="item.nombre" :color="item.active ? 'primary':'white'" :text-color="item.active ? 'white':'primary'" rounded style="height: 60px; width:200px" @click="activarB(index, item.id)" />
           </div>
         </div>
       </q-scroll-area>
@@ -140,11 +140,11 @@
         </div>
       </q-scroll-area>
 
-      <div v-else class="row justify-center full-width full-height items-center q-pa-xl">
+      <!-- <div v-else class="row justify-center full-width full-height items-center q-pa-xl">
         <div class="text-h5">
           :( Sin Nada Por Aqui
         </div>
-      </div>
+      </div> -->
 
       <q-separator  v-if="buscar === 0" color="black" />
 
@@ -718,11 +718,12 @@ export default {
         })
       }
     },
-    activarB (ind) {
+    activarB (ind, cat) {
+      console.log('aqui', ind)
       const indexActual = this.categorias.findIndex(v => v.active)
       this.categorias[indexActual].active = false
       this.categorias[ind].active = true
-      this.buscar = ind
+      this.buscar = cat
     },
     getProducto (id) {
       this.$api.get('producto/' + id).then(res => {
