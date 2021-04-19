@@ -1,6 +1,6 @@
 <template>
-  <div style="height:100%;">
-      <q-img :src="baseu + perfile" spinner-color="white" style="height: 400px; width: 100%;">
+  <div style="height:100%; width:100%">
+      <q-img :src="baseu + perfile" spinner-color="white" style="height: 500px; width: 100%">
           <div class="row no-wrap justify-between bg-transparent" style="width:100%">
               <div class="col text-h6 text-white text-weight-bolder ellipsis">{{data.datos_proveedor.nombreEmpresa}}</div>
               <q-btn no-caps flat icon="store" label="Ir" color="white" @click="rol !== 1 ? irTienda() : $router.push('/proveedor/' + data.datos_proveedor._id)" />

@@ -17,6 +17,20 @@
         </q-carousel-slide>
     </q-carousel>
 
+    <div class="row justify-between q-pa-xl" style="width: 100%">
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 row justify-center items-center q-mt-md">
+        <img
+          src="logo.png"
+          spinner-color="white"
+          style="width: 300px" />
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center row items-center text-h5">
+        Nuestra página web es el resultado de nuestro empeño por innovar y acercarnos a nuestros clientes en tiempos difíciles. <br><br>
+        Aquí usted puede comprar desde la comodidad de su hogar y verá que algunas tiendas tienen hasta servicio de delivery y despacho a otras regiones. <br><br>
+        <strong class="text-center" style="width:100%">¡Bienvenidos entonces a navegar en Lo De La Feria!</strong>
+      </div>
+    </div>
+
     <q-scroll-area
         horizontal
         style="height: 320px;"
@@ -194,7 +208,7 @@
     <q-dialog v-model="verProducto">
       <q-card style="width: 400px">
         <q-card-section class="q-pa-none" style="width: 100%">
-          <DetalleProducto :data="producto" lugar="inicio" />
+          <DetalleProducto :data="producto" lugar="inicio"/>
         </q-card-section>
       </q-card>
     </q-dialog>
