@@ -61,7 +61,7 @@
               <div class="text-bold q-mb-sm">Conoce nuestras tiendas</div>
               <div class="row justify-between" style="height: 85%; width: 100%">
                 <div class="col-6" v-for="(item, index) in tiendas" :key="index">
-                  <a class="text-white" :href="'#/tienda/'+item._id">{{item.nombreEmpresa}}</a>
+                  <a  @click="clic(item._id)" class="text-white text-no-wrap" style="cursor:pointer; text-decoration: underline" >{{item.nombreEmpresa}}</a>
                 </div>
               </div>
             </div>
@@ -158,6 +158,11 @@ export default {
   },
   methods: {
     ...mapMutations('generals', ['logout']),
+    clic (id) {
+      console.log(this.$router.history.current.fullPath)
+      this.$router.push('/tienda/' + id)
+      location.reload()
+    },
     cerrarSesion () {
       this.logout()
       this.$router.push('/inicio')
