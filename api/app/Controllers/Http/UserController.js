@@ -131,7 +131,7 @@ class UserController {
     }
     const params = {
         commerceOrder: Math.floor(Math.random() * (2000 - 1100 + 1)) + 1100,
-        subject: 'Pago de prueba',
+        subject: 'Compra Flaag',
         currency: 'CLP',
         amount: dat.amount,
         email: dat.email,
