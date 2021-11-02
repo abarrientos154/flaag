@@ -35,7 +35,7 @@
             </div>
             <div class="row items-center" style="width: 100%">
               <q-icon class="col-1" name="email" size="sm" />
-              <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.email}} </div>
+              <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.email2}} </div>
             </div>
             <div class="row items-center" style="width: 100%">
               <q-icon class="col-1" name="phone" size="sm" />
@@ -43,7 +43,7 @@
             </div>
             <div class="row items-center" style="width: 100%">
               <q-icon class="col-1" name="home_work" size="sm" />
-              <div class="col q-ml-xs text-subtitle2"> Días de atención: {{user.dias.length ? dias() : ''}} </div>
+              <div class="col q-ml-xs text-subtitle2"> Días de atención: {{user.dias ? user.dias.length ? dias() : '' : ''}} </div>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -297,7 +297,7 @@
           </q-card>
         </q-card-section>
         <q-card-section v-else>
-          <div class="text-center text-weight-bolder text-subtitle1 q-ma-md shadow-11 q-pa-md bg-primary" style="border-radius:10px;">La tienda no ha configurado un método de pago</div>
+          <div class="text-center text-subtitle1 q-ma-md shadow-11 q-pa-md bg-primary" style="border-radius:10px;">La tienda no ha configurado un método de pago</div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -537,35 +537,6 @@ export default {
         })
       }
     },
-    fileCompra () {
-      var img = ''
-      var cc = {}
-      cc = this.compraFile
-      img = URL.createObjectURL(cc)
-      this.imgCompra = img
-    },
-    formatPrice (value) {
-      const val = (value / 1).toFixed(0).replace('.', ',')
-      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    },
-    addFavorito () {
-      if (this.login) {
-        if (this.favorito) {
-          this.$api.delete('favorito/' + this.proveedor_id).then(res => {
-            this.favorito = res
-          })
-        } else {
-          this.$api.post('favorito/' + this.proveedor_id).then(res => {
-            this.favorito = res
-          })
-        }
-      }
-    },
-    obtenerFavorito () {
-      this.$api.get('favorito/' + this.proveedor_id).then(res => {
-        this.favorito = res
-      })
-    },
     efectivo () {
       this.$api.post('comprar_productos', { carrito: this.carrito, token: true, pago: '1' }).then(res => {
         if (res) {
@@ -614,20 +585,6 @@ export default {
         })
       }
     },
-    aprobado () {
-      this.$api.post('comprar_productos', { carrito: this.response.localData.carrito, token: this.token, pago: '3' }).then(res => {
-        if (res) {
-          this.carrito = []
-          this.getProductosByProveedor(this.proveedor_id)
-          this.verCarrito = false
-          this.$q.notify({
-            message: 'Compra realizada con exito',
-            color: 'positive',
-            positive: 'positive'
-          })
-        }
-      })
-    },
     async test () {
       this.$q.loading.show({
         message: 'Iniciando Proceso de Pago'
@@ -658,6 +615,49 @@ export default {
           message: 'Error al procesar la compra ' + v.data,
           color: 'negative'
         })
+      })
+    },
+    fileCompra () {
+      var img = ''
+      var cc = {}
+      cc = this.compraFile
+      img = URL.createObjectURL(cc)
+      this.imgCompra = img
+    },
+    formatPrice (value) {
+      const val = (value / 1).toFixed(0).replace('.', ',')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
+    addFavorito () {
+      if (this.login) {
+        if (this.favorito) {
+          this.$api.delete('favorito/' + this.proveedor_id).then(res => {
+            this.favorito = res
+          })
+        } else {
+          this.$api.post('favorito/' + this.proveedor_id).then(res => {
+            this.favorito = res
+          })
+        }
+      }
+    },
+    obtenerFavorito () {
+      this.$api.get('favorito/' + this.proveedor_id).then(res => {
+        this.favorito = res
+      })
+    },
+    aprobado () {
+      this.$api.post('comprar_productos', { carrito: this.response.localData.carrito, token: this.token, pago: '3' }).then(res => {
+        if (res) {
+          this.carrito = []
+          this.getProductosByProveedor(this.proveedor_id)
+          this.verCarrito = false
+          this.$q.notify({
+            message: 'Compra realizada con exito',
+            color: 'positive',
+            positive: 'positive'
+          })
+        }
       })
     },
     getInfo () {

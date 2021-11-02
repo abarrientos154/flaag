@@ -35,7 +35,7 @@
             </div>
             <div class="row items-center" style="width: 100%">
               <q-icon class="col-1" name="email" size="sm" />
-              <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.email}} </div>
+              <div class="col q-ml-xs ellipsis text-subtitle2"> {{user.email2}} </div>
             </div>
             <div class="row items-center" style="width: 100%">
               <q-icon class="col-1" name="phone" size="sm" />
@@ -43,7 +43,7 @@
             </div>
             <div class="row items-center" style="width: 100%">
               <q-icon class="col-1" name="home_work" size="sm" />
-              <div class="col q-ml-xs text-subtitle2"> Días de atención: {{user.dias.length ? dias() : ''}} </div>
+              <div class="col q-ml-xs text-subtitle2"> Días de atención: {{user.dias ? user.dias.length ? dias() : '' : ''}} </div>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
@@ -246,7 +246,6 @@ export default {
   },
   computed: {
     filtrarProCa () {
-      console.log(this.buscar)
       if (this.buscar === 0) {
         return this.data
       } else {
@@ -299,7 +298,6 @@ export default {
       }
     },
     activarB (ind, cat) {
-      console.log(ind, cat)
       const indexActual = this.categorias.findIndex(v => v.active)
       this.categorias[indexActual].active = false
       this.categorias[ind].active = true

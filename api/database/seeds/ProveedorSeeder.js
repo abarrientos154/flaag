@@ -17,6 +17,7 @@ const userData = [
   {
     id: 1,
     email: 'novedadesantho@lodelaferia.cl',
+    email2: '',
     password: 'novedadesantho.2021',
     nombreEmpresa: 'Novedades Antho',
     rut: '',
@@ -35,6 +36,7 @@ const userData = [
   {
     id: 2,
     email: 'maosaysen@lodelaferia.cl',
+    email2: '',
     password: 'maosaysen.2021',
     nombreEmpresa: 'Maos Aysen',
     rut: '',
@@ -53,6 +55,7 @@ const userData = [
   {
     id: 3,
     email: 'lafresquita@lodelaferia.cl',
+    email2: '',
     password: 'lafresquita.2021',
     nombreEmpresa: 'La Fresquita',
     rut: '',
@@ -71,6 +74,7 @@ const userData = [
   {
     id: 4,
     email: 'rincondelanonita@lodelaferia.cl',
+    email2: '',
     password: 'rincondelanonita.2021',
     nombreEmpresa: 'Rincón De La Nonita',
     rut: '',
@@ -89,6 +93,7 @@ const userData = [
   {
     id: 5,
     email: 'artesaniasaitue@lodelaferia.cl',
+    email2: '',
     password: 'artesaniasaitue.2021',
     nombreEmpresa: 'Artesanias Aitue',
     rut: '',
@@ -107,6 +112,7 @@ const userData = [
   {
     id: 6,
     email: 'crismar@lodelaferia.cl',
+    email2: '',
     password: 'crismar.2021',
     nombreEmpresa: 'Crismar',
     rut: '',
@@ -125,6 +131,7 @@ const userData = [
   {
     id: 7,
     email: 'casadelosartesanosm@lodelaferia.cl',
+    email2: '',
     password: 'casadelosartesanosm.2021',
     nombreEmpresa: 'Casa de los Artesanos',
     rut: '',
@@ -143,6 +150,7 @@ const userData = [
   {
     id: 8,
     email: 'manosaustrales@lodelaferia.cl',
+    email2: '',
     password: 'manosaustrales.2021',
     nombreEmpresa: 'Manos Australes',
     rut: '',
@@ -161,6 +169,7 @@ const userData = [
   {
     id: 9,
     email: 'miloyventto@lodelaferia.cl',
+    email2: '',
     password: 'miloyventto.2021',
     nombreEmpresa: 'Milo Y Ventto',
     rut: '',
@@ -179,6 +188,7 @@ const userData = [
   {
     id: 10,
     email: 'manosdehadas@lodelaferia.cl',
+    email2: '',
     password: 'manosdehadas.2021',
     nombreEmpresa: 'Manos De Hadas',
     rut: '',
@@ -197,6 +207,7 @@ const userData = [
   {
     id: 11,
     email: 'marihogartienda@lodelaferia.cl',
+    email2: '',
     password: 'marihogartienda.2021',
     nombreEmpresa: 'Mari Hogar Tienda',
     rut: '',
@@ -215,6 +226,7 @@ const userData = [
   {
     id: 12,
     email: 'casadelosartesanosc@lodelaferia.cl',
+    email2: '',
     password: 'casadelosartesanosc.2021',
     nombreEmpresa: 'Casa De Los Artesanos',
     rut: '',
@@ -233,6 +245,7 @@ const userData = [
   {
     id: 13,
     email: 'rincontresb@lodelaferia.cl',
+    email2: '',
     password: 'rincontresb.2021',
     nombreEmpresa: 'Rincon Tres B',
     rut: ' ',
@@ -251,6 +264,7 @@ const userData = [
   {
     id: 14,
     email: 'chacatoys@lodelaferia.cl',
+    email2: '',
     password: 'chacatoys.2021',
     nombreEmpresa: 'Chaca Toys',
     rut: ' ',
@@ -269,6 +283,7 @@ const userData = [
   {
     id: 15,
     email: 'vanidosas@lodelaferia.cl',
+    email2: '',
     password: 'vanidosas.2021',
     nombreEmpresa: 'Vanidosas',
     rut: '',
@@ -287,6 +302,7 @@ const userData = [
   {
     id: 16,
     email: 'intrepidos@lodelaferia.cl',
+    email2: '',
     password: 'intrepidos.2021',
     nombreEmpresa: 'Intrepidos',
     rut: '',

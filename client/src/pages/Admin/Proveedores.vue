@@ -19,8 +19,12 @@
                             <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.direccionFisica ? card.direccionFisica : 'Dirección'}}</div>
                         </div>
                         <div class="row" style="width:100%">
-                            <q-icon class="col-1" name="email" color="blak" style="font-size: 1.3rem;"/>
+                            <q-icon class="col-1" name="person" color="blak" style="font-size: 1.3rem;"/>
                             <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.email}}</div>
+                        </div>
+                        <div class="row" style="width:100%">
+                            <q-icon class="col-1" name="email" color="blak" style="font-size: 1.3rem;"/>
+                            <div class="q-pl-xs text-grey-9 text-subtitle2">{{card.email2}}</div>
                         </div>
                         <div class="row" style="width:100%">
                             <q-icon class="col-1" name="phone" color="blak" style="font-size: 1.3rem;"/>

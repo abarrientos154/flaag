@@ -44,8 +44,12 @@
           />
         </div>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md">
-          <q-input disable readonly v-model="form.email" label="Email" outlined
+          <q-input disable readonly v-model="form.email" label="Usuario" outlined
           />
+        </div>
+        <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md">
+          <q-input v-model="form.email2" label="Correo electrónico" outlined
+          error-message="Ingresa un email válido" :error="$v.form.email2.$error" @blur="$v.form.email2.$touch()"/>
         </div>
         <div class="col-xs-11 col-sm-6 col-md-6 col-lg-6 q-mt-md">
           <q-select outlined v-model="form.dias" :options="optionsDias" label="Dias" multiple emit-value map-options >
@@ -215,7 +219,7 @@
 </template>
 
 <script>
-import { required, requiredIf } from 'vuelidate/lib/validators'
+import { required, requiredIf, email } from 'vuelidate/lib/validators'
 import env from '../../env'
 export default {
   data () {
@@ -285,7 +289,8 @@ export default {
         required: requiredIf(function (nestedModel) {
           return this.metodo2
         })
-      }
+      },
+      email2: { email }
     },
     flow: {
       apiKey: { required },
@@ -301,19 +306,55 @@ export default {
     }
   },
   methods: {
-    selecMetodo () {
-      if (this.form.metodoPago) {
-        if (this.form.metodoPago.find(v => v === '3')) {
-          this.metodo3 = true
+    async getInfo () {
+      this.$q.loading.show()
+      await this.$api.get('user_info').then(res => {
+        if (res) {
+          this.form = res
+          if (this.form.metodoPago.length) {
+            if (this.form.metodoPago.find(v => v === '3')) {
+              this.metodo3 = true
+              this.getDataFlow(this.form._id)
+            } else {
+              this.metodo3 = false
+            }
+            if (this.form.metodoPago.find(v => v === '2')) {
+              this.metodo2 = true
+            } else {
+              this.metodo2 = false
+            }
+          }
+          this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
+          this.baseuPortada = env.apiUrl + '/perfil_img/portada' + this.form._id
+          this.$q.loading.hide()
         } else {
-          this.metodo3 = false
+          this.$q.loading.hide()
         }
-        if (this.form.metodoPago.find(v => v === '2')) {
-          this.metodo2 = true
-        } else {
-          this.metodo2 = false
+      })
+    },
+    async getProvEdit (id) {
+      this.$q.loading.show()
+      await this.$api.post('user_by_id/' + id).then(res => {
+        if (res) {
+          this.form = res
+          if (this.form.metodoPago.length) {
+            if (this.form.metodoPago.find(v => v === '3')) {
+              this.metodo3 = true
+              this.getDataFlow(this.form._id)
+            } else {
+              this.metodo3 = false
+            }
+            if (this.form.metodoPago.find(v => v === '2')) {
+              this.metodo2 = true
+            } else {
+              this.metodo2 = false
+            }
+          }
+          this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
+          this.baseuPortada = env.apiUrl + '/perfil_img/portada' + this.form._id
+          this.$q.loading.hide()
         }
-      }
+      })
     },
     getDataFlow (id) {
       this.$api.post('flow_by_id/' + id).then(res => {
@@ -342,6 +383,20 @@ export default {
         })
       }
     },
+    selecMetodo () {
+      if (this.form.metodoPago) {
+        if (this.form.metodoPago.find(v => v === '3')) {
+          this.metodo3 = true
+        } else {
+          this.metodo3 = false
+        }
+        if (this.form.metodoPago.find(v => v === '2')) {
+          this.metodo2 = true
+        } else {
+          this.metodo2 = false
+        }
+      }
+    },
     guardar () {
       var paso = false
       this.$v.form.$touch()
@@ -361,7 +416,7 @@ export default {
             this.getProvEdit(this.form._id)
             this.$q.notify({
               message: 'Guardado Correctamente',
-              positive: 'positive'
+              color: 'positive'
             })
           }
         })
@@ -410,54 +465,6 @@ export default {
           location.reload()
         }
         this.$q.loading.hide()
-      })
-    },
-    async getInfo () {
-      this.$q.loading.show()
-      await this.$api.get('user_info').then(res => {
-        if (res) {
-          this.form = res
-          if (this.form.metodoPago.length) {
-            if (this.form.metodoPago.find(v => v === '3')) {
-              this.metodo3 = true
-              this.getDataFlow(this.form._id)
-            } else {
-              this.metodo3 = false
-            }
-            if (this.form.metodoPago.find(v => v === '2')) {
-              this.metodo2 = true
-            } else {
-              this.metodo2 = false
-            }
-          }
-          this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
-          this.baseuPortada = env.apiUrl + '/perfil_img/portada' + this.form._id
-          this.$q.loading.hide()
-        }
-      })
-    },
-    async getProvEdit (id) {
-      this.$q.loading.show()
-      await this.$api.post('user_by_id/' + id).then(res => {
-        if (res) {
-          this.form = res
-          if (this.form.metodoPago.length) {
-            if (this.form.metodoPago.find(v => v === '3')) {
-              this.metodo3 = true
-              this.getDataFlow(this.form._id)
-            } else {
-              this.metodo3 = false
-            }
-            if (this.form.metodoPago.find(v => v === '2')) {
-              this.metodo2 = true
-            } else {
-              this.metodo2 = false
-            }
-          }
-          this.baseu = env.apiUrl + '/perfil_img/' + this.form._id
-          this.baseuPortada = env.apiUrl + '/perfil_img/portada' + this.form._id
-          this.$q.loading.hide()
-        }
       })
     },
     async addImg () {
