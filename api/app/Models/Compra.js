@@ -7,6 +7,12 @@ class Compra extends Model {
  productos () {
     return this.hasOne('App/Models/Producto', 'producto', '_id')
   }
+  compradorInfo () {
+    return this.hasOne('App/Models/User', 'comprador', '_id')
+  }
+  tiendaInfo () {
+    return this.hasOne('App/Models/User', 'tienda', '_id')
+  }
 }
 
 module.exports = Compra

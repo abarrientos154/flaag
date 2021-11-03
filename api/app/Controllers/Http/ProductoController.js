@@ -238,13 +238,15 @@ class ProductoController {
     var type = params.type
     var data
     if (type == 1){
-      data = (await Compras.query().where({comprador: user._id}).with('productos').fetch()).toJSON()
+      data = (await Compras.query().where({comprador: user._id}).with('productos').with('compradorInfo').with('tiendaInfo').fetch()).toJSON()
     } else {
-      data = (await Compras.query().where({tienda: user._id}).with('productos').fetch()).toJSON()
+      data = (await Compras.query().where({tienda: user._id}).with('productos').with('compradorInfo').with('tiendaInfo').fetch()).toJSON()
     }
     response.send(data.map(v => {
       return {
         ...v.productos,
+        comprador: v.compradorInfo,
+        tienda: v.tiendaInfo,
         cantidad: v.cantidad,
         created_at: v.created_at
       }

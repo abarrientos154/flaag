@@ -5,7 +5,7 @@
       <div class="row justify-center q-mt-sm">
         <q-chip @click="select(item)" clickable v-for="(item, index) in reportes" :key="index" :color="item === reporte ? 'primary':''"> {{item}} </q-chip>
       </div>
-      <list-pro :data="filtrado" :baseu="baseu" class="full-width q-mt-lg"/>
+      <list-pro :data="filtrado" :baseu="baseu" :type="1" class="full-width q-mt-lg"/>
     </div>
   </q-page>
 </template>
