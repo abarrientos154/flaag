@@ -538,6 +538,7 @@ export default {
       }
     },
     efectivo () {
+      this.$q.loading.show()
       this.$api.post('comprar_productos', { carrito: this.carrito, token: true, pago: '1' }).then(res => {
         if (res) {
           this.carrito = []
@@ -548,6 +549,9 @@ export default {
             color: 'positive',
             positive: 'positive'
           })
+          this.$q.loading.hide()
+        } else {
+          this.$q.loading.hide()
         }
       })
     },

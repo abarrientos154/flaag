@@ -5,7 +5,9 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 const Helpers = use('Helpers')
 const mkdirp = use('mkdirp')
+const Email = use("App/Functions/Email")
 const Producto = use('App/Models/Producto')
+const User = use('App/Models/User')
 const Flow = use('App/Models/Flow')
 const Compras = use('App/Models/Compra')
 const fs = require('fs')
@@ -180,6 +182,17 @@ class ProductoController {
           var disable = await Producto.query().where({_id: carrito[i]._id}).update({disable: true})
         }
       }
+      const tienda = (await User.find(carrito[0].proveedor_id))
+      let mail = await Email.sendMail(tienda.email2, 'Te hicieron una compra', `
+      <center>
+        <div>Te hicieron una compra, ve a tu tienda, sección reportes y podrás ver lo último que te han comprado.</div>
+      </center>
+      `)
+      let mail2 = await Email.sendMail(user.email, 'Realizaste una compra', `
+      <center>
+        <div>Realizaste una compra en Lo de la feria Online, para revisar los datos de la tienda donde compraste <b><a href="https://lodelaferia.cl/">Inicia sesión aquí</a></b> y revisa Reportes</div>
+      </center>
+      `)
     }
     response.send(true)
   }
@@ -205,6 +218,19 @@ class ProductoController {
     if (!request.all().token === true) {
       await Flow.query().where({token: request.all().token}).update({status: 1})
     }
+
+    const tienda = (await User.find(carrito[0].proveedor_id))
+    let mail = await Email.sendMail(tienda.email2, 'Te hicieron una compra', `
+    <center>
+      <div>Te hicieron una compra, ve a tu tienda, sección reportes y podrás ver lo último que te han comprado.</div>
+    </center>
+    `)
+    let mail2 = await Email.sendMail(user.email, 'Realizaste una compra', `
+    <center>
+      <div>Realizaste una compra en Lo de la feria Online, para revisar los datos de la tienda donde compraste <b><a href="https://lodelaferia.cl/">Inicia sesión aquí</a></b> y revisa Reportes</div>
+    </center>
+    `)
+
     response.send(true)
   }
   async reportes ({ params, response, auth }) {

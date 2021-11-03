@@ -5,6 +5,7 @@ const mkdirp = use('mkdirp')
 const fs = require('fs')
 var randomize = require('randomatic');
 const Flow = require('flowcl-node-api-client')
+const Email = use("App/Functions/Email")
 const User = use("App/Models/User")
 const flowData = use("App/Models/FlowDatum")
 const Role = use("App/Models/Role")
@@ -158,6 +159,18 @@ class UserController {
   }
   async store_flow ({request, response}) {
     let dat = request.all()
+    const tienda = (await User.find(dat.tienda_id))
+    const cliente = (await User.find(dat.user))
+    let mail = await Email.sendMail(tienda.email2, 'Te hicieron una compra', `
+    <center>
+      <div>Te hicieron una compra, ve a tu tienda, sección reportes y podrás ver lo último que te han comprado.</div>
+    </center>
+    `)
+    let mail2 = await Email.sendMail(cliente.email, 'Realizaste una compra', `
+    <center>
+      <div>Realizaste una compra en Lo de la feria Online, para revisar los datos de la tienda donde compraste <b><a href="https://lodelaferia.cl/">Inicia sesión aquí</a></b> y revisa Reportes</div>
+    </center>
+    `)
     Floww.create(dat)
   }
   async flowResponse ({params, response}) {
