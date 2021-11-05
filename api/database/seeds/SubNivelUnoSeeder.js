@@ -2425,7 +2425,187 @@ const data = [
     categoria_id: 79,
     nombre: 'Short',
     proveedor_id: 16
-  }
+  },
+  {
+    id: 397,
+    categoria_id: 94,
+    nombre: 'jeans',
+    proveedor_id: 20
+  },
+  {
+    id: 398,
+    categoria_id: 94,
+    nombre: 'Polerones',
+    proveedor_id: 20
+  },
+  {
+    id: 399,
+    categoria_id: 94,
+    nombre: 'Poleras',
+    proveedor_id: 20
+  },
+  {
+    id: 400,
+    categoria_id: 94,
+    nombre: 'Otros',
+    proveedor_id: 20
+  },
+  {
+    id: 401,
+    categoria_id: 95,
+    nombre: 'Globos',
+    proveedor_id: 20
+  },
+  {
+    id: 402,
+    categoria_id: 95,
+    nombre: 'Cajas de regalo',
+    proveedor_id: 20
+  },
+  {
+    id: 403,
+    categoria_id: 95,
+    nombre: 'Cortinas metalicas',
+    proveedor_id: 20
+  },
+  {
+    id: 404,
+    categoria_id: 95,
+    nombre: 'Numeros',
+    proveedor_id: 20
+  },
+  {
+    id: 405,
+    categoria_id: 95,
+    nombre: 'Topper',
+    proveedor_id: 20
+  },
+  {
+    id: 406,
+    categoria_id: 95,
+    nombre: 'Otros',
+    proveedor_id: 20
+  },
+  {
+    id: 407,
+    categoria_id: 96,
+    nombre: 'Poleras',
+    proveedor_id: 20
+  },
+  {
+    id: 408,
+    categoria_id: 96,
+    nombre: 'Buzos',
+    proveedor_id: 20
+  },
+  {
+    id: 409,
+    categoria_id: 96,
+    nombre: 'Otros',
+    proveedor_id: 20
+  },
+  {
+    id: 410,
+    categoria_id: 98,
+    nombre: 'collares y arnés',
+    proveedor_id: 21
+  },
+  {
+    id: 411,
+    categoria_id: 98,
+    nombre: 'juguetes',
+    proveedor_id: 21
+  },
+  {
+    id: 412,
+    categoria_id: 98,
+    nombre: 'rascadores',
+    proveedor_id: 21
+  },
+  {
+    id: 413,
+    categoria_id: 98,
+    nombre: 'camas',
+    proveedor_id: 21
+  },
+  {
+    id: 414,
+    categoria_id: 98,
+    nombre: 'platos y dispensadores',
+    proveedor_id: 21
+  },
+  {
+    id: 415,
+    categoria_id: 98,
+    nombre: 'Areneros',
+    proveedor_id: 21
+  },
+  {
+    id: 416,
+    categoria_id: 98,
+    nombre: 'Ropa',
+    proveedor_id: 21
+  },
+  {
+    id: 417,
+    categoria_id: 98,
+    nombre: 'Transportadoras',
+    proveedor_id: 21
+  },
+  {
+    id: 418,
+    categoria_id: 98,
+    nombre: 'Cuidado o higiene',
+    proveedor_id: 21
+  },
+  {
+    id: 419,
+    categoria_id: 97,
+    nombre: 'Collares y arnés',
+    proveedor_id: 21
+  },
+  {
+    id: 420,
+    categoria_id: 97,
+    nombre: 'Juguetes',
+    proveedor_id: 21
+  },
+  {
+    id: 421,
+    categoria_id: 97,
+    nombre: 'Camas',
+    proveedor_id: 21
+  },
+  {
+    id: 422,
+    categoria_id: 97,
+    nombre: 'Platos y dispensadores',
+    proveedor_id: 21
+  },
+  {
+    id: 423,
+    categoria_id: 97,
+    nombre: 'Ropa',
+    proveedor_id: 21
+  },
+  {
+    id: 424,
+    categoria_id: 97,
+    nombre: 'Transportadoras',
+    proveedor_id: 21
+  },
+  {
+    id: 425,
+    categoria_id: 97,
+    nombre: 'Cuidado y higiene',
+    proveedor_id: 21
+  },
+  {
+    id: 426,
+    categoria_id: 99,
+    nombre: 'Otros',
+    proveedor_id: 21
+  },
 ]
 
 class SubNivelUnoSeeder {

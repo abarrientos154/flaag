@@ -408,6 +408,106 @@ const categoriaData = [
     id: 79,
     nombre: 'Ropa de Hombre Extra Grande',
     proveedor_id: 16
+  },
+  {
+    id: 80,
+    nombre: 'accesorios varios',
+    proveedor_id: 17
+  },
+  {
+    id: 81,
+    nombre: 'pulseras',
+    proveedor_id: 17
+  },
+  {
+    id: 82,
+    nombre: 'aros',
+    proveedor_id: 17
+  },
+  {
+    id: 83,
+    nombre: 'collares',
+    proveedor_id: 17
+  },
+  {
+    id: 84,
+    nombre: 'anillos',
+    proveedor_id: 17
+  },
+  {
+    id: 85,
+    nombre: 'maquillaje y belleza',
+    proveedor_id: 17
+  },
+  {
+    id: 86,
+    nombre: 'Otros',
+    proveedor_id: 17
+  },
+  {
+    id: 87,
+    nombre: 'Lencería Dama & Varón',
+    proveedor_id: 18
+  },
+  {
+    id: 88,
+    nombre: 'Joyas de plata 925- 950',
+    proveedor_id: 18
+  },
+  {
+    id: 89,
+    nombre: 'Belleza y Cuidado Personal',
+    proveedor_id: 18
+  },
+  {
+    id: 90,
+    nombre: 'Perfumería',
+    proveedor_id: 18
+  },
+  {
+    id: 91,
+    nombre: 'Artesanías',
+    proveedor_id: 18
+  },
+  {
+    id: 92,
+    nombre: 'Ropa Reciclada',
+    proveedor_id: 18
+  },
+  {
+    id: 93,
+    nombre: 'Otros',
+    proveedor_id: 18
+  },
+  {
+    id: 94,
+    nombre: 'Ropa Dama y Varon',
+    proveedor_id: 20
+  },
+  {
+    id: 95,
+    nombre: 'Cotillon',
+    proveedor_id: 20
+  },
+  {
+    id: 96,
+    nombre: 'ropa para niños',
+    proveedor_id: 20
+  },
+  {
+    id: 97,
+    nombre: 'Perros',
+    proveedor_id: 21
+  },
+  {
+    id: 98,
+    nombre: 'Gatos',
+    proveedor_id: 21
+  },
+  {
+    id: 99,
+    nombre: 'Articulos para Pet Lovers',
+    proveedor_id: 21
   }
 
 ]
