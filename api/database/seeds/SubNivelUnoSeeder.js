@@ -2606,6 +2606,66 @@ const data = [
     nombre: 'Otros',
     proveedor_id: 21
   },
+  {
+    id: 427,
+    categoria_id: 100,
+    nombre: 'último en tendencia',
+    proveedor_id: 19
+  },
+  {
+    id: 428,
+    categoria_id: 101,
+    nombre: 'dirigido a la protección de la piel',
+    proveedor_id: 19
+  },
+  {
+    id: 429,
+    categoria_id: 102,
+    nombre: 'accesorios que complementan el maquillaje',
+    proveedor_id: 19
+  },
+  {
+    id: 430,
+    categoria_id: 103,
+    nombre: 'tendencia enfocada en la estación o temporada del mes correspondiente del año',
+    proveedor_id: 19
+  },
+  {
+    id: 431,
+    categoria_id: 104,
+    nombre: 'moños',
+    proveedor_id: 19
+  },
+  {
+    id: 432,
+    categoria_id: 104,
+    nombre: 'pinches',
+    proveedor_id: 19
+  },
+  {
+    id: 433,
+    categoria_id: 104,
+    nombre: 'aros',
+    proveedor_id: 19
+  },
+  {
+    id: 434,
+    categoria_id: 105,
+    nombre: 'Libros para colorear',
+    proveedor_id: 19
+  },
+  {
+    id: 435,
+    categoria_id: 105,
+    nombre: 'stickers gigantes',
+    proveedor_id: 19
+  },
+  {
+    id: 436,
+    categoria_id: 105,
+    nombre: 'burbujas',
+    proveedor_id: 19
+  }
 ]
 
 class SubNivelUnoSeeder {

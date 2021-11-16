@@ -508,6 +508,36 @@ const categoriaData = [
     id: 99,
     nombre: 'Articulos para Pet Lovers',
     proveedor_id: 21
+  },
+  {
+    id: 100,
+    nombre: 'Maquillaje',
+    proveedor_id: 19
+  },
+  {
+    id: 101,
+    nombre: 'Skin Care',
+    proveedor_id: 19
+  },
+  {
+    id: 102,
+    nombre: 'Accesorios de Belleza',
+    proveedor_id: 19
+  },
+  {
+    id: 103,
+    nombre: 'Vestuario Juvenil',
+    proveedor_id: 19
+  },
+  {
+    id: 104,
+    nombre: 'Accesorios para el Cabello',
+    proveedor_id: 19
+  },
+  {
+    id: 105,
+    nombre: 'Articulos para niñas y niños',
+    proveedor_id: 19
   }
 
 ]
