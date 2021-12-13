@@ -193,6 +193,11 @@ class ProductoController {
         <div>Realizaste una compra en Lo de la feria Online, para revisar los datos de la tienda donde compraste <b><a href="https://lodelaferia.cl/">Inicia sesión aquí</a></b> y revisa Reportes</div>
       </center>
       `)
+      let mail3 = await Email.sendMail('pablo.arrocet.eiche@gmail.com', 'Hicieron una compra', `
+      <center>
+        <div>Hicieron una compra en Lo de la feria Online, para revisar los datos ingresa <b><a href="https://lodelaferia.cl/">Inicia sesión aquí</a></b> y revisa Reportes</div>
+      </center>
+      `)
     }
     response.send(true)
   }
